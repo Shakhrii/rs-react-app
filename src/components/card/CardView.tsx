@@ -1,6 +1,11 @@
 import React from "react";
+import type { Pokemon } from "../../types/types";
 
-export class CardView extends React.Component {
+interface CardViewProps {
+  pokemon: Pokemon;
+}
+
+export class CardView extends React.Component<CardViewProps> {
   render() {
     return (
       <div className="w-50 h-55">
