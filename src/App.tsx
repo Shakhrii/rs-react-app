@@ -7,6 +7,8 @@ import type {
   PokemonDetailResponse,
   PokemonsResponse,
 } from "./types/types";
+import { SpinnerView } from "./components/spinner/SpinnerView";
+
 const SERVER_URL = "https://pokeapi.co/api/v2/pokemon";
 
 export default class App extends Component {
@@ -17,10 +19,13 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
-    const result = await this.getPokemons();
-    this.setState({
-      pokemons: result,
-    });
+    setTimeout(async () => {
+      const result = await this.getPokemons();
+      this.setState({
+        pokemons: result,
+        isLoading: false,
+      });
+    }, 500);
   }
 
   showError(message: string) {
@@ -67,8 +72,14 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <SearchView />
-        <CardListView pokemons={this.state.pokemons} />
+        <div className="flex flex-col gap-20 items-center">
+          <SearchView />
+          {this.state.isLoading ? (
+            <SpinnerView />
+          ) : (
+            <CardListView pokemons={this.state.pokemons} />
+          )}
+        </div>
       </>
     );
   }

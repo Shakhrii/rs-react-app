@@ -8,13 +8,13 @@ interface CardViewProps {
 export class CardView extends React.Component<CardViewProps> {
   render() {
     return (
-      <div className="w-50 h-55">
+      <div className="w-50 h-55 shadow hover:bg-amber-500/50 rounded-sm transition-colors duration-300 ease-in-out active:bg-amber-500">
         <img
           className="w-full h-2/3"
           src={this.props.pokemon.avatar}
           alt="pokemon avatar"
         ></img>
-        <span>{this.props.pokemon.name}</span>
+        <span className="text-sm">{this.props.pokemon.name}</span>
       </div>
     );
   }
