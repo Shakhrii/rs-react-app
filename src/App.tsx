@@ -1,41 +1,75 @@
 import "./App.css";
+import { Component } from "react";
 import { CardListView } from "./components/card/CardListView";
 import { SearchView } from "./components/search/SearchView";
+import type {
+  Pokemon,
+  PokemonDetailResponse,
+  PokemonsResponse,
+} from "./types/types";
+const SERVER_URL = "https://pokeapi.co/api/v2/pokemon";
 
-function App() {
-  const pokemons = [
-    {
-      name: "clefairy",
-      avatar:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png",
-    },
-    {
-      name: "bulbasaur",
-      avatar:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    },
-    {
-      name: "ivysaur",
-      avatar:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
-    },
-    {
-      name: "venusaur",
-      avatar:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
-    },
-    {
-      name: "charmander",
-      avatar:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    },
-  ];
-  return (
-    <>
-      <SearchView />
-      <CardListView pokemons={pokemons} />
-    </>
-  );
+export default class App extends Component {
+  state = {
+    pokemons: null,
+    isLoading: true,
+    error: null,
+  };
+
+  async componentDidMount() {
+    const result = await this.getPokemons();
+    this.setState({
+      pokemons: result,
+    });
+  }
+
+  showError(message: string) {
+    console.log(message);
+  }
+  async fetchData(): Promise<PokemonsResponse[]> {
+    try {
+      const response = await fetch(SERVER_URL);
+      if (response.ok) {
+        const resultResponse = await response.json();
+        return resultResponse.results;
+      } else {
+        throw Error(response.statusText);
+      }
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }
+
+  parseDetailPokemons(pokemonResponses: PokemonDetailResponse[]): Pokemon[] {
+    const pokemons: Pokemon[] = pokemonResponses.map(
+      ({ sprites, ...rest }) => ({
+        ...rest,
+        avatar: sprites.front_default,
+      }),
+    );
+    return pokemons;
+  }
+
+  async getPokemons(): Promise<Pokemon[]> {
+    const pokemonResponse = await this.fetchData();
+    const pokemonsDetailResponse = await Promise.all(
+      pokemonResponse.map(async (pokemon) => {
+        const res = await fetch(pokemon.url);
+        const resDetail = (await res.json()) as PokemonDetailResponse;
+        return resDetail;
+      }),
+    );
+
+    return this.parseDetailPokemons(pokemonsDetailResponse);
+  }
+
+  render() {
+    return (
+      <>
+        <SearchView />
+        <CardListView pokemons={this.state.pokemons} />
+      </>
+    );
+  }
 }
-
-export default App;
