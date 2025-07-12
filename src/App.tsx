@@ -13,9 +13,10 @@ const SERVER_URL = "https://pokeapi.co/api/v2/pokemon";
 
 export default class App extends Component {
   state = {
-    pokemons: null,
+    pokemons: undefined,
     isLoading: true,
-    error: null,
+    error: undefined,
+    value: undefined,
   };
 
   async componentDidMount() {
@@ -69,11 +70,34 @@ export default class App extends Component {
     return this.parseDetailPokemons(pokemonsDetailResponse);
   }
 
+  async getPokemonByName(name: string): Promise<Pokemon> {
+    const response = await fetch(`${SERVER_URL}/${name}`);
+    return await response.json();
+  }
+
+  changeSearchTermHandler(value: string): void {
+    this.setState({
+      isLoading: true,
+    });
+    setTimeout(async () => {
+      const result = this.getPokemonByName(value);
+      this.setState({
+        pokemons: [result],
+        isLoading: false,
+      });
+    }, 500);
+  }
+
   render() {
     return (
       <>
         <div className="flex flex-col gap-20 items-center">
-          <SearchView />
+          <SearchView
+            value={this.state.value}
+            onSeacrhClick={(value) => {
+              this.changeSearchTermHandler(value);
+            }}
+          />
           {this.state.isLoading ? (
             <SpinnerView />
           ) : (

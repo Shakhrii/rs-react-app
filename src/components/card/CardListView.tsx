@@ -3,7 +3,7 @@ import type { Pokemon } from "../../types/types";
 import { CardView } from "./CardView";
 
 interface CardListViewProps {
-  pokemons: Pokemon[] | null;
+  pokemons: Pokemon[] | undefined;
 }
 export class CardListView extends React.Component<CardListViewProps> {
   render() {
