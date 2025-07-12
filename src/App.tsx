@@ -57,8 +57,8 @@ export default class App extends Component {
       } else {
         throw Error(response.statusText);
       }
-    } catch (error) {
-      console.log(error);
+    } catch {
+      this.showError("Something went wrong...");
       return [];
     } finally {
       this.setState({

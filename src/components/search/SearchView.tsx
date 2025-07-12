@@ -11,9 +11,17 @@ export class SearchView extends React.Component<SearchViewProps> {
   };
 
   handleChangeEvent(event: ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      value: event.target.value.toString(),
-    });
+    const inputValue = event.target.value.toString();
+    this.setState(
+      {
+        value: inputValue,
+      },
+      () => {
+        if (!inputValue) {
+          this.handleClick();
+        }
+      },
+    );
   }
 
   handleClick() {
