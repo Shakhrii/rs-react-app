@@ -8,6 +8,7 @@ import type {
   PokemonsResponse,
 } from "./types/types";
 import { SpinnerView } from "./components/spinner/SpinnerView";
+import { ErrorView } from "./components/error/ErrorView";
 
 const SERVER_URL = "https://pokeapi.co/api/v2/pokemon";
 
@@ -15,8 +16,9 @@ export default class App extends Component {
   state = {
     pokemons: undefined,
     isLoading: true,
-    error: undefined,
     value: undefined,
+    error: undefined,
+    messageError: undefined,
   };
 
   async componentDidMount() {
@@ -25,13 +27,27 @@ export default class App extends Component {
       this.setState({
         pokemons: result,
         isLoading: false,
+        isError: false,
+        messageError: undefined,
       });
-    }, 500);
+    }, 200);
   }
 
   showError(message: string) {
+    this.setState({
+      error: true,
+      messageError: message,
+    });
     console.log(message);
   }
+
+  skipError() {
+    this.setState({
+      error: false,
+      messageError: undefined,
+    });
+  }
+
   async fetchData(): Promise<PokemonsResponse[]> {
     try {
       const response = await fetch(SERVER_URL);
@@ -44,6 +60,10 @@ export default class App extends Component {
     } catch (error) {
       console.log(error);
       return [];
+    } finally {
+      this.setState({
+        isLoading: false,
+      });
     }
   }
 
@@ -58,6 +78,8 @@ export default class App extends Component {
   }
 
   async getPokemons(): Promise<Pokemon[]> {
+    this.skipError();
+
     const pokemonResponse = await this.fetchData();
     const pokemonsDetailResponse = await Promise.all(
       pokemonResponse.map(async (pokemon) => {
@@ -80,9 +102,13 @@ export default class App extends Component {
       } else {
         throw Error(response.statusText);
       }
-    } catch (error) {
-      console.log(error);
+    } catch {
+      this.showError(`Doesnt find anything with "${term}"`);
       return undefined;
+    } finally {
+      this.setState({
+        isLoading: false,
+      });
     }
   }
 
@@ -92,6 +118,8 @@ export default class App extends Component {
   }
 
   async getPokemonBySearchTerm(term: string): Promise<Pokemon | undefined> {
+    this.skipError();
+
     const result = await this.fetchPokemonBySearchTerm(term);
     if (result) {
       return this.parsePokemonDetail(result);
@@ -107,7 +135,10 @@ export default class App extends Component {
     setTimeout(async () => {
       let result;
       if (value) {
-        result = [await this.getPokemonBySearchTerm(value)];
+        result = await this.getPokemonBySearchTerm(value);
+        if (result) {
+          result = [result];
+        }
       } else {
         result = await this.getPokemons();
       }
@@ -118,7 +149,7 @@ export default class App extends Component {
           isLoading: false,
         });
       }
-    }, 500);
+    }, 200);
   }
 
   render() {
@@ -133,6 +164,8 @@ export default class App extends Component {
           />
           {this.state.isLoading ? (
             <SpinnerView />
+          ) : this.state.error ? (
+            <ErrorView message={this.state.messageError} />
           ) : (
             <CardListView pokemons={this.state.pokemons} />
           )}
