@@ -2,13 +2,13 @@ import "./App.css";
 import { Component } from "react";
 import { CardListView } from "./components/card/CardListView";
 import { SearchView } from "./components/search/SearchView";
+import { SpinnerView } from "./components/spinner/SpinnerView";
+import { ErrorView } from "./components/error/ErrorView";
 import type {
   Pokemon,
   PokemonDetailResponse,
   PokemonsResponse,
 } from "./types/types";
-import { SpinnerView } from "./components/spinner/SpinnerView";
-import { ErrorView } from "./components/error/ErrorView";
 
 const SERVER_URL = "https://pokeapi.co/api/v2/pokemon";
 
@@ -69,8 +69,13 @@ export default class App extends Component {
 
   parseDetailPokemons(pokemonResponses: PokemonDetailResponse[]): Pokemon[] {
     const pokemons: Pokemon[] = pokemonResponses.map(
-      ({ sprites, ...rest }) => ({
+      ({ sprites, abilities, ...rest }) => ({
         ...rest,
+        abilities: abilities.reduce(
+          (accumulator, currentValue) =>
+            accumulator + currentValue.ability.name + " ",
+          "",
+        ),
         avatar: sprites.front_default,
       }),
     );
@@ -113,8 +118,16 @@ export default class App extends Component {
   }
 
   parsePokemonDetail(pokemonsDetailResponse: PokemonDetailResponse): Pokemon {
-    const { sprites, ...rest } = pokemonsDetailResponse;
-    return { ...rest, avatar: sprites.front_default };
+    const { sprites, abilities, ...rest } = pokemonsDetailResponse;
+    return {
+      ...rest,
+      avatar: sprites.front_default,
+      abilities: abilities.reduce(
+        (accumulator, currentValue) =>
+          accumulator + currentValue.ability.name + " ",
+        "",
+      ),
+    };
   }
 
   async getPokemonBySearchTerm(term: string): Promise<Pokemon | undefined> {
