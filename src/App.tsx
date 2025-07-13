@@ -22,20 +22,20 @@ export default class App extends Component {
     messageError: undefined,
   };
 
-  saveToLS(key: string, value: string) {
-    localStorage.setItem(key, value);
-  }
-
-  getFromLS(key: string): string {
-    return localStorage.getItem(key) ?? "";
-  }
-
   async componentDidMount() {
     const searchTermValue = this.getFromLS(SEARCH_TERM_KEY);
     this.setState({
       searchTerm: searchTermValue,
     });
     this.getPokemonsBySearchTerm(searchTermValue);
+  }
+
+  saveToLS(key: string, value: string) {
+    localStorage.setItem(key, value);
+  }
+
+  getFromLS(key: string): string {
+    return localStorage.getItem(key) ?? "";
   }
 
   showError(message: string) {
@@ -51,6 +51,13 @@ export default class App extends Component {
       error: false,
       messageError: undefined,
     });
+  }
+
+  resetSearch() {
+    this.setState({
+      searchTerm: "",
+    });
+    this.changeSearchTermHandler("");
   }
 
   async fetchData(): Promise<PokemonsResponse[]> {
@@ -181,7 +188,7 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <div className="flex flex-col gap-20 items-center">
+        <div className="flex flex-col gap-15 items-center relative">
           <SearchView
             value={this.state.searchTerm}
             onSeacrhClick={(value) => {
@@ -191,10 +198,22 @@ export default class App extends Component {
           {this.state.isLoading ? (
             <SpinnerView />
           ) : this.state.error ? (
-            <ErrorView message={this.state.messageError} />
+            <ErrorView
+              message={this.state.messageError}
+              resetSearchHandler={() => this.resetSearch()}
+            />
           ) : (
             <CardListView pokemons={this.state.pokemons} />
           )}
+          <button
+            className="text-white bg-gradient-to-r from-red-400 via-red-500
+           to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none
+            focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 
+            dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 
+            py-2.5 text-center me-2 mb-2 fixed bottom-10 right-10"
+          >
+            Show Error
+          </button>
         </div>
       </>
     );

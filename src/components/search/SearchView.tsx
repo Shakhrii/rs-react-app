@@ -46,7 +46,11 @@ export class SearchView extends React.Component<SearchViewProps> {
     return (
       <div className="flex gap-2">
         <input
-          className="border-2 border-solid border-amber-500 rounded-md p-1.5 text-neutral-500 placeholder:text-neutral-300 focus:outline-0 hover:border-amber-400 focus:border-amber-400"
+          className="border-2 border-solid
+           border-amber-500 rounded-md p-1.5
+            text-neutral-500 placeholder:text-neutral-300 
+            focus:outline-0 hover:border-amber-400
+             focus:border-amber-400 bg-white"
           type="text"
           placeholder="type name or id... "
           value={this.state.value || ""}
