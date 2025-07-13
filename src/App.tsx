@@ -97,18 +97,23 @@ export default class App extends Component {
   }
 
   parseDetailPokemons(pokemonResponses: PokemonDetailResponse[]): Pokemon[] {
-    const pokemons: Pokemon[] = pokemonResponses.map(
-      ({ sprites, abilities, ...rest }) => ({
-        ...rest,
-        abilities: abilities.reduce(
-          (accumulator, currentValue) =>
-            accumulator + currentValue.ability.name + ' ',
-          ''
-        ),
-        avatar: sprites.front_default,
-      })
+    const pokemons: Pokemon[] = pokemonResponses.map((item) =>
+      this.parsePokemonDetail(item)
     );
     return pokemons;
+  }
+
+  parsePokemonDetail(pokemonsDetailResponse: PokemonDetailResponse): Pokemon {
+    const { sprites, abilities, ...rest } = pokemonsDetailResponse;
+    return {
+      ...rest,
+      avatar: sprites.front_default,
+      abilities: abilities.reduce(
+        (accumulator, currentValue) =>
+          accumulator + currentValue.ability.name + ' ',
+        ''
+      ),
+    };
   }
 
   async getPokemons(): Promise<Pokemon[]> {
@@ -144,19 +149,6 @@ export default class App extends Component {
         isLoading: false,
       });
     }
-  }
-
-  parsePokemonDetail(pokemonsDetailResponse: PokemonDetailResponse): Pokemon {
-    const { sprites, abilities, ...rest } = pokemonsDetailResponse;
-    return {
-      ...rest,
-      avatar: sprites.front_default,
-      abilities: abilities.reduce(
-        (accumulator, currentValue) =>
-          accumulator + currentValue.ability.name + ' ',
-        ''
-      ),
-    };
   }
 
   async getPokemon(term: string): Promise<Pokemon | undefined> {
