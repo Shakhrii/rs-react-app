@@ -49,7 +49,7 @@ export class SearchView extends React.Component<SearchViewProps> {
           className="border-2 border-solid border-amber-500 rounded-md p-1.5 text-neutral-500 placeholder:text-neutral-300 focus:outline-0 hover:border-amber-400 focus:border-amber-400"
           type="text"
           placeholder="type something... "
-          value={this.state.value}
+          value={this.state.value || ""}
           onChange={(event) => this.handleChangeEvent(event)}
         />
         <button
