@@ -9,6 +9,8 @@ import type {
   PokemonDetailResponse,
   PokemonsResponse,
 } from "./types/types";
+import ErrorBoundary from "./components/error/ErrorBoundary";
+import { ButtonBoundaryErrorView } from "./components/error/ButtonBoundaryErrorView";
 
 const SERVER_URL = "https://pokeapi.co/api/v2/pokemon";
 const SEARCH_TERM_KEY = "search_term";
@@ -18,7 +20,8 @@ export default class App extends Component {
     pokemons: undefined,
     isLoading: true,
     searchTerm: undefined,
-    error: undefined,
+    error: false,
+    boundaryError: false,
     messageError: undefined,
   };
 
@@ -30,12 +33,24 @@ export default class App extends Component {
     this.getPokemonsBySearchTerm(searchTermValue);
   }
 
+  componentDidUpdate(): void {
+    if (this.state.boundaryError) {
+      throw Error("Error boundary");
+    }
+  }
+
   saveToLS(key: string, value: string) {
     localStorage.setItem(key, value);
   }
 
   getFromLS(key: string): string {
     return localStorage.getItem(key) ?? "";
+  }
+
+  showErrorBoundary() {
+    this.setState({
+      boundaryError: true,
+    });
   }
 
   showError(message: string) {
@@ -189,31 +204,25 @@ export default class App extends Component {
     return (
       <>
         <div className="flex flex-col gap-15 items-center relative">
-          <SearchView
-            value={this.state.searchTerm}
-            onSeacrhClick={(value) => {
-              this.changeSearchTermHandler(value);
-            }}
-          />
-          {this.state.isLoading ? (
-            <SpinnerView />
-          ) : this.state.error ? (
-            <ErrorView
-              message={this.state.messageError}
-              resetSearchHandler={() => this.resetSearch()}
+          <ErrorBoundary>
+            <SearchView
+              value={this.state.searchTerm}
+              onSeacrhClick={(value) => {
+                this.changeSearchTermHandler(value);
+              }}
             />
-          ) : (
-            <CardListView pokemons={this.state.pokemons} />
-          )}
-          <button
-            className="text-white bg-gradient-to-r from-red-400 via-red-500
-           to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none
-            focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 
-            dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 
-            py-2.5 text-center me-2 mb-2 fixed bottom-10 right-10"
-          >
-            Show Error
-          </button>
+            {this.state.isLoading ? (
+              <SpinnerView />
+            ) : this.state.error ? (
+              <ErrorView
+                message={this.state.messageError}
+                resetSearchHandler={() => this.resetSearch()}
+              />
+            ) : (
+              <CardListView pokemons={this.state.pokemons} />
+            )}
+            <ButtonBoundaryErrorView />
+          </ErrorBoundary>
         </div>
       </>
     );
