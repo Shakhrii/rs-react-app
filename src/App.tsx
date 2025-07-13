@@ -11,6 +11,8 @@ import type {
 } from "./types/types";
 import ErrorBoundary from "./components/error/ErrorBoundary";
 import { ButtonBoundaryErrorView } from "./components/error/ButtonBoundaryErrorView";
+import HeaderView from "./components/header/HeaderView";
+import MainView from "./components/main/MainView";
 
 const SERVER_URL = "https://pokeapi.co/api/v2/pokemon";
 const SEARCH_TERM_KEY = "search_term";
@@ -205,23 +207,27 @@ export default class App extends Component {
       <>
         <div className="flex flex-col gap-15 items-center relative">
           <ErrorBoundary>
-            <SearchView
-              value={this.state.searchTerm}
-              onSeacrhClick={(value) => {
-                this.changeSearchTermHandler(value);
-              }}
-            />
-            {this.state.isLoading ? (
-              <SpinnerView />
-            ) : this.state.error ? (
-              <ErrorView
-                message={this.state.messageError}
-                resetSearchHandler={() => this.resetSearch()}
+            <HeaderView>
+              <SearchView
+                value={this.state.searchTerm}
+                onSeacrhClick={(value) => {
+                  this.changeSearchTermHandler(value);
+                }}
               />
-            ) : (
-              <CardListView pokemons={this.state.pokemons} />
-            )}
-            <ButtonBoundaryErrorView />
+            </HeaderView>
+            <MainView>
+              {this.state.isLoading ? (
+                <SpinnerView />
+              ) : this.state.error ? (
+                <ErrorView
+                  message={this.state.messageError}
+                  resetSearchHandler={() => this.resetSearch()}
+                />
+              ) : (
+                <CardListView pokemons={this.state.pokemons} />
+              )}
+              <ButtonBoundaryErrorView />
+            </MainView>
           </ErrorBoundary>
         </div>
       </>

@@ -1,7 +1,4 @@
 import { Component } from "react";
-type ErrorViewProps = {
-  handlerClick: () => void;
-};
 
 export class ButtonBoundaryErrorView extends Component {
   state = {
@@ -14,7 +11,7 @@ export class ButtonBoundaryErrorView extends Component {
     });
   }
 
-  componentDidUpdate(prevState: Readonly<{}>): void {
+  componentDidUpdate(): void {
     if (this.state.throwError) {
       throw Error("Render Error from ButtonBoundaryErrorView");
     }
