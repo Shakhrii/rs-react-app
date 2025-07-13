@@ -1,4 +1,5 @@
 import { Component } from "react";
+import corruptedFile from "../../assets/images/corrupted-file.png";
 type ErrorViewProps = {
   message: string | undefined;
   resetSearchHandler?: () => void;
@@ -8,7 +9,7 @@ export class ErrorView extends Component<ErrorViewProps> {
     return (
       <div className="w-1/2 flex flex-col gap-5 items-center justify-center">
         <div className="w-50 h-50 self-center opacity-70">
-          <img src="src/assets/images/corrupted-file.png" alt="empty"></img>
+          <img src={corruptedFile} alt="empty"></img>
         </div>
         <span className="text-neutral-400">{this.props.message}</span>
         {this.props.resetSearchHandler && (
