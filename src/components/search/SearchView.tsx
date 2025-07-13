@@ -7,8 +7,22 @@ type SearchViewProps = {
 
 export class SearchView extends React.Component<SearchViewProps> {
   state = {
-    value: "",
+    value: this.props.value,
   };
+
+  componentDidMount(): void {
+    this.setState({
+      value: this.props.value,
+    });
+  }
+
+  componentDidUpdate(prevProps: Readonly<SearchViewProps>): void {
+    if (this.props.value !== prevProps.value) {
+      this.setState({
+        value: this.props.value,
+      });
+    }
+  }
 
   handleChangeEvent(event: ChangeEvent<HTMLInputElement>) {
     const inputValue = event.target.value.toString();
@@ -25,7 +39,7 @@ export class SearchView extends React.Component<SearchViewProps> {
   }
 
   handleClick() {
-    this.props.onSeacrhClick(this.state.value);
+    this.props.onSeacrhClick(this.state.value || "");
   }
 
   render() {
@@ -35,7 +49,7 @@ export class SearchView extends React.Component<SearchViewProps> {
           className="border-2 border-solid border-amber-500 rounded-md p-1.5 text-neutral-500 placeholder:text-neutral-300 focus:outline-0 hover:border-amber-400 focus:border-amber-400"
           type="text"
           placeholder="type something... "
-          value={this.props.value}
+          value={this.state.value}
           onChange={(event) => this.handleChangeEvent(event)}
         />
         <button

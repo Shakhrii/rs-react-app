@@ -11,26 +11,31 @@ import type {
 } from "./types/types";
 
 const SERVER_URL = "https://pokeapi.co/api/v2/pokemon";
+const SEARCH_TERM_KEY = "search_term";
 
 export default class App extends Component {
   state = {
     pokemons: undefined,
     isLoading: true,
-    value: undefined,
+    searchTerm: undefined,
     error: undefined,
     messageError: undefined,
   };
 
+  saveToLS(key: string, value: string) {
+    localStorage.setItem(key, value);
+  }
+
+  getFromLS(key: string): string {
+    return localStorage.getItem(key) ?? "";
+  }
+
   async componentDidMount() {
-    setTimeout(async () => {
-      const result = await this.getPokemons();
-      this.setState({
-        pokemons: result,
-        isLoading: false,
-        isError: false,
-        messageError: undefined,
-      });
-    }, 200);
+    const searchTermValue = this.getFromLS(SEARCH_TERM_KEY);
+    this.setState({
+      searchTerm: searchTermValue,
+    });
+    this.getPokemonsBySearchTerm(searchTermValue);
   }
 
   showError(message: string) {
@@ -130,7 +135,7 @@ export default class App extends Component {
     };
   }
 
-  async getPokemonBySearchTerm(term: string): Promise<Pokemon | undefined> {
+  async getPokemon(term: string): Promise<Pokemon | undefined> {
     this.skipError();
 
     const result = await this.fetchPokemonBySearchTerm(term);
@@ -141,14 +146,14 @@ export default class App extends Component {
     }
   }
 
-  changeSearchTermHandler(value: string): void {
+  getPokemonsBySearchTerm(value: string) {
     this.setState({
       isLoading: true,
     });
     setTimeout(async () => {
       let result;
       if (value) {
-        result = await this.getPokemonBySearchTerm(value);
+        result = await this.getPokemon(value);
         if (result) {
           result = [result];
         }
@@ -165,12 +170,20 @@ export default class App extends Component {
     }, 200);
   }
 
+  changeSearchTermHandler(value: string): void {
+    this.saveToLS(SEARCH_TERM_KEY, value);
+    this.setState({
+      searchTerm: value,
+    });
+    this.getPokemonsBySearchTerm(value || "");
+  }
+
   render() {
     return (
       <>
         <div className="flex flex-col gap-20 items-center">
           <SearchView
-            value={this.state.value}
+            value={this.state.searchTerm}
             onSeacrhClick={(value) => {
               this.changeSearchTermHandler(value);
             }}
