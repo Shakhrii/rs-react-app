@@ -1,6 +1,6 @@
-import React from "react";
-import type { Pokemon } from "../../types/types";
-import { CardView } from "./CardView";
+import React from 'react';
+import type { Pokemon } from '../../types/types';
+import { CardView } from './CardView';
 
 interface CardListViewProps {
   pokemons: Pokemon[] | undefined;

@@ -1,4 +1,4 @@
-import React, { type ChangeEvent } from "react";
+import React, { type ChangeEvent } from 'react';
 
 type SearchViewProps = {
   value: string | undefined;
@@ -34,12 +34,12 @@ export class SearchView extends React.Component<SearchViewProps> {
         if (!inputValue) {
           this.handleClick();
         }
-      },
+      }
     );
   }
 
   handleClick() {
-    this.props.onSeacrhClick(this.state.value || "");
+    this.props.onSeacrhClick(this.state.value || '');
   }
 
   render() {
@@ -53,7 +53,7 @@ export class SearchView extends React.Component<SearchViewProps> {
              focus:border-amber-400 bg-white"
           type="text"
           placeholder="type name or id... "
-          value={this.state.value || ""}
+          value={this.state.value || ''}
           onChange={(event) => this.handleChangeEvent(event)}
         />
         <button

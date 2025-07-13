@@ -1,5 +1,5 @@
-import React from "react";
-import type { Pokemon } from "../../types/types";
+import React from 'react';
+import type { Pokemon } from '../../types/types';
 
 interface CardViewProps {
   pokemon: Pokemon;

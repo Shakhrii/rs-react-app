@@ -1,5 +1,5 @@
-import React, { type PropsWithChildren } from "react";
-import { ErrorView } from "./ErrorView";
+import React, { type PropsWithChildren } from 'react';
+import { ErrorView } from './ErrorView';
 
 export default class ErrorBoundary extends React.Component<PropsWithChildren> {
   state = { hasError: false };

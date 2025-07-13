@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component } from 'react';
 
 export class ButtonBoundaryErrorView extends Component {
   state = {
@@ -13,7 +13,7 @@ export class ButtonBoundaryErrorView extends Component {
 
   componentDidUpdate(): void {
     if (this.state.throwError) {
-      throw Error("Render Error from ButtonBoundaryErrorView");
+      throw Error('Render Error from ButtonBoundaryErrorView');
     }
   }
 

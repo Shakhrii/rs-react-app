@@ -1,5 +1,5 @@
-import { Component } from "react";
-import corruptedFile from "../../assets/images/corrupted-file.png";
+import { Component } from 'react';
+import corruptedFile from '../../assets/images/corrupted-file.png';
 type ErrorViewProps = {
   message: string | undefined;
   resetSearchHandler?: () => void;
