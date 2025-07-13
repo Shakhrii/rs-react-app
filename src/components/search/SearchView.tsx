@@ -25,7 +25,7 @@ export class SearchView extends React.Component<SearchViewProps> {
   }
 
   handleChangeEvent(event: ChangeEvent<HTMLInputElement>) {
-    const inputValue = event.target.value.toString();
+    const inputValue = event.target.value.toString().trim();
     this.setState(
       {
         value: inputValue,
