@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
@@ -18,12 +18,22 @@ describe('Render component', () => {
   });
 });
 
-describe('Updates input value', () => {
+describe('Searching user interaction', () => {
   it('update input value when user types', async () => {
     render(<SearchView value={''} onSeacrhClick={() => {}} />);
     const input = screen.getByRole('textbox');
     await userEvent.clear(input);
     await userEvent.type(input, 'test-data');
     expect(input).toHaveValue('test-data');
+  });
+
+  it('triggers search callback with correct parameter', async () => {
+    const handleSearchClick = vi.fn();
+    const value = 'test value';
+
+    render(<SearchView value={value} onSeacrhClick={handleSearchClick} />);
+    const button = screen.getByRole('button');
+    await userEvent.click(button);
+    expect(handleSearchClick).toHaveBeenCalledWith(value);
   });
 });
