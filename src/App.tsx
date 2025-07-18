@@ -13,6 +13,7 @@ import ErrorBoundary from './components/error/ErrorBoundary';
 import { ButtonBoundaryErrorView } from './components/error/ButtonBoundaryErrorView';
 import HeaderView from './components/header/HeaderView';
 import MainView from './components/main/MainView';
+import { getFromLS, saveToLS } from './utils/utils';
 
 const SERVER_URL = 'https://pokeapi.co/api/v2/pokemon';
 const SEARCH_TERM_KEY = 'search_term';
@@ -28,7 +29,7 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
-    const searchTermValue = this.getFromLS(SEARCH_TERM_KEY);
+    const searchTermValue = getFromLS(SEARCH_TERM_KEY);
     this.setState({
       searchTerm: searchTermValue,
     });
@@ -39,14 +40,6 @@ export default class App extends Component {
     if (this.state.boundaryError) {
       throw Error('Error boundary');
     }
-  }
-
-  saveToLS(key: string, value: string) {
-    localStorage.setItem(key, value);
-  }
-
-  getFromLS(key: string): string {
-    return localStorage.getItem(key) ?? '';
   }
 
   showErrorBoundary() {
@@ -187,7 +180,7 @@ export default class App extends Component {
   }
 
   changeSearchTermHandler(value: string): void {
-    this.saveToLS(SEARCH_TERM_KEY, value);
+    saveToLS(SEARCH_TERM_KEY, value);
     this.setState({
       searchTerm: value,
     });
