@@ -4,25 +4,20 @@ import { CardListView } from './components/card/CardListView';
 import { SearchView } from './components/search/SearchView';
 import { SpinnerView } from './components/spinner/SpinnerView';
 import { ErrorView } from './components/error/ErrorView';
-import type {
-  Pokemon,
-  PokemonDetailResponse,
-  PokemonsResponse,
-} from './types/types';
+import type { Pokemon } from './types/types';
 import ErrorBoundary from './components/error/ErrorBoundary';
 import { ButtonBoundaryErrorView } from './components/error/ButtonBoundaryErrorView';
 import HeaderView from './components/header/HeaderView';
 import MainView from './components/main/MainView';
 import { getFromLS, saveToLS } from './utils/utils';
-
-const SERVER_URL = 'https://pokeapi.co/api/v2/pokemon';
+import { getPokemons as fetchData } from './api/Api';
 const SEARCH_TERM_KEY = 'search_term';
 
 export default class App extends Component {
   state = {
     pokemons: undefined,
     isLoading: true,
-    searchTerm: undefined,
+    searchTerm: '',
     error: false,
     boundaryError: false,
     messageError: undefined,
@@ -30,16 +25,45 @@ export default class App extends Component {
 
   async componentDidMount() {
     const searchTermValue = getFromLS(SEARCH_TERM_KEY);
-    this.setState({
-      searchTerm: searchTermValue,
-    });
-    this.getPokemonsBySearchTerm(searchTermValue);
+    this.setState(
+      {
+        searchTerm: searchTermValue,
+      },
+      () => {
+        this.getPokemons();
+      }
+    );
   }
 
   componentDidUpdate(): void {
     if (this.state.boundaryError) {
       throw Error('Error boundary');
     }
+  }
+
+  async getPokemons(): Promise<Pokemon[]> {
+    this.skipError();
+    this.setState({
+      isLoading: true,
+    });
+
+    let result;
+
+    try {
+      result = await fetchData(this.state.searchTerm);
+      if (result && !Array.isArray(result)) {
+        result = [result];
+      }
+    } catch {
+      this.showError('No results...');
+      return [];
+    } finally {
+      this.setState({
+        pokemons: result,
+        isLoading: false,
+      });
+    }
+    return result;
   }
 
   showErrorBoundary() {
@@ -70,121 +94,16 @@ export default class App extends Component {
     this.changeSearchTermHandler('');
   }
 
-  async fetchData(): Promise<PokemonsResponse[]> {
-    try {
-      const response = await fetch(SERVER_URL);
-      if (response.ok) {
-        const resultResponse = await response.json();
-        return resultResponse.results;
-      } else {
-        throw Error(response.statusText);
-      }
-    } catch {
-      this.showError('Something went wrong...');
-      return [];
-    } finally {
-      this.setState({
-        isLoading: false,
-      });
-    }
-  }
-
-  parseDetailPokemons(pokemonResponses: PokemonDetailResponse[]): Pokemon[] {
-    const pokemons: Pokemon[] = pokemonResponses.map((item) =>
-      this.parsePokemonDetail(item)
-    );
-    return pokemons;
-  }
-
-  parsePokemonDetail(pokemonsDetailResponse: PokemonDetailResponse): Pokemon {
-    const { sprites, abilities, ...rest } = pokemonsDetailResponse;
-    return {
-      ...rest,
-      avatar: sprites.front_default,
-      abilities: abilities.reduce(
-        (accumulator, currentValue) =>
-          accumulator + currentValue.ability.name + ' ',
-        ''
-      ),
-    };
-  }
-
-  async getPokemons(): Promise<Pokemon[]> {
-    this.skipError();
-
-    const pokemonResponse = await this.fetchData();
-    const pokemonsDetailResponse = await Promise.all(
-      pokemonResponse.map(async (pokemon) => {
-        const res = await fetch(pokemon.url);
-        const resDetail = (await res.json()) as PokemonDetailResponse;
-        return resDetail;
-      })
-    );
-
-    return this.parseDetailPokemons(pokemonsDetailResponse);
-  }
-
-  async fetchPokemonBySearchTerm(
-    term: string
-  ): Promise<PokemonDetailResponse | undefined> {
-    try {
-      const response = await fetch(`${SERVER_URL}/${term}`);
-      if (response.ok) {
-        return await response.json();
-      } else {
-        throw Error(response.statusText);
-      }
-    } catch {
-      this.showError(`Doesnt find anything with "${term}"`);
-      return undefined;
-    } finally {
-      this.setState({
-        isLoading: false,
-      });
-    }
-  }
-
-  async getPokemon(term: string): Promise<Pokemon | undefined> {
-    this.skipError();
-
-    const result = await this.fetchPokemonBySearchTerm(term);
-    if (result) {
-      return this.parsePokemonDetail(result);
-    } else {
-      return undefined;
-    }
-  }
-
-  getPokemonsBySearchTerm(value: string) {
-    this.setState({
-      isLoading: true,
-    });
-    setTimeout(async () => {
-      let result;
-      if (value) {
-        result = await this.getPokemon(value);
-        if (result) {
-          result = [result];
-        }
-      } else {
-        result = await this.getPokemons();
-      }
-
-      if (result) {
-        this.setState({
-          pokemons: result,
-          isLoading: false,
-        });
-      }
-    }, 200);
-  }
-
   changeSearchTermHandler(value: string): void {
     saveToLS(SEARCH_TERM_KEY, value);
-    this.setState({
-      searchTerm: value,
-    });
-    this.getPokemonsBySearchTerm(value || '');
+    this.setState(
+      {
+        searchTerm: value,
+      },
+      () => {
+        this.getPokemons();
+      }
+    );
   }
 
   render() {
