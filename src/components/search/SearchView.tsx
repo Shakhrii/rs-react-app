@@ -1,9 +1,5 @@
 import React, { type ChangeEvent } from 'react';
-
-type SearchViewProps = {
-  value: string | undefined;
-  onSeacrhClick: (value: string) => void;
-};
+import type { SearchViewProps } from '../../types/types';
 
 export class SearchView extends React.Component<SearchViewProps> {
   state = {

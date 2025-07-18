@@ -7,7 +7,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
+    globals: true,
     environment: 'jsdom',
+    setupFiles: ['@testing-library/jest-dom/vitest'],
     coverage: {
       thresholds: {
         statements: 80,
