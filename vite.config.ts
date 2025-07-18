@@ -11,6 +11,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['@testing-library/jest-dom/vitest'],
     coverage: {
+      provider: 'v8',
       thresholds: {
         statements: 80,
         branches: 50,
