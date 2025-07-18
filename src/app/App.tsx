@@ -1,16 +1,16 @@
 import './App.css';
 import { Component } from 'react';
-import { CardListView } from './components/card/CardListView';
-import { SearchView } from './components/search/SearchView';
-import { SpinnerView } from './components/spinner/SpinnerView';
-import { ErrorView } from './components/error/ErrorView';
-import type { Pokemon } from './types/types';
-import ErrorBoundary from './components/error/ErrorBoundary';
-import { ButtonBoundaryErrorView } from './components/error/ButtonBoundaryErrorView';
-import HeaderView from './components/header/HeaderView';
-import MainView from './components/main/MainView';
-import { getFromLS, saveToLS } from './utils/utils';
-import { getPokemons as fetchData } from './api/Api';
+import { CardListView } from '../components/card/CardListView';
+import { SearchView } from '../components/search/SearchView';
+import { SpinnerView } from '../components/spinner/SpinnerView';
+import { ErrorView } from '../components/error/ErrorView';
+import type { Pokemon } from '../types/types';
+import ErrorBoundary from '../components/error/ErrorBoundary';
+import { ButtonBoundaryErrorView } from '../components/error/ButtonBoundaryErrorView';
+import HeaderView from '../components/header/HeaderView';
+import MainView from '../components/main/MainView';
+import { getFromLS, saveToLS } from '../utils/utils';
+import { getPokemons as fetchData } from '../api/Api';
 const SEARCH_TERM_KEY = 'search_term';
 
 export default class App extends Component {
