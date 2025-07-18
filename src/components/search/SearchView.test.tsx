@@ -36,4 +36,21 @@ describe('Searching user interaction', () => {
     await userEvent.click(button);
     expect(handleSearchClick).toHaveBeenCalledWith(value);
   });
+
+  it('trims whitespace from search input before saving', async () => {
+    const handleSearchClick = vi.fn();
+    const values = ['     value', 'value     '];
+
+    render(<SearchView value={''} onSeacrhClick={handleSearchClick} />);
+    const input = screen.getByRole('textbox');
+    const button = screen.getByRole('button');
+
+    for (const value of values) {
+      await userEvent.clear(input);
+      await userEvent.type(input, value);
+      await userEvent.click(button);
+      const res = value.trim();
+      expect(handleSearchClick).toHaveBeenCalledWith(res);
+    }
+  });
 });
