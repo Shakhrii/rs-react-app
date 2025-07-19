@@ -1,8 +1,12 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import App from './App';
+
+afterEach(() => {
+  localStorage.clear();
+});
 
 describe('User interaction test', () => {
   it('saves search term to localStorage when search button is clicked', async () => {
