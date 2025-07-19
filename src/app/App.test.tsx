@@ -17,3 +17,16 @@ describe('User interaction test', () => {
     expect(localStorage.getItem(SEARCH_TERM_KEY)).toBe('test');
   });
 });
+
+describe('Local Storage integration', () => {
+  it('retrieves saved search term on component mount', async () => {
+    const searchTerm = 'value';
+    const SEARCH_TERM_KEY = 'search_term';
+    localStorage.setItem(SEARCH_TERM_KEY, searchTerm);
+
+    render(<App />);
+    const input = screen.getByRole('textbox');
+    expect(localStorage.getItem(SEARCH_TERM_KEY)).toBe(searchTerm);
+    expect(input).toHaveValue(searchTerm);
+  });
+});
