@@ -3,11 +3,9 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { SpinnerView } from './SpinnerView';
 
-
 describe('Rendering tests', () => {
-    it('Renders loading indicator', async () => {
-        render(<SpinnerView />);
-        expect(screen.getByRole('status')).toBeInTheDocument();
-    });
+  it('Renders loading indicator', async () => {
+    render(<SpinnerView />);
+    expect(screen.getByRole('status')).toBeInTheDocument();
   });
-  
+});
