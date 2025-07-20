@@ -26,27 +26,27 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">75% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">18/24</span>
+            <span class="fraction">24/24</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">75% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Branches</span>
-            <span class="fraction">3/4</span>
+            <span class="fraction">6/6</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">60% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Functions</span>
-            <span class="fraction">3/5</span>
+            <span class="fraction">5/5</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">75% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">18/24</span>
+            <span class="fraction">24/24</span>
           </div>
         </div>
         <p class="quiet">
@@ -60,7 +60,7 @@
           </div>
         </template>
       </div>
-      <div class="status-line medium"></div>
+      <div class="status-line high"></div>
       <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -100,35 +100,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Component } from 'react';
 &nbsp;
@@ -137,22 +137,22 @@ export class ButtonBoundaryErrorView extends Component {
     throwError: false,
   };
 &nbsp;
-<span class="fstat-no" title="function not covered" >  clickHandler() {</span>
-<span class="cstat-no" title="statement not covered" >    this.setState({</span>
-<span class="cstat-no" title="statement not covered" >      throwError: true,</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  clickHandler() {
+    this.setState({
+      throwError: true,
+    });
+  }
 &nbsp;
   componentDidUpdate(): void {
-    if (this.state.throwError) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >      throw Error('Render Error from ButtonBoundaryErrorView');</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+    if (this.state.throwError) {
+      throw Error('Render Error from ButtonBoundaryErrorView');
+    }
   }
 &nbsp;
   render() {
     return (
       &lt;button
-        onClick={<span class="fstat-no" title="function not covered" >() =&gt; this.clickHandler()}</span>
+        onClick={() =&gt; this.clickHandler()}
         className="text-white bg-gradient-to-r from-red-400 via-red-500
             to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none
               focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 
@@ -178,7 +178,7 @@ export class ButtonBoundaryErrorView extends Component {
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-07-20T16:24:11.271Z
+      at 2025-07-20T17:08:36.739Z
     </div>
     <script src="../../../prettify.js"></script>
     <script>
