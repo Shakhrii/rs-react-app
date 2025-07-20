@@ -49,7 +49,7 @@ describe('API Integration Tests', () => {
     );
   });
 
-  it('calls API with correct parameters', async () => {
+  it('calls API with search term parameter', async () => {
     const params = 'bulbasaur';
     const result = await getPokemons(params);
 
@@ -63,4 +63,30 @@ describe('API Integration Tests', () => {
       })
     );
   });
+
+  it('handle 404 error responses', async () => {
+    server.use(
+        http.get(`${SERVER_URL}/undefined`, () => {
+          return new HttpResponse(null, { status: 404 });
+        })
+      );
+  
+      await expect(getPokemons('undefined')).rejects.toThrow(
+        /Not Found/
+      );  
+  });
+
+  it('handle 500 Internal Server Error', async () => {
+    server.use(
+      http.get(SERVER_URL, () => {
+        return new HttpResponse(null, { status: 500 });
+      })
+    );
+
+    await expect(getPokemons('')).rejects.toThrow(
+      /Internal Server Error/
+    );
+  });
+
 });
+
