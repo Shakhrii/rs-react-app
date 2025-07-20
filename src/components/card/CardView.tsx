@@ -18,7 +18,7 @@ export class CardView extends React.Component<CardViewProps> {
           alt="pokemon avatar"
         ></img>
         <div className="flex flex-col items-start p-5">
-          <span className="text-sm">
+          <span  data-testid="card-name" className="text-sm">
             <span className="font-bold">name: </span>
             {this.props.pokemon.name}
           </span>
