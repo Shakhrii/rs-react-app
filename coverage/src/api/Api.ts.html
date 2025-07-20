@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.66% </span>
+                <span class="strong">46.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/60</span>
+                <span class='fraction'>28/60</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">58.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>7/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.66% </span>
+                <span class="strong">46.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/60</span>
+                <span class='fraction'>28/60</span>
             </div>
         
             
@@ -151,13 +151,13 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -192,10 +192,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -223,14 +223,14 @@ export async function getPokemons(
   if (searchTerm) {
     return getPokemon(searchTerm);
   } else {
-    const pokemonResponse = await fetchPokemons(SERVER_URL<span class="branch-0 cbranch-no" title="branch not covered" >);</span>
-<span class="cstat-no" title="statement not covered" >    const pokemonsDetailResponse = await Promise.all(</span>
-<span class="cstat-no" title="statement not covered" >      pokemonResponse.map(async (pokemon) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        const res = await fetch(pokemon.url);</span>
+    const pokemonResponse = await fetchPokemons(SERVER_URL);
+    const pokemonsDetailResponse = await Promise.all(
+      pokemonResponse.map(async (pokemon) =&gt; {
+        const res = await fetch(pokemon.url<span class="branch-0 cbranch-no" title="branch not covered" >);</span>
 <span class="cstat-no" title="statement not covered" >        const resDetail = (await res.json()) as PokemonDetailResponse;</span>
 <span class="cstat-no" title="statement not covered" >        return resDetail;</span>
-<span class="cstat-no" title="statement not covered" >      })</span>
-<span class="cstat-no" title="statement not covered" >    );</span>
+      })
+<span class="branch-0 cbranch-no" title="branch not covered" >    );</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return parsePokemons(pokemonsDetailResponse);</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
@@ -264,11 +264,11 @@ async function getPokemon(searchTerm: string) {
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;
 async function fetchPokemons(url: string): Promise&lt;PokemonsResponse[]&gt; {
-  const response = await fetch(url<span class="branch-0 cbranch-no" title="branch not covered" >);</span>
-<span class="cstat-no" title="statement not covered" >  if (response.ok) {</span>
-<span class="cstat-no" title="statement not covered" >    const resultResponse = await response.json();</span>
-<span class="cstat-no" title="statement not covered" >    return resultResponse.results;</span>
-<span class="cstat-no" title="statement not covered" >  } else {</span>
+  const response = await fetch(url);
+  if (response.ok) {
+    const resultResponse = await response.json();
+    return resultResponse.results;
+<span class="branch-0 cbranch-no" title="branch not covered" >  } else {</span>
 <span class="cstat-no" title="statement not covered" >    throw Error(response.statusText);</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 }
@@ -289,7 +289,7 @@ async function fetchPokemon(url: string): Promise&lt;PokemonDetailResponse&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-19T13:05:13.982Z
+                at 2025-07-20T07:12:11.947Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
