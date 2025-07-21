@@ -32,3 +32,8 @@ export type PokemonsResponse = {
   name: string;
   url: string;
 };
+
+export type SearchViewProps = {
+  value: string | undefined;
+  onSeacrhClick: (value: string) => void;
+};

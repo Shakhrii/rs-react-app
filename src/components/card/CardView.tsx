@@ -8,14 +8,17 @@ interface CardViewProps {
 export class CardView extends React.Component<CardViewProps> {
   render() {
     return (
-      <div className="w-50 flex flex-col items-start shadow hover:bg-amber-500/50 rounded-sm transition-colors duration-300 ease-in-out active:bg-amber-500 bg-white">
+      <div
+        data-testid="card-item"
+        className="w-50 flex flex-col items-start shadow hover:bg-amber-500/50 rounded-sm transition-colors duration-300 ease-in-out active:bg-amber-500 bg-white"
+      >
         <img
           className="w-full h-2/3"
           src={this.props.pokemon.avatar}
           alt="pokemon avatar"
         ></img>
         <div className="flex flex-col items-start p-5">
-          <span className="text-sm">
+          <span data-testid="card-name" className="text-sm">
             <span className="font-bold">name: </span>
             {this.props.pokemon.name}
           </span>
