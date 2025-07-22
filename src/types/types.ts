@@ -41,3 +41,7 @@ export type SearchViewProps = {
 export interface CardViewProps {
   pokemon: Pokemon;
 }
+
+export interface CardListViewProps {
+  pokemons: Pokemon[] | undefined;
+}
