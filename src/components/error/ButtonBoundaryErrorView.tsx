@@ -1,34 +1,28 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 
-export class ButtonBoundaryErrorView extends Component {
-  state = {
-    throwError: false,
-  };
+export function ButtonBoundaryErrorView() {
+  const [isThrowError, setThrowError] = useState(false);
 
-  clickHandler() {
-    this.setState({
-      throwError: true,
-    });
+  function clickHandler() {
+    setThrowError(true);
   }
 
-  componentDidUpdate(): void {
-    if (this.state.throwError) {
+  useEffect(() => {
+    if (isThrowError) {
       throw Error('Render Error from ButtonBoundaryErrorView');
     }
-  }
+  }, [isThrowError]);
 
-  render() {
-    return (
-      <button
-        onClick={() => this.clickHandler()}
-        className="text-white bg-gradient-to-r from-red-400 via-red-500
-            to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none
-              focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 
-              dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 
-              py-2.5 text-center me-2 mb-2 fixed bottom-10 right-10"
-      >
-        Show Error
-      </button>
-    );
-  }
+  return (
+    <button
+      onClick={() => clickHandler()}
+      className="text-white bg-gradient-to-r from-red-400 via-red-500
+          to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none
+            focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 
+            dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 
+            py-2.5 text-center me-2 mb-2 fixed bottom-10 right-10"
+    >
+      Show Error
+    </button>
+  );
 }

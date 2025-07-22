@@ -16,8 +16,7 @@ describe('Rendering tests', () => {
     };
 
     render(<CardView pokemon={testPokemon} />);
-    // const nameEl = screen.getByTestId('card-name');
-    // expect(nameEl).toHaveTextContent(testPokemon.name);
+
     expect(screen.getByText(testPokemon.name)).toBeInTheDocument();
     expect(screen.getByText(testPokemon.height)).toBeInTheDocument();
     expect(screen.getByText(testPokemon.weight)).toBeInTheDocument();
