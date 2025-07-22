@@ -1,9 +1,7 @@
 import { Component } from 'react';
 import corruptedFile from '../../assets/images/corrupted-file.png';
-type ErrorViewProps = {
-  message: string | undefined;
-  resetSearchHandler?: () => void;
-};
+import type { ErrorViewProps } from '../../types/types';
+
 export class ErrorView extends Component<ErrorViewProps> {
   render() {
     return (

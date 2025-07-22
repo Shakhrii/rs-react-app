@@ -38,10 +38,15 @@ export type SearchViewProps = {
   onSeacrhClick: (value: string) => void;
 };
 
-export interface CardViewProps {
-  pokemon: Pokemon;
-}
+export type ErrorViewProps = {
+  message: string | undefined;
+  resetSearchHandler?: () => void;
+};
 
-export interface CardListViewProps {
+export type CardViewProps = {
+  pokemon: Pokemon;
+};
+
+export type CardListViewProps = {
   pokemons: Pokemon[] | undefined;
-}
+};
