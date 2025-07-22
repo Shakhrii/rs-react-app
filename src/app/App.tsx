@@ -8,7 +8,7 @@ import ErrorBoundary from '../components/error/ErrorBoundary';
 import { ButtonBoundaryErrorView } from '../components/error/ButtonBoundaryErrorView';
 import HeaderView from '../components/header/HeaderView';
 import MainView from '../components/main/MainView';
-import CardListView from '../components/card/CardListView';
+import { CardListView } from '../components/card/CardListView';
 import { getFromLS, saveToLS } from '../utils/utils';
 import { getPokemons as fetchData } from '../api/Api';
 const SEARCH_TERM_KEY = 'search_term';

@@ -1,6 +1,6 @@
 import type { CardViewProps } from '../../types/types';
 
-export default function CardView({ pokemon }: CardViewProps) {
+export function CardView({ pokemon }: CardViewProps) {
   return (
     <div
       data-testid="card-item"

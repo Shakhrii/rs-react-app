@@ -1,7 +1,7 @@
 import type { CardListViewProps } from '../../types/types';
-import CardView from './CardView';
+import { CardView } from './CardView';
 
-export default function CardListView({ pokemons }: CardListViewProps) {
+export function CardListView({ pokemons }: CardListViewProps) {
   return (
     <div className="flex flex-wrap justify-center gap-5">
       {pokemons?.map((pokemon) => (
