@@ -114,7 +114,7 @@ export default class App extends Component {
             <HeaderView>
               <SearchView
                 value={this.state.searchTerm}
-                onSeacrhClick={(value) => {
+                onSearchClick={(value) => {
                   this.changeSearchTermHandler(value);
                 }}
               />

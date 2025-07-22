@@ -35,7 +35,7 @@ export type PokemonsResponse = {
 
 export type SearchViewProps = {
   value: string | undefined;
-  onSeacrhClick: (value: string) => void;
+  onSearchClick: (value: string) => void;
 };
 
 export type ErrorViewProps = {
