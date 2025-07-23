@@ -42,7 +42,8 @@ export type SearchViewProps = {
 
 export type ErrorViewProps = {
   message: string | undefined;
-  resetSearchHandler?: () => void;
+  buttonText: string;
+  clickHandler?: () => void;
 };
 
 export type CardViewProps = {
