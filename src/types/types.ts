@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export type Pokemon = {
   id: number;
   name: string;
@@ -49,4 +51,12 @@ export type CardViewProps = {
 
 export type CardListViewProps = {
   pokemons: Pokemon[] | undefined;
+};
+
+export type HeaderViewProps = {
+  children?: ReactNode;
+};
+
+export type MainViewProps = {
+  children?: ReactNode;
 };

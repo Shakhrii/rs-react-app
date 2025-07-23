@@ -1,11 +1,5 @@
-import React, { type ReactNode } from 'react';
+import type { HeaderViewProps } from '../../types/types';
 
-interface HeaderProps {
-  children?: ReactNode;
-}
-
-export default class HeaderView extends React.Component<HeaderProps> {
-  render() {
-    return <header>{this.props.children}</header>;
-  }
+export default function HeaderView({ children }: HeaderViewProps) {
+  return <header>{children}</header>;
 }

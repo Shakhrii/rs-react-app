@@ -2,21 +2,25 @@ import { useEffect, useState, type ChangeEvent } from 'react';
 import type { SearchViewProps } from '../../types/types';
 
 export function SearchView({ value, onSearchClick }: SearchViewProps) {
-  const [seatchTerm, setSearchTerm] = useState(value);
+  const [searchTerm, setSearchTerm] = useState(value);
+
+  useEffect(() => {
+    setSearchTerm(value);
+  }, [value]);
+
+  useEffect(() => {
+    if (!searchTerm) {
+      handleClick();
+    }
+  }, [searchTerm]);
 
   function handleChangeEvent(event: ChangeEvent<HTMLInputElement>) {
     const inputValue = event.target.value.toString().trim();
     setSearchTerm(inputValue);
   }
 
-  useEffect(() => {
-    if (!seatchTerm) {
-      handleClick();
-    }
-  }, [seatchTerm]);
-
   function handleClick() {
-    onSearchClick(seatchTerm || '');
+    onSearchClick(searchTerm || '');
   }
 
   return (
@@ -29,7 +33,7 @@ export function SearchView({ value, onSearchClick }: SearchViewProps) {
             focus:border-amber-400 bg-white"
         type="text"
         placeholder="type name or id... "
-        value={seatchTerm || ''}
+        value={searchTerm || ''}
         onChange={(event) => handleChangeEvent(event)}
       />
       <button
