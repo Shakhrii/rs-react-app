@@ -1,4 +1,4 @@
 export const enum PageRoutes {
-  POKEMONS = '/',
+  POKEMONS = '/pokemons',
   NOT_FOUND = '*',
 }
