@@ -7,9 +7,15 @@ import MainView from '../../components/main/MainView';
 import { SearchView } from '../../components/search/SearchView';
 import { SpinnerView } from '../../components/spinner/SpinnerView';
 import type { Pokemon } from '../../types/types';
-import { getFromLS, saveToLS } from '../../utils/utils';
+import {
+  COUNT_KEY,
+  getFromLS,
+  LIMIT,
+  saveToLS,
+  SEARCH_TERM_KEY,
+} from '../../utils/utils';
 import { getPokemons as fetchData } from '../../api/Api';
-const SEARCH_TERM_KEY = 'search_term';
+import { PaginationView } from '../../components/pagination/PaginationView';
 
 export default function Pokemons() {
   const [pokemons, setPokemons] = useState<Pokemon[] | undefined>(undefined);
@@ -19,6 +25,7 @@ export default function Pokemons() {
   );
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState('');
+  // const [totalCount, setTotalCount] = useState(getFromLS(COUNT_KEY));
 
   useEffect(() => {
     getPokemons();
@@ -88,7 +95,15 @@ export default function Pokemons() {
                 clickHandler={() => resetSearch()}
               />
             ) : (
-              <CardListView pokemons={pokemons} />
+              <>
+                <div className="flex flex-col gap-10">
+                  <CardListView pokemons={pokemons} />
+                  <PaginationView
+                    count={Number(getFromLS(COUNT_KEY))}
+                    limit={LIMIT}
+                  />
+                </div>
+              </>
             )}
           </MainView>
         </ErrorBoundary>

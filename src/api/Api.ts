@@ -3,8 +3,7 @@ import type {
   PokemonDetailResponse,
   PokemonsResponse,
 } from '../types/types';
-
-const SERVER_URL = 'https://pokeapi.co/api/v2/pokemon';
+import { COUNT_KEY, saveToLS, SERVER_URL } from '../utils/utils';
 
 export async function getPokemons(
   searchTerm: string
@@ -56,6 +55,7 @@ async function fetchPokemons(url: string): Promise<PokemonsResponse[]> {
   const response = await fetch(url);
   if (response.ok) {
     const resultResponse = await response.json();
+    saveToLS(COUNT_KEY, resultResponse.count);
     return resultResponse.results;
   } else {
     throw Error(response.statusText);

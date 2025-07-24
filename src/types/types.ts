@@ -61,3 +61,7 @@ export type HeaderViewProps = {
 export type MainViewProps = {
   children?: ReactNode;
 };
+
+export type ButtonProps = {
+  children: ReactNode;
+};
