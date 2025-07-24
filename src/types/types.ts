@@ -64,4 +64,13 @@ export type MainViewProps = {
 
 export type ButtonProps = {
   children: ReactNode;
+  onClick: () => void;
+};
+
+export type ButtonDisabledProps = {
+  children: ReactNode;
+};
+
+export type ButtonArrowProps = {
+  onClick: () => void;
 };

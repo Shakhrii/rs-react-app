@@ -1,6 +1,9 @@
-export function ButtonLeftArrow() {
+import type { ButtonArrowProps } from '../../../types/types';
+
+export function ButtonLeftArrow({ onClick }: ButtonArrowProps) {
   return (
     <button
+      onClick={() => onClick()}
       type="button"
       className="text-white bg-amber-500 hover:bg-amber-400 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 active:bg-amber-300"
     >

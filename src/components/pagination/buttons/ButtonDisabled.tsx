@@ -1,6 +1,6 @@
-import type { ButtonProps } from '../../../types/types';
+import type { ButtonDisabledProps } from '../../../types/types';
 
-export function ButtonDisabled({ children }: ButtonProps) {
+export function ButtonDisabled({ children }: ButtonDisabledProps) {
   return (
     <button
       type="button"
