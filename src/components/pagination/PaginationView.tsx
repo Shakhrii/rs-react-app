@@ -34,20 +34,23 @@ export function PaginationView({
   }, [count]);
 
   useEffect(() => {
+    if (!isVisible && paginationParam.has('page')) {
+      paginationParam.delete('page');
+      setPaginationParam(paginationParam);
+    }
+  }, []);
+
+  useEffect(() => {
     if (!isVisible) {
       paginationParam.delete('page');
       setPaginationParam(paginationParam);
     } else {
+      const offset = (currentPage - 1) * LIMIT;
+      onPageChanged(offset);
       paginationParam.set('page', String(currentPage));
       setPaginationParam(paginationParam);
     }
-  }, [isVisible]);
-
-  useEffect(() => {
-    const offset = (currentPage - 1) * LIMIT;
-    onPageChanged(offset);
-    setPaginationParam((prev) => ({ ...prev, page: currentPage }));
-  }, [currentPage]);
+  }, [currentPage, isVisible]);
 
   return (
     <div
