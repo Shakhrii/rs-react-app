@@ -36,6 +36,20 @@ export function PaginationView({
   }, []);
 
   useEffect(() => {
+    setCurrentPage(1);
+  }, [count]);
+
+  useEffect(() => {
+    if (!isVisible) {
+      paginationParam.delete('page');
+      setPaginationParam(paginationParam);
+    } else {
+      paginationParam.set('page', String(currentPage));
+      setPaginationParam(paginationParam);
+    }
+  }, [isVisible]);
+
+  useEffect(() => {
     const offset = (currentPage - 1) * LIMIT;
     onPageChanged(offset);
     setPaginationParam((prev) => ({ ...prev, page: currentPage }));

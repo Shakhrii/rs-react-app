@@ -47,10 +47,8 @@ export default function Pokemons() {
       const res = await fetchData(searchTerm, offset);
       if (res && !Array.isArray(res)) {
         result = [res];
-        setTotalCount(Number(getFromLS(COUNT_KEY)));
       } else {
         result = res;
-        setTotalCount(Number(getFromLS(COUNT_KEY)));
       }
     } catch {
       showError('No results...');
@@ -58,6 +56,8 @@ export default function Pokemons() {
     } finally {
       setPokemons(result);
       setLoading(false);
+      const count = Number(getFromLS(COUNT_KEY));
+      setTotalCount(count);
     }
     return result;
   }
@@ -113,7 +113,7 @@ export default function Pokemons() {
                 </>
               )}
               <PaginationView
-                isVisible={!isLoading}
+                isVisible={!isLoading && !error}
                 count={totalCount}
                 limit={LIMIT}
                 onPageChanged={(offset) => handlePaginationPageChanged(offset)}
