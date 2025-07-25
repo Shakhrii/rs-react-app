@@ -93,7 +93,7 @@ export default function Pokemons() {
             />
           </HeaderView>
           <MainView>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10 items-center justify-center">
               {isLoading ? (
                 <SpinnerView />
               ) : error ? (
