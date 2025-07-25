@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { CardListView } from '../../components/card/CardListView';
 import ErrorBoundary from '../../components/error/ErrorBoundary';
 import { ErrorView } from '../../components/error/ErrorView';
-import HeaderView from '../../components/header/HeaderView';
 import MainView from '../../components/main/MainView';
 import { SearchView } from '../../components/search/SearchView';
 import { SpinnerView } from '../../components/spinner/SpinnerView';
@@ -84,14 +83,12 @@ export default function Pokemons() {
     <>
       <div className="flex flex-col gap-15 items-center relative">
         <ErrorBoundary>
-          <HeaderView>
-            <SearchView
-              value={searchTerm}
-              onSearchClick={(value) => {
-                changeSearchTermHandler(value);
-              }}
-            />
-          </HeaderView>
+          <SearchView
+            value={searchTerm}
+            onSearchClick={(value) => {
+              changeSearchTermHandler(value);
+            }}
+          />
           <MainView>
             <div className="flex flex-col gap-10 items-center justify-center">
               {isLoading ? (
