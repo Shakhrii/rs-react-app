@@ -30,12 +30,6 @@ export function PaginationView({
   }
 
   useEffect(() => {
-    console.log('PAGINATION MOUNT');
-
-    return () => console.log('PAGINATION UNMOUNT');
-  }, []);
-
-  useEffect(() => {
     setCurrentPage(1);
   }, [count]);
 

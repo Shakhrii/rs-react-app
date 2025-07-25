@@ -32,13 +32,6 @@ export default function Pokemons() {
     getPokemons();
   }, [searchTerm, offset]);
 
-  // useEffect(() => {
-  //   const savedSearchTerm = getFromLS(SEARCH_TERM_KEY);
-  //   if (savedSearchTerm) {
-  //     setSearchTerm(savedSearchTerm);
-  //   }
-  // }, []);
-
   async function getPokemons(): Promise<Pokemon[]> {
     skipError();
     setLoading(true);
