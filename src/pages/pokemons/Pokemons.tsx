@@ -28,7 +28,7 @@ export default function Pokemons() {
 
   useEffect(() => {
     getPokemons();
-  }, [searchTerm]);
+  }, [searchTerm, offset]);
 
   useEffect(() => {
     const savedSearchTerm = getFromLS(SEARCH_TERM_KEY);
@@ -49,10 +49,7 @@ export default function Pokemons() {
         result = [res];
       } else {
         result = res;
-
-        if (totalCount != Number(getFromLS(COUNT_KEY))) {
-          setTotalCount(Number(getFromLS(COUNT_KEY)));
-        }
+        setTotalCount(Number(getFromLS(COUNT_KEY)));
       }
     } catch {
       showError('No results...');
@@ -74,10 +71,7 @@ export default function Pokemons() {
   }
 
   function handlePaginationPageChanged(offs: number) {
-    if (offs != offset) {
-      setOffset(offs);
-      getPokemons();
-    }
+    setOffset(offs);
   }
 
   function showError(message: string) {
