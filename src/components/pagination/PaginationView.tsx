@@ -4,6 +4,7 @@ import { ButtonDisabled } from './buttons/ButtonDisabled';
 import { ButtonLeftArrow } from './buttons/ButtonLeftArrow';
 import { ButtonRightArrow } from './buttons/ButtonRightArrow';
 import { LIMIT } from '../../utils/utils';
+import { useSearchParams } from 'react-router';
 
 type PaginationViewProps = {
   limit: number;
@@ -18,7 +19,9 @@ export function PaginationView({
   onPageChanged,
   isVisible,
 }: PaginationViewProps) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [paginationParam, setPaginationParam] = useSearchParams();
+  const page = paginationParam.get('page');
+  const [currentPage, setCurrentPage] = useState(Number(page) || 1);
 
   const firstPage = 1;
   let pages = 0;
@@ -35,6 +38,7 @@ export function PaginationView({
   useEffect(() => {
     const offset = (currentPage - 1) * LIMIT;
     onPageChanged(offset);
+    setPaginationParam((prev) => ({ ...prev, page: currentPage }));
   }, [currentPage]);
 
   return (
