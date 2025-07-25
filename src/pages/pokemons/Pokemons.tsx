@@ -47,6 +47,7 @@ export default function Pokemons() {
       const res = await fetchData(searchTerm, offset);
       if (res && !Array.isArray(res)) {
         result = [res];
+        setTotalCount(Number(getFromLS(COUNT_KEY)));
       } else {
         result = res;
         setTotalCount(Number(getFromLS(COUNT_KEY)));

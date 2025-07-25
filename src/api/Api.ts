@@ -10,6 +10,7 @@ export async function getPokemons(
   offset: number
 ): Promise<Pokemon[] | Pokemon> {
   if (searchTerm) {
+    saveToLS(COUNT_KEY, '1');
     return getPokemon(searchTerm);
   } else {
     const pokemonResponse = await fetchPokemons(SERVER_URL, offset);
