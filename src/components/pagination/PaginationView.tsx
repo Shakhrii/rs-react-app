@@ -1,15 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from './buttons/Button';
 import { ButtonDisabled } from './buttons/ButtonDisabled';
 import { ButtonLeftArrow } from './buttons/ButtonLeftArrow';
 import { ButtonRightArrow } from './buttons/ButtonRightArrow';
+import { LIMIT } from '../../utils/utils';
 
 type PaginationViewProps = {
   limit: number;
   count: number;
+  onPageChanged: (offset: number) => void;
+  isVisible: boolean;
 };
 
-export function PaginationView({ count, limit }: PaginationViewProps) {
+export function PaginationView({
+  count,
+  limit,
+  onPageChanged,
+  isVisible,
+}: PaginationViewProps) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const firstPage = 1;
@@ -18,19 +26,25 @@ export function PaginationView({ count, limit }: PaginationViewProps) {
     pages = Math.floor(count / limit) + (count % limit > 0 ? 1 : 0);
   }
 
-  function nextPage() {
-    setCurrentPage((prev) => prev + 1);
-  }
+  useEffect(() => {
+    console.log('PAGINATION MOUNT');
 
-  function prevPage() {
-    setCurrentPage((prev) => prev - 1);
-  }
+    return () => console.log('PAGINATION UNMOUNT');
+  }, []);
+
+  useEffect(() => {
+    const offset = (currentPage - 1) * LIMIT;
+    onPageChanged(offset);
+  }, [currentPage]);
 
   return (
-    <div className="flex flex-row items-center justify-center gap-3">
+    <div
+      style={{ display: isVisible ? 'flex' : 'none' }}
+      className="flex flex-row items-center justify-center gap-3"
+    >
       {currentPage != firstPage && (
         <>
-          <ButtonLeftArrow onClick={() => prevPage()} />
+          <ButtonLeftArrow onClick={() => setCurrentPage((prev) => prev - 1)} />
           <Button onClick={() => setCurrentPage(1)}>{firstPage}</Button>
         </>
       )}
@@ -42,7 +56,9 @@ export function PaginationView({ count, limit }: PaginationViewProps) {
       {currentPage != pages && (
         <>
           <Button onClick={() => setCurrentPage(pages)}>{pages}</Button>
-          <ButtonRightArrow onClick={() => nextPage()} />
+          <ButtonRightArrow
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+          />
         </>
       )}
     </div>

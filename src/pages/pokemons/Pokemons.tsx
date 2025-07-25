@@ -20,16 +20,22 @@ import { PaginationView } from '../../components/pagination/PaginationView';
 export default function Pokemons() {
   const [pokemons, setPokemons] = useState<Pokemon[] | undefined>(undefined);
   const [isLoading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState<string>(
-    getFromLS(SEARCH_TERM_KEY)
-  );
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState('');
-  // const [totalCount, setTotalCount] = useState(getFromLS(COUNT_KEY));
+  const [offset, setOffset] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     getPokemons();
   }, [searchTerm]);
+
+  useEffect(() => {
+    const savedSearchTerm = getFromLS(SEARCH_TERM_KEY);
+    if (savedSearchTerm) {
+      setSearchTerm(savedSearchTerm);
+    }
+  }, []);
 
   async function getPokemons(): Promise<Pokemon[]> {
     skipError();
@@ -38,11 +44,15 @@ export default function Pokemons() {
     let result: Pokemon[] = [];
 
     try {
-      const res = await fetchData(searchTerm);
+      const res = await fetchData(searchTerm, offset);
       if (res && !Array.isArray(res)) {
         result = [res];
       } else {
         result = res;
+
+        if (totalCount != Number(getFromLS(COUNT_KEY))) {
+          setTotalCount(Number(getFromLS(COUNT_KEY)));
+        }
       }
     } catch {
       showError('No results...');
@@ -61,6 +71,13 @@ export default function Pokemons() {
 
   function resetSearch() {
     changeSearchTermHandler('');
+  }
+
+  function handlePaginationPageChanged(offs: number) {
+    if (offs != offset) {
+      setOffset(offs);
+      getPokemons();
+    }
   }
 
   function showError(message: string) {
@@ -86,25 +103,27 @@ export default function Pokemons() {
             />
           </HeaderView>
           <MainView>
-            {isLoading ? (
-              <SpinnerView />
-            ) : error ? (
-              <ErrorView
-                message={messageError}
-                buttonText="Reset Search"
-                clickHandler={() => resetSearch()}
-              />
-            ) : (
-              <>
-                <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10">
+              {isLoading ? (
+                <SpinnerView />
+              ) : error ? (
+                <ErrorView
+                  message={messageError}
+                  buttonText="Reset Search"
+                  clickHandler={() => resetSearch()}
+                />
+              ) : (
+                <>
                   <CardListView pokemons={pokemons} />
-                  <PaginationView
-                    count={Number(getFromLS(COUNT_KEY))}
-                    limit={LIMIT}
-                  />
-                </div>
-              </>
-            )}
+                </>
+              )}
+              <PaginationView
+                isVisible={!isLoading}
+                count={totalCount}
+                limit={LIMIT}
+                onPageChanged={(offset) => handlePaginationPageChanged(offset)}
+              />
+            </div>
           </MainView>
         </ErrorBoundary>
       </div>

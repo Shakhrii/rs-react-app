@@ -3,15 +3,16 @@ import type {
   PokemonDetailResponse,
   PokemonsResponse,
 } from '../types/types';
-import { COUNT_KEY, saveToLS, SERVER_URL } from '../utils/utils';
+import { COUNT_KEY, LIMIT, saveToLS, SERVER_URL } from '../utils/utils';
 
 export async function getPokemons(
-  searchTerm: string
+  searchTerm: string,
+  offset: number
 ): Promise<Pokemon[] | Pokemon> {
   if (searchTerm) {
     return getPokemon(searchTerm);
   } else {
-    const pokemonResponse = await fetchPokemons(SERVER_URL);
+    const pokemonResponse = await fetchPokemons(SERVER_URL, offset);
     const pokemonsDetailResponse = await Promise.all(
       pokemonResponse.map(async (pokemon) => {
         const res = await fetch(pokemon.url);
@@ -51,8 +52,11 @@ function parsePokemon(pokemonsDetailResponse: PokemonDetailResponse): Pokemon {
   };
 }
 
-async function fetchPokemons(url: string): Promise<PokemonsResponse[]> {
-  const response = await fetch(url);
+async function fetchPokemons(
+  url: string,
+  offset: number
+): Promise<PokemonsResponse[]> {
+  const response = await fetch(`${url}?limit=${LIMIT}&offset=${offset}`);
   if (response.ok) {
     const resultResponse = await response.json();
     saveToLS(COUNT_KEY, resultResponse.count);
