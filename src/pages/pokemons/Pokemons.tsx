@@ -20,7 +20,9 @@ import { PaginationView } from '../../components/pagination/PaginationView';
 export default function Pokemons() {
   const [pokemons, setPokemons] = useState<Pokemon[] | undefined>(undefined);
   const [isLoading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>(
+    getFromLS(SEARCH_TERM_KEY)
+  );
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState('');
   const [offset, setOffset] = useState(0);
@@ -30,12 +32,12 @@ export default function Pokemons() {
     getPokemons();
   }, [searchTerm, offset]);
 
-  useEffect(() => {
-    const savedSearchTerm = getFromLS(SEARCH_TERM_KEY);
-    if (savedSearchTerm) {
-      setSearchTerm(savedSearchTerm);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedSearchTerm = getFromLS(SEARCH_TERM_KEY);
+  //   if (savedSearchTerm) {
+  //     setSearchTerm(savedSearchTerm);
+  //   }
+  // }, []);
 
   async function getPokemons(): Promise<Pokemon[]> {
     skipError();
