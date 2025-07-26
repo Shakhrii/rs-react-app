@@ -3,6 +3,7 @@ import { getPokemon as fetchdata } from '../../api/Api';
 import type { CardDetailViewProps, Pokemon } from '../../types/types';
 import { SpinnerView } from '../spinner/SpinnerView';
 import { ErrorView } from '../error/ErrorView';
+import { CloseButton } from './close-button/CloseButton';
 
 export function CardDetailView({ id }: CardDetailViewProps) {
   const [pokemon, setPokemon] = useState<Pokemon>({} as Pokemon);
@@ -28,7 +29,7 @@ export function CardDetailView({ id }: CardDetailViewProps) {
   }, [id]);
 
   return (
-    <div>
+    <div className="w-100 h-full flex justify-center">
       {isLoading ? (
         <SpinnerView />
       ) : error ? (
@@ -36,8 +37,9 @@ export function CardDetailView({ id }: CardDetailViewProps) {
       ) : (
         <div
           data-testid="card-item"
-          className="w-50 flex flex-col items-start shadow hover:bg-amber-500/50 rounded-sm transition-colors duration-300 ease-in-out active:bg-amber-500 bg-white"
+          className="w-100 flex flex-col items-start shadow rounded-sm transition-colors duration-300 ease-in-out bg-white relative"
         >
+          <CloseButton />
           <img
             className="w-full h-2/3"
             src={pokemon.avatar}

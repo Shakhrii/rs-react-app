@@ -87,7 +87,7 @@ export default function Pokemons() {
             }}
           />
           <MainView>
-            <div className="flex flex-col gap-10 items-center justify-center">
+            <div className="flex flex-col gap-10 items-center justify-center flex-2/3">
               {isLoading ? (
                 <SpinnerView />
               ) : error ? (
@@ -108,7 +108,9 @@ export default function Pokemons() {
                 onPageChanged={(offset) => handlePaginationPageChanged(offset)}
               />
             </div>
-            <Outlet />
+            <div className="flex-100">
+              <Outlet />
+            </div>
           </MainView>
         </ErrorBoundary>
       </div>

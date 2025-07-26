@@ -32,10 +32,6 @@ export function CardView({ pokemon }: CardViewProps) {
           <span className="font-bold">weight: </span>
           {pokemon.weight}
         </span>
-        <span className="text-sm flex">
-          <span className="font-bold">abilities: </span>
-          {pokemon.abilities}
-        </span>
       </div>
     </div>
   );
