@@ -1,5 +1,5 @@
 export const SERVER_URL = 'https://pokeapi.co/api/v2/pokemon';
-export const LIMIT = 20;
+export const LIMIT = 6;
 
 export const COUNT_KEY = 'count';
 export const SEARCH_TERM_KEY = 'search_term';

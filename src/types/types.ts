@@ -7,6 +7,9 @@ export type Pokemon = {
   weight: number;
   height: number;
   abilities: string;
+  baseExperience: number;
+  order: number;
+  heldItems: string;
 };
 
 export type SpritesResponse = {
@@ -21,6 +24,14 @@ export type AbilitiesResponse = {
   ability: AbilityResponse;
 };
 
+export type HeldItemResponse = {
+  name: string;
+};
+
+export type HeldItemsResponse = {
+  item: HeldItemResponse;
+};
+
 export type PokemonDetailResponse = {
   id: number;
   name: string;
@@ -28,6 +39,9 @@ export type PokemonDetailResponse = {
   weight: number;
   height: number;
   abilities: AbilitiesResponse[];
+  base_experience: number;
+  order: number;
+  held_items: HeldItemsResponse[];
 };
 
 export type PokemonsResponse = {
@@ -84,6 +98,6 @@ export type MenuProps = {
   items: MenuItemProps[];
 };
 
-export type PokemonPageProps = {
-  pokemon: Pokemon;
+export type CardDetailViewProps = {
+  id: string;
 };

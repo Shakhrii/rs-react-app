@@ -27,7 +27,7 @@ export async function getPokemons(
   }
 }
 
-async function getPokemon(searchTerm: string) {
+export async function getPokemon(searchTerm: string) {
   const res = (await fetchPokemon(
     `${SERVER_URL}/${searchTerm}`
   )) as PokemonDetailResponse;
@@ -42,15 +42,25 @@ function parsePokemons(pokemonResponses: PokemonDetailResponse[]): Pokemon[] {
 }
 
 function parsePokemon(pokemonsDetailResponse: PokemonDetailResponse): Pokemon {
-  const { sprites, abilities, ...rest } = pokemonsDetailResponse;
+  const { sprites, abilities, held_items, base_experience, ...rest } =
+    pokemonsDetailResponse;
   return {
     ...rest,
     avatar: sprites.front_default,
+    baseExperience: base_experience,
     abilities: abilities.reduce(
       (accumulator, currentValue) =>
         accumulator + currentValue.ability.name + ' ',
       ''
     ),
+    heldItems:
+      held_items.length > 0
+        ? held_items.reduce(
+            (accumulator, currentValue) =>
+              accumulator + currentValue.item.name + ' ',
+            ''
+          )
+        : '',
   };
 }
 

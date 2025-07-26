@@ -40,7 +40,8 @@ export default function Pokemons() {
       } else {
         result = res;
       }
-    } catch {
+    } catch (error) {
+      console.log(error);
       showError('No results...');
       return [];
     } finally {
