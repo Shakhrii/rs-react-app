@@ -11,13 +11,12 @@ import { getPokemons as fetchData } from '../../api/Api';
 import { PaginationView } from '../../components/pagination/PaginationView';
 import { COUNT_KEY, LIMIT, SEARCH_TERM_KEY } from '../../utils/contstants';
 import { Outlet } from 'react-router';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export default function Pokemons() {
   const [pokemons, setPokemons] = useState<Pokemon[] | undefined>(undefined);
   const [isLoading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState<string>(
-    getFromLS(SEARCH_TERM_KEY)
-  );
+  const [searchTerm, setSearchTerm] = useLocalStorage('', SEARCH_TERM_KEY);
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState('');
   const [offset, setOffset] = useState(0);
@@ -34,7 +33,7 @@ export default function Pokemons() {
     let result: Pokemon[] = [];
 
     try {
-      const res = await fetchData(searchTerm, offset);
+      const res = await fetchData(searchTerm.toString(), offset);
       if (res && !Array.isArray(res)) {
         result = [res];
       } else {
