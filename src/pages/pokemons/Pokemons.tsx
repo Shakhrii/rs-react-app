@@ -6,15 +6,10 @@ import MainView from '../../components/main/MainView';
 import { SearchView } from '../../components/search/SearchView';
 import { SpinnerView } from '../../components/spinner/SpinnerView';
 import type { Pokemon } from '../../types/types';
-import {
-  COUNT_KEY,
-  getFromLS,
-  LIMIT,
-  saveToLS,
-  SEARCH_TERM_KEY,
-} from '../../utils/utils';
+import { getFromLS, saveToLS } from '../../utils/utils';
 import { getPokemons as fetchData } from '../../api/Api';
 import { PaginationView } from '../../components/pagination/PaginationView';
+import { COUNT_KEY, LIMIT, SEARCH_TERM_KEY } from '../../utils/contstants';
 
 export default function Pokemons() {
   const [pokemons, setPokemons] = useState<Pokemon[] | undefined>(undefined);

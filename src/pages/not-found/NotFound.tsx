@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router';
 import { ErrorView } from '../../components/error/ErrorView';
-import { PageRoutes } from '../../utils/pages-routes';
+import { PAGE_ROUTES } from '../../utils/contstants';
 
 export function NotFound() {
   const navigate = useNavigate();
 
   function backToPokemons() {
-    navigate(PageRoutes.POKEMONS);
+    navigate(PAGE_ROUTES.POKEMONS);
   }
   return (
     <div className="flex items-center justify-center">

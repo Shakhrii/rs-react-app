@@ -3,8 +3,8 @@ import { Button } from './buttons/Button';
 import { ButtonDisabled } from './buttons/ButtonDisabled';
 import { ButtonLeftArrow } from './buttons/ButtonLeftArrow';
 import { ButtonRightArrow } from './buttons/ButtonRightArrow';
-import { LIMIT } from '../../utils/utils';
 import { useSearchParams } from 'react-router';
+import { LIMIT } from '../../utils/contstants';
 
 type PaginationViewProps = {
   limit: number;

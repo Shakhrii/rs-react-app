@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
 import { getPokemons } from './Api';
-import { SERVER_URL } from '../utils/utils';
+import { SERVER_URL } from '../utils/contstants';
 
 describe('API Integration Tests', () => {
   const restHandlers = [

@@ -74,3 +74,12 @@ export type ButtonDisabledProps = {
 export type ButtonArrowProps = {
   onClick: () => void;
 };
+
+export type MenuItemProps = {
+  value: string;
+  path: string;
+};
+
+export type MenuProps = {
+  items: MenuItemProps[];
+};

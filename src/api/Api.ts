@@ -3,7 +3,8 @@ import type {
   PokemonDetailResponse,
   PokemonsResponse,
 } from '../types/types';
-import { COUNT_KEY, LIMIT, saveToLS, SERVER_URL } from '../utils/utils';
+import { COUNT_KEY, LIMIT, SERVER_URL } from '../utils/contstants';
+import { saveToLS } from '../utils/utils';
 
 export async function getPokemons(
   searchTerm: string,
