@@ -10,6 +10,7 @@ import { getFromLS, saveToLS } from '../../utils/utils';
 import { getPokemons as fetchData } from '../../api/Api';
 import { PaginationView } from '../../components/pagination/PaginationView';
 import { COUNT_KEY, LIMIT, SEARCH_TERM_KEY } from '../../utils/contstants';
+import { Outlet } from 'react-router';
 
 export default function Pokemons() {
   const [pokemons, setPokemons] = useState<Pokemon[] | undefined>(undefined);
@@ -106,6 +107,7 @@ export default function Pokemons() {
                 onPageChanged={(offset) => handlePaginationPageChanged(offset)}
               />
             </div>
+            <Outlet />
           </MainView>
         </ErrorBoundary>
       </div>

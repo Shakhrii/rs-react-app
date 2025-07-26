@@ -5,7 +5,8 @@ export const COUNT_KEY = 'count';
 export const SEARCH_TERM_KEY = 'search_term';
 
 export const enum PAGE_ROUTES {
-  POKEMONS = '/pokemons',
+  POKEMONS = '/pokemons/',
+  POKEMON = ':detailsId',
   ABOUT = '/about',
   NOT_FOUND = '*',
 }

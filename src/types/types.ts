@@ -83,3 +83,7 @@ export type MenuItemProps = {
 export type MenuProps = {
   items: MenuItemProps[];
 };
+
+export type PokemonPageProps = {
+  pokemon: Pokemon;
+};
