@@ -31,9 +31,9 @@
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">64.28% </span>
+            <span class="strong">70.58% </span>
             <span class="quiet">Branches</span>
-            <span class="fraction">9/14</span>
+            <span class="fraction">12/17</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -213,12 +213,12 @@
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -251,7 +251,7 @@ export function PaginationView({
   const firstPage = 1;
   let pages = 0;
   if (count &gt; 0) {
-    pages = Math.floor(count / limit) + (count % limit &gt; <span class="branch-0 cbranch-no" title="branch not covered" >0 ? 1 : 0</span>);
+    pages = Math.floor(count / limit) + (count % limit &gt; 0 ? <span class="branch-0 cbranch-no" title="branch not covered" >1 : 0);</span>
   }
 &nbsp;
   useEffect(() =&gt; {
@@ -318,7 +318,7 @@ export function PaginationView({
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-07-27T06:58:01.658Z
+      at 2025-07-27T08:05:04.371Z
     </div>
     <script src="../../../prettify.js"></script>
     <script>
