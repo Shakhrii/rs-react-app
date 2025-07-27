@@ -6,7 +6,7 @@ import MainView from '../../components/main/MainView';
 import { SearchView } from '../../components/search/SearchView';
 import { SpinnerView } from '../../components/spinner/SpinnerView';
 import type { Pokemon } from '../../types/types';
-import { getFromLS, saveToLS } from '../../utils/utils';
+import { getFromLS } from '../../utils/utils';
 import { getPokemons as fetchData } from '../../api/Api';
 import { PaginationView } from '../../components/pagination/PaginationView';
 import { COUNT_KEY, LIMIT, SEARCH_TERM_KEY } from '../../utils/contstants';
@@ -16,11 +16,11 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 export default function Pokemons() {
   const [pokemons, setPokemons] = useState<Pokemon[] | undefined>(undefined);
   const [isLoading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useLocalStorage('', SEARCH_TERM_KEY);
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState('');
   const [offset, setOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useLocalStorage('', SEARCH_TERM_KEY);
 
   useEffect(() => {
     getPokemons();
@@ -39,8 +39,7 @@ export default function Pokemons() {
       } else {
         result = res;
       }
-    } catch (error) {
-      console.log(error);
+    } catch {
       showError('No results...');
       return [];
     } finally {
@@ -53,7 +52,7 @@ export default function Pokemons() {
   }
 
   function changeSearchTermHandler(value: string) {
-    saveToLS(SEARCH_TERM_KEY, value);
+    setSearchTerm(value);
     setSearchTerm(value);
   }
 

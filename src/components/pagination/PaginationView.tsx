@@ -30,10 +30,6 @@ export function PaginationView({
   }
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, [count]);
-
-  useEffect(() => {
     if (!isVisible && paginationParam.has('page')) {
       paginationParam.delete('page');
       setPaginationParam(paginationParam);
@@ -45,10 +41,14 @@ export function PaginationView({
       paginationParam.delete('page');
       setPaginationParam(paginationParam);
     } else {
-      const offset = (currentPage - 1) * LIMIT;
-      onPageChanged(offset);
-      paginationParam.set('page', String(currentPage));
-      setPaginationParam(paginationParam);
+      if (currentPage <= pages) {
+        const offset = (currentPage - 1) * LIMIT;
+        onPageChanged(offset);
+        paginationParam.set('page', String(currentPage));
+        setPaginationParam(paginationParam);
+      } else {
+        setCurrentPage(1);
+      }
     }
   }, [currentPage, isVisible]);
 

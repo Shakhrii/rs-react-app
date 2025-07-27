@@ -29,9 +29,9 @@
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">88.88% </span>
+            <span class="strong">90% </span>
             <span class="quiet">Branches</span>
-            <span class="fraction">16/18</span>
+            <span class="fraction">18/20</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -216,19 +216,19 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
@@ -303,7 +303,7 @@ import MainView from '../../components/main/MainView';
 import { SearchView } from '../../components/search/SearchView';
 import { SpinnerView } from '../../components/spinner/SpinnerView';
 import type { Pokemon } from '../../types/types';
-import { getFromLS, saveToLS } from '../../utils/utils';
+import { getFromLS } from '../../utils/utils';
 import { getPokemons as fetchData } from '../../api/Api';
 import { PaginationView } from '../../components/pagination/PaginationView';
 import { COUNT_KEY, LIMIT, SEARCH_TERM_KEY } from '../../utils/contstants';
@@ -313,11 +313,11 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 export default function Pokemons() {
   const [pokemons, setPokemons] = useState&lt;Pokemon[] | undefined&gt;(undefined);
   const [isLoading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useLocalStorage('', SEARCH_TERM_KEY);
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState('');
   const [offset, setOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useLocalStorage('', SEARCH_TERM_KEY);
 &nbsp;
   useEffect(() =&gt; {
     getPokemons();
@@ -350,7 +350,7 @@ export default function Pokemons() {
   }
 &nbsp;
   function changeSearchTermHandler(value: string) {
-    saveToLS(SEARCH_TERM_KEY, value);
+    setSearchTerm(value);
     setSearchTerm(value);
   }
 &nbsp;
@@ -427,7 +427,7 @@ export default function Pokemons() {
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-07-27T08:05:04.371Z
+      at 2025-07-27T10:02:36.579Z
     </div>
     <script src="../../../prettify.js"></script>
     <script>

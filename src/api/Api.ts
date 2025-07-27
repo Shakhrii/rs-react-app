@@ -71,7 +71,7 @@ async function fetchPokemons(
   const response = await fetch(`${url}?limit=${LIMIT}&offset=${offset}`);
   if (response.ok) {
     const resultResponse = await response.json();
-    saveToLS(COUNT_KEY, resultResponse.count);
+    saveToLS(COUNT_KEY, resultResponse.count || 1);
     return resultResponse.results;
   } else {
     throw Error(response.statusText);
