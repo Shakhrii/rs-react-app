@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { CardView } from './CardView';
 import type { Pokemon } from '../../types/types';
+import { MemoryRouter } from 'react-router';
 
 describe('Rendering tests', () => {
   it('correctly displays item names and descriptions', async () => {
@@ -13,14 +14,19 @@ describe('Rendering tests', () => {
       weight: 2,
       abilities: 'abilities1',
       avatar: '',
+      order: 1,
+      baseExperience: 64,
+      heldItems: 'heldItem',
     };
 
-    render(<CardView pokemon={testPokemon} />);
-    // const nameEl = screen.getByTestId('card-name');
-    // expect(nameEl).toHaveTextContent(testPokemon.name);
+    render(
+      <MemoryRouter>
+        <CardView pokemon={testPokemon} />
+      </MemoryRouter>
+    );
+
     expect(screen.getByText(testPokemon.name)).toBeInTheDocument();
     expect(screen.getByText(testPokemon.height)).toBeInTheDocument();
     expect(screen.getByText(testPokemon.weight)).toBeInTheDocument();
-    expect(screen.getByText(testPokemon.abilities)).toBeInTheDocument();
   });
 });

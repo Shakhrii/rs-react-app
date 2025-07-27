@@ -3,5 +3,6 @@ export function saveToLS(key: string, value: string) {
 }
 
 export function getFromLS(key: string): string {
-  return localStorage.getItem(key) ?? '';
+  const value = localStorage.getItem(key) || '';
+  return value;
 }

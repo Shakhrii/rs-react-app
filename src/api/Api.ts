@@ -3,16 +3,18 @@ import type {
   PokemonDetailResponse,
   PokemonsResponse,
 } from '../types/types';
-
-const SERVER_URL = 'https://pokeapi.co/api/v2/pokemon';
+import { COUNT_KEY, LIMIT, SERVER_URL } from '../utils/contstants';
+import { saveToLS } from '../utils/utils';
 
 export async function getPokemons(
-  searchTerm: string
+  searchTerm: string,
+  offset: number
 ): Promise<Pokemon[] | Pokemon> {
   if (searchTerm) {
+    saveToLS(COUNT_KEY, '1');
     return getPokemon(searchTerm);
   } else {
-    const pokemonResponse = await fetchPokemons(SERVER_URL);
+    const pokemonResponse = await fetchPokemons(SERVER_URL, offset);
     const pokemonsDetailResponse = await Promise.all(
       pokemonResponse.map(async (pokemon) => {
         const res = await fetch(pokemon.url);
@@ -25,7 +27,7 @@ export async function getPokemons(
   }
 }
 
-async function getPokemon(searchTerm: string) {
+export async function getPokemon(searchTerm: string) {
   const res = (await fetchPokemon(
     `${SERVER_URL}/${searchTerm}`
   )) as PokemonDetailResponse;
@@ -40,22 +42,36 @@ function parsePokemons(pokemonResponses: PokemonDetailResponse[]): Pokemon[] {
 }
 
 function parsePokemon(pokemonsDetailResponse: PokemonDetailResponse): Pokemon {
-  const { sprites, abilities, ...rest } = pokemonsDetailResponse;
+  const { sprites, abilities, held_items, base_experience, ...rest } =
+    pokemonsDetailResponse;
   return {
     ...rest,
     avatar: sprites.front_default,
+    baseExperience: base_experience,
     abilities: abilities.reduce(
       (accumulator, currentValue) =>
         accumulator + currentValue.ability.name + ' ',
       ''
     ),
+    heldItems:
+      held_items.length > 0
+        ? held_items.reduce(
+            (accumulator, currentValue) =>
+              accumulator + currentValue.item.name + ' ',
+            ''
+          )
+        : '',
   };
 }
 
-async function fetchPokemons(url: string): Promise<PokemonsResponse[]> {
-  const response = await fetch(url);
+async function fetchPokemons(
+  url: string,
+  offset: number
+): Promise<PokemonsResponse[]> {
+  const response = await fetch(`${url}?limit=${LIMIT}&offset=${offset}`);
   if (response.ok) {
     const resultResponse = await response.json();
+    saveToLS(COUNT_KEY, resultResponse.count || 1);
     return resultResponse.results;
   } else {
     throw Error(response.statusText);

@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
 import { getPokemons } from './Api';
-const SERVER_URL = 'https://pokeapi.co/api/v2/pokemon';
+import { SERVER_URL } from '../utils/contstants';
 
 describe('API Integration Tests', () => {
   const restHandlers = [
@@ -16,6 +16,9 @@ describe('API Integration Tests', () => {
             abilities: [{ ability: { name: 'overgrow' } }],
             height: 7,
             weight: 69,
+            order: 1,
+            base_experience: 64,
+            held_items: [],
           },
         ],
       });
@@ -27,6 +30,9 @@ describe('API Integration Tests', () => {
         name: 'bulbasaur',
         height: 7,
         weight: 69,
+        order: 1,
+        base_experience: 64,
+        held_items: [],
         sprites: { front_default: 'image-url' },
         abilities: [{ ability: { name: 'overgrow' } }],
       });
@@ -42,7 +48,7 @@ describe('API Integration Tests', () => {
   afterEach(() => server.resetHandlers());
 
   it('calls API with empty parameters', async () => {
-    const result = await getPokemons('');
+    const result = await getPokemons('', 0);
 
     expect(result).toEqual(
       expect.arrayContaining([expect.objectContaining({ name: 'bulbasaur' })])
@@ -51,7 +57,7 @@ describe('API Integration Tests', () => {
 
   it('calls API with search term parameter', async () => {
     const params = 'bulbasaur';
-    const result = await getPokemons(params);
+    const result = await getPokemons(params, 0);
 
     expect(result).toEqual(
       expect.objectContaining({
@@ -60,20 +66,21 @@ describe('API Integration Tests', () => {
         abilities: 'overgrow ',
         height: 7,
         weight: 69,
+        order: 1,
+        baseExperience: 64,
+        heldItems: '',
       })
     );
   });
 
   it('handle 404 error responses', async () => {
     server.use(
-        http.get(`${SERVER_URL}/undefined`, () => {
-          return new HttpResponse(null, { status: 404 });
-        })
-      );
-  
-      await expect(getPokemons('undefined')).rejects.toThrow(
-        /Not Found/
-      );  
+      http.get(`${SERVER_URL}/undefined`, () => {
+        return new HttpResponse(null, { status: 404 });
+      })
+    );
+
+    await expect(getPokemons('undefined', 0)).rejects.toThrow(/Not Found/);
   });
 
   it('handle 500 Internal Server Error', async () => {
@@ -83,10 +90,6 @@ describe('API Integration Tests', () => {
       })
     );
 
-    await expect(getPokemons('')).rejects.toThrow(
-      /Internal Server Error/
-    );
+    await expect(getPokemons('', 0)).rejects.toThrow(/Internal Server Error/);
   });
-
 });
-

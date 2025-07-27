@@ -6,13 +6,13 @@ import { SearchView } from './SearchView';
 
 describe('Render component', () => {
   it('render search input', () => {
-    render(<SearchView value={''} onSeacrhClick={() => {}} />);
+    render(<SearchView value={''} onSearchClick={() => {}} />);
     const result = screen.getByRole('textbox');
     expect(result).toBeInTheDocument();
   });
 
   it('render search button', () => {
-    render(<SearchView value={''} onSeacrhClick={() => {}} />);
+    render(<SearchView value={''} onSearchClick={() => {}} />);
     const result = screen.getByRole('button');
     expect(result).toBeInTheDocument();
   });
@@ -20,7 +20,7 @@ describe('Render component', () => {
 
 describe('Searching user interaction', () => {
   it('update input value when user types', async () => {
-    render(<SearchView value={''} onSeacrhClick={() => {}} />);
+    render(<SearchView value={''} onSearchClick={() => {}} />);
     const input = screen.getByRole('textbox');
     await userEvent.clear(input);
     await userEvent.type(input, 'test-data');
@@ -31,7 +31,7 @@ describe('Searching user interaction', () => {
     const handleSearchClick = vi.fn();
     const value = 'test value';
 
-    render(<SearchView value={value} onSeacrhClick={handleSearchClick} />);
+    render(<SearchView value={value} onSearchClick={handleSearchClick} />);
     const button = screen.getByRole('button');
     await userEvent.click(button);
     expect(handleSearchClick).toHaveBeenCalledWith(value);
@@ -41,7 +41,7 @@ describe('Searching user interaction', () => {
     const handleSearchClick = vi.fn();
     const values = ['     value', 'value     '];
 
-    render(<SearchView value={''} onSeacrhClick={handleSearchClick} />);
+    render(<SearchView value={''} onSearchClick={handleSearchClick} />);
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button');
 

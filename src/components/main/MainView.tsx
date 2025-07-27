@@ -1,15 +1,5 @@
-import React, { type ReactNode } from 'react';
+import type { MainViewProps } from '../../types/types';
 
-interface MainProps {
-  children?: ReactNode;
-}
-
-export default class MainView extends React.Component<MainProps> {
-  render() {
-    return (
-      <main className="w-full flex items-center justify-center">
-        {this.props.children}
-      </main>
-    );
-  }
+export default function MainView({ children }: MainViewProps) {
+  return <main className="w-full flex">{children}</main>;
 }
