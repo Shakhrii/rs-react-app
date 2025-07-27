@@ -29,7 +29,8 @@ export function CardDetailView({ id }: CardDetailViewProps) {
   }, [id]);
 
   return (
-    <div className="w-100 h-full flex justify-center">
+    <div className="w-100 h-full flex justify-center relative">
+      <CloseButton />
       {isLoading ? (
         <SpinnerView />
       ) : error ? (
@@ -37,9 +38,9 @@ export function CardDetailView({ id }: CardDetailViewProps) {
       ) : (
         <div
           data-testid="card-item"
-          className="w-100 flex flex-col items-start shadow rounded-sm transition-colors duration-300 ease-in-out bg-white relative"
+          className="w-100 flex flex-col items-start shadow rounded-sm
+           transition-colors duration-300 ease-in-out bg-white relative"
         >
-          <CloseButton />
           <img
             className="w-full h-2/3"
             src={pokemon.avatar}

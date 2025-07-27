@@ -11,7 +11,7 @@ export function CloseButton() {
       onClick={() =>
         navigate(`${PAGE_ROUTES.POKEMONS}?${searchParams.toString()}`)
       }
-      className="absolute top-5 right-5 text-white rounded-b-full"
+      className="absolute top-5 right-5 text-white rounded-b-full z-99"
     >
       <svg
         className="w-[36px] h-[36px] text-amber-500 hover:text-amber-300 hover:cursor-pointer"
