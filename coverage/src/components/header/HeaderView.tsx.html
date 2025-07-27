@@ -25,7 +25,7 @@
           <div class="fl pad1y space-right2">
             <span class="strong">100% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">6/6</span>
+            <span class="fraction">14/14</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -43,7 +43,7 @@
           <div class="fl pad1y space-right2">
             <span class="strong">100% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">6/6</span>
+            <span class="fraction">14/14</span>
           </div>
         </div>
         <p class="quiet">
@@ -70,27 +70,45 @@
 <a name='L9'></a><a href='#L9'>9</a>
 <a name='L10'></a><a href='#L10'>10</a>
 <a name='L11'></a><a href='#L11'>11</a>
-<a name='L12'></a><a href='#L12'>12</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { type ReactNode } from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { HeaderViewProps } from '../../types/types';
+import { MENU_ITEMS } from '../../utils/contstants';
+import { Menu } from '../menu/Menu';
 &nbsp;
-interface HeaderProps {
-  children?: ReactNode;
-}
-&nbsp;
-export default class HeaderView extends React.Component&lt;HeaderProps&gt; {
-  render() {
-    return &lt;header&gt;{this.props.children}&lt;/header&gt;;
-  }
+export default function HeaderView({ children }: HeaderViewProps) {
+  return (
+    &lt;header className="pb-6"&gt;
+      &lt;h1 className="text-neutral-500 text-4xl pb-6"&gt;Pokemons Api&lt;/h1&gt;
+      &lt;nav&gt;
+        &lt;div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200"&gt;
+          &lt;Menu items={MENU_ITEMS} /&gt;
+        &lt;/div&gt;
+      &lt;/nav&gt;
+      {children}
+    &lt;/header&gt;
+  );
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -106,7 +124,7 @@ export default class HeaderView extends React.Component&lt;HeaderProps&gt; {
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-07-22T14:35:55.761Z
+      at 2025-07-27T06:58:01.658Z
     </div>
     <script src="../../../prettify.js"></script>
     <script>

@@ -1,4 +1,4 @@
-import photo from '../../assets/images/photo.JPG';
+import photo from '../../assets/images/photo.jpeg';
 
 export function About() {
   const link = 'https://rs.school/courses/reactjs';

@@ -23,9 +23,9 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">60.86% </span>
+            <span class="strong">65.21% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">14/23</span>
+            <span class="fraction">15/23</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -41,9 +41,9 @@
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">60.86% </span>
+            <span class="strong">65.21% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">14/23</span>
+            <span class="fraction">15/23</span>
           </div>
         </div>
         <p class="quiet">
@@ -87,12 +87,7 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -104,8 +99,9 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -114,40 +110,38 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Component } from 'react';
-import corruptedFile from '../../assets/images/corrupted-file.png';
-type ErrorViewProps = {
-  message: string | undefined;
-  resetSearchHandler?: () =&gt; void;
-};
-export class ErrorView extends Component&lt;ErrorViewProps&gt; {
-  render() {
-    return (
-      &lt;div className="w-1/2 flex flex-col gap-5 items-center justify-center"&gt;
-        &lt;div className="w-50 h-50 self-center opacity-70"&gt;
-          &lt;img src={corruptedFile} alt="empty"&gt;&lt;/img&gt;
-        &lt;/div&gt;
-        &lt;span className="text-neutral-400"&gt;{this.props.message}&lt;/span&gt;
-        {this.props.<span class="branch-0 cbranch-no" title="branch not covered" >resetSearchHandler &amp;&amp; (</span>
-<span class="cstat-no" title="statement not covered" >          &lt;button</span>
-<span class="cstat-no" title="statement not covered" >            type="button"</span>
-<span class="cstat-no" title="statement not covered" >            onClick={<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >              if (this.props.resetSearchHandler)</span>
-<span class="cstat-no" title="statement not covered" >                this.props.resetSearchHandler();</span>
-<span class="cstat-no" title="statement not covered" >            }}</span>
-<span class="cstat-no" title="statement not covered" >            className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"</span>
-<span class="cstat-no" title="statement not covered" >          &gt;</span>
-            Reset search
-<span class="cstat-no" title="statement not covered" >          &lt;/button&gt;</span>
-        )}
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import corruptedFile from '../../assets/images/corrupted-file.png';
+import type { ErrorViewProps } from '../../types/types';
+&nbsp;
+export function ErrorView({
+  message,
+  buttonText,
+  clickHandler,
+}: ErrorViewProps) {
+  return (
+    &lt;div className="w-1/2 flex flex-col gap-5 items-center justify-center"&gt;
+      &lt;div className="w-50 h-50 self-center opacity-70"&gt;
+        &lt;img src={corruptedFile} alt="empty"&gt;&lt;/img&gt;
       &lt;/div&gt;
-    );
-  }
+      &lt;span className="text-neutral-400"&gt;{message}&lt;/span&gt;
+      {<span class="branch-0 cbranch-no" title="branch not covered" >clickHandler &amp;&amp; (</span>
+<span class="cstat-no" title="statement not covered" >        &lt;button</span>
+<span class="cstat-no" title="statement not covered" >          type="button"</span>
+<span class="cstat-no" title="statement not covered" >          onClick={<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (clickHandler) clickHandler();</span>
+<span class="cstat-no" title="statement not covered" >          }}</span>
+<span class="cstat-no" title="statement not covered" >          className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"</span>
+        &gt;
+<span class="cstat-no" title="statement not covered" >          {buttonText}</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/button&gt;</span>
+      )}
+    &lt;/div&gt;
+  );
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -163,7 +157,7 @@ export class ErrorView extends Component&lt;ErrorViewProps&gt; {
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-07-22T14:35:55.761Z
+      at 2025-07-27T06:58:01.658Z
     </div>
     <script src="../../../prettify.js"></script>
     <script>

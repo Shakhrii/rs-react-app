@@ -44,6 +44,9 @@ describe('Rendering tests', () => {
         avatar: `avatar${i}`,
         weight: i,
         height: i,
+        order: i * 10,
+        baseExperience: i,
+        heldItems: `heldItems${i}`,
         abilities: `abilities${i}`,
       };
       testPokemons.push(pokemon);
