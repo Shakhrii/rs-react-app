@@ -53,7 +53,6 @@ export default function Pokemons() {
 
   function changeSearchTermHandler(value: string) {
     setSearchTerm(value);
-    setSearchTerm(value);
   }
 
   function resetSearch() {
