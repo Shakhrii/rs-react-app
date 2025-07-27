@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1753612668420" clover="3.2.0">
-  <project timestamp="1753612668420" name="All files">
-    <metrics statements="710" coveredstatements="610" conditionals="112" coveredconditionals="102" methods="61" coveredmethods="45" elements="883" coveredelements="757" complexity="0" loc="710" ncloc="710" packages="22" files="28" classes="28"/>
+<coverage generated="1753615077173" clover="3.2.0">
+  <project timestamp="1753615077173" name="All files">
+    <metrics statements="711" coveredstatements="611" conditionals="110" coveredconditionals="100" methods="61" coveredmethods="45" elements="882" coveredelements="756" complexity="0" loc="711" ncloc="711" packages="22" files="28" classes="28"/>
     <package name="src">
       <metrics statements="12" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="main.tsx" path="/Users/shakhri/Desktop/rs/react/last-version/rs-react-app/src/main.tsx">
@@ -21,9 +21,9 @@
       </file>
     </package>
     <package name="src.api">
-      <metrics statements="77" coveredstatements="72" conditionals="23" coveredconditionals="22" methods="6" coveredmethods="6"/>
+      <metrics statements="77" coveredstatements="72" conditionals="22" coveredconditionals="21" methods="6" coveredmethods="6"/>
       <file name="Api.ts" path="/Users/shakhri/Desktop/rs/react/last-version/rs-react-app/src/api/Api.ts">
-        <metrics statements="77" coveredstatements="72" conditionals="23" coveredconditionals="22" methods="6" coveredmethods="6"/>
+        <metrics statements="77" coveredstatements="72" conditionals="22" coveredconditionals="21" methods="6" coveredmethods="6"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
         <line num="9" count="7" type="cond" truecount="1" falsecount="0"/>
@@ -38,8 +38,8 @@
         <line num="18" count="2" type="stmt"/>
         <line num="19" count="2" type="cond" truecount="1" falsecount="0"/>
         <line num="20" count="7" type="cond" truecount="1" falsecount="0"/>
-        <line num="21" count="3" type="cond" truecount="1" falsecount="0"/>
-        <line num="22" count="1" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
         <line num="23" count="2" type="stmt"/>
         <line num="24" count="2" type="cond" truecount="1" falsecount="0"/>
         <line num="26" count="1" type="stmt"/>
@@ -834,18 +834,19 @@
       </file>
     </package>
     <package name="src.utils">
-      <metrics statements="20" coveredstatements="20" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
+      <metrics statements="21" coveredstatements="21" conditionals="3" coveredconditionals="2" methods="2" coveredmethods="2"/>
       <file name="contstants.ts" path="/Users/shakhri/Desktop/rs/react/last-version/rs-react-app/src/utils/contstants.ts">
-        <metrics statements="13" coveredstatements="13" conditionals="1" coveredconditionals="1" methods="0" coveredmethods="0"/>
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
-        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
         <line num="14" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
