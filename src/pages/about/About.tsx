@@ -23,7 +23,11 @@ export function About() {
           great success in this course!
         </p>
         <a href={link} target="blank" className="self-start mt-5">
-          <div className="bg-amber-300 text-neutral-800 text-2xl inline p-2 rounded-sm hover:bg-amber-200 active:bg-amber-400">
+          <div
+            className="bg-amber-300 text-neutral-800 
+              text-2xl inline p-2 rounded-sm hover:bg-amber-200
+            active:bg-amber-400"
+          >
             <span>RS School React Course</span>
           </div>
         </a>

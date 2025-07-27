@@ -5,7 +5,9 @@ export function ButtonLeftArrow({ onClick }: ButtonArrowProps) {
     <button
       onClick={() => onClick()}
       type="button"
-      className="text-white bg-amber-500 hover:bg-amber-400 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 active:bg-amber-300"
+      className="text-white bg-amber-500 hover:bg-amber-400
+        font-medium rounded-lg text-sm p-2.5 text-center 
+        inline-flex items-center me-2 active:bg-amber-300"
     >
       <svg
         className="w-5 h-5"

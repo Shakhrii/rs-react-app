@@ -12,7 +12,9 @@ export function CardView({ pokemon }: CardViewProps) {
     <div
       onClick={handleClick}
       data-testid="card-item"
-      className="w-50 flex flex-col items-start shadow hover:bg-amber-500/50 rounded-sm transition-colors duration-300 ease-in-out active:bg-amber-500 bg-white"
+      className="w-50 flex flex-col items-start shadow
+      hover:bg-amber-500/50 rounded-sm transition-colors 
+        duration-300 ease-in-out active:bg-amber-500 bg-white"
     >
       <img
         className="w-full h-2/3"
