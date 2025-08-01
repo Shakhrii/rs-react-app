@@ -1,8 +1,41 @@
 import { useNavigate } from 'react-router';
 import type { CardViewProps } from '../../types/types';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { selectSelectedItemIds } from '../../store/slices/selectedItems.slice';
+import { useEffect, useState, type ChangeEvent } from 'react';
+import { selected, unselected } from '../../store/slices/selectedItems.slice';
 
 export function CardView({ pokemon }: CardViewProps) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const isSelected = () => {
+    return selectedIds.includes(pokemon.id);
+  };
+
+  const selectedIds = useAppSelector(selectSelectedItemIds);
+  const [isSelect, setSelected] = useState(isSelected());
+
+  const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    setSelected(!isSelect);
+  };
+
+  useEffect(() => {
+    if (isSelect) {
+      addSelected();
+    } else {
+      removeSelected();
+    }
+  }, [isSelect]);
+
+  const addSelected = () => {
+    dispatch(selected({ id: pokemon.id }));
+  };
+
+  const removeSelected = () => {
+    dispatch(unselected({ id: pokemon.id }));
+  };
 
   function handleClick() {
     const searchParams = new URLSearchParams(window.location.search);
@@ -34,6 +67,11 @@ export function CardView({ pokemon }: CardViewProps) {
           <span className="font-bold">weight: </span>
           {pokemon.weight}
         </span>
+        <input
+          type="checkbox"
+          checked={isSelect}
+          onChange={(e) => handleSelect(e)}
+        />
       </div>
     </div>
   );
