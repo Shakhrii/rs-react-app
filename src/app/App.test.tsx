@@ -5,10 +5,16 @@ import '@testing-library/jest-dom';
 import App from './App';
 import type { Pokemon } from '../types/types';
 import * as api from '../api/Api';
+import { store } from '../store/store';
+import { Provider } from 'react-redux';
 
 describe('User interaction test', () => {
   it('saves search term to localStorage when search button is clicked', async () => {
-    render(<App />);
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
     const input = screen.getByRole('textbox');
     const button = screen.getByText('Search');
     const SEARCH_TERM_KEY = 'search_term';
@@ -26,7 +32,11 @@ describe('Local Storage integration', () => {
     const SEARCH_TERM_KEY = 'search_term';
     localStorage.setItem(SEARCH_TERM_KEY, searchTerm);
 
-    render(<App />);
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
     const input = screen.getByRole('textbox');
     expect(localStorage.getItem(SEARCH_TERM_KEY)).toBe(searchTerm);
     expect(input).toHaveValue(searchTerm);
@@ -63,7 +73,11 @@ describe('Rendering tests', () => {
   });
 
   it('show loading state while fetching data', async () => {
-    render(<App />);
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
 
     const button = screen.getByText('Search');
     await userEvent.click(button);
