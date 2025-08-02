@@ -18,16 +18,18 @@ const selectedItemsSlice = createSlice({
     unselected: (state, action: PayloadAction<Pokemon>) => {
       state.items = state.items.filter((item) => item.id !== action.payload.id);
     },
+    unselectedAll: () => {
+      return initialState;
+    },
   },
   selectors: {
-    selectSelectedItemIds: (state) =>
-      state.items.map((item) => {
-        return item.id;
-      }),
+    selectSelectedItemIds: (state) => state.items.map((item) => item.id),
     selectSelectedItems: (state) => state.items,
   },
 });
 
 export default selectedItemsSlice.reducer;
-export const { selected, unselected } = selectedItemsSlice.actions;
-export const { selectSelectedItemIds } = selectedItemsSlice.selectors;
+export const { selected, unselected, unselectedAll } =
+  selectedItemsSlice.actions;
+export const { selectSelectedItemIds, selectSelectedItems } =
+  selectedItemsSlice.selectors;

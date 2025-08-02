@@ -2,31 +2,24 @@ import { useNavigate } from 'react-router';
 import type { CardViewProps } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { selectSelectedItemIds } from '../../store/slices/selectedItems.slice';
-import { useEffect, useState } from 'react';
 import { selected, unselected } from '../../store/slices/selectedItems.slice';
 
 export function CardView({ pokemon }: CardViewProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const selectedIds = useAppSelector(selectSelectedItemIds);
   const isSelected = () => {
     return selectedIds.includes(pokemon.id);
   };
 
-  const selectedIds = useAppSelector(selectSelectedItemIds);
-  const [isSelect, setSelected] = useState(isSelected());
-
   const handleSelect = () => {
-    setSelected(!isSelect);
-  };
-
-  useEffect(() => {
-    if (isSelect) {
-      addSelected();
-    } else {
+    if (isSelected()) {
       removeSelected();
+    } else {
+      addSelected();
     }
-  }, [isSelect]);
+  };
 
   const addSelected = () => {
     dispatch(selected(pokemon));
@@ -69,7 +62,7 @@ export function CardView({ pokemon }: CardViewProps) {
         <div className="flex gap-2.5 items-center mt-6">
           <input
             type="checkbox"
-            checked={isSelect}
+            checked={isSelected()}
             onClick={(e) => e.stopPropagation()}
             onChange={handleSelect}
           />
