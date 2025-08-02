@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { CardListView } from './CardListView';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 describe('Rendering Tests', () => {
   it('render correct number of items when data is provided', () => {
@@ -24,7 +26,9 @@ describe('Rendering Tests', () => {
 
     render(
       <MemoryRouter>
-        <CardListView pokemons={testPokemons} />
+        <Provider store={store}>
+          <CardListView pokemons={testPokemons} />
+        </Provider>
       </MemoryRouter>
     );
     const items = screen.queryAllByTestId('card-item');
@@ -52,7 +56,9 @@ describe('Data Display Tests', () => {
 
     render(
       <MemoryRouter>
-        <CardListView pokemons={testPokemons} />
+        <Provider store={store}>
+          <CardListView pokemons={testPokemons} />
+        </Provider>
       </MemoryRouter>
     );
 
