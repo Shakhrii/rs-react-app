@@ -66,12 +66,15 @@ export function CardView({ pokemon }: CardViewProps) {
           <span className="font-bold">weight: </span>
           {pokemon.weight}
         </span>
-        <input
-          type="checkbox"
-          checked={isSelect}
-          onClick={(e) => e.stopPropagation()}
-          onChange={handleSelect}
-        />
+        <div className="flex gap-2.5 items-center mt-6">
+          <input
+            type="checkbox"
+            checked={isSelect}
+            onClick={(e) => e.stopPropagation()}
+            onChange={handleSelect}
+          />
+          <label>add to download</label>
+        </div>
       </div>
     </div>
   );
