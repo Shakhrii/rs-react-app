@@ -1,26 +1,30 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { Pokemon } from '../../types/types';
 export interface SelectedItemsState {
-  ids: number[];
+  items: Pokemon[];
 }
 
 const initialState: SelectedItemsState = {
-  ids: [],
+  items: [],
 };
 
 const selectedItemsSlice = createSlice({
   name: 'selectedItems',
   initialState,
   reducers: {
-    selected: (state, action: PayloadAction<{ id: number }>) => {
-      state.ids.push(action.payload.id);
+    selected: (state, action: PayloadAction<Pokemon>) => {
+      state.items.push(action.payload);
     },
-    unselected: (state, action: PayloadAction<{ id: number }>) => {
-      const unselectedId = action.payload.id;
-      state.ids = state.ids.filter((id) => id !== unselectedId);
+    unselected: (state, action: PayloadAction<Pokemon>) => {
+      state.items = state.items.filter((item) => item.id !== action.payload.id);
     },
   },
   selectors: {
-    selectSelectedItemIds: (state) => state.ids,
+    selectSelectedItemIds: (state) =>
+      state.items.map((item) => {
+        return item.id;
+      }),
+    selectSelectedItems: (state) => state.items,
   },
 });
 

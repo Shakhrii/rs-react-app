@@ -29,11 +29,11 @@ export function CardView({ pokemon }: CardViewProps) {
   }, [isSelect]);
 
   const addSelected = () => {
-    dispatch(selected({ id: pokemon.id }));
+    dispatch(selected(pokemon));
   };
 
   const removeSelected = () => {
-    dispatch(unselected({ id: pokemon.id }));
+    dispatch(unselected(pokemon));
   };
 
   function handleClick() {
