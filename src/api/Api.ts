@@ -42,10 +42,23 @@ function parsePokemons(pokemonResponses: PokemonDetailResponse[]): Pokemon[] {
 }
 
 function parsePokemon(pokemonsDetailResponse: PokemonDetailResponse): Pokemon {
-  const { sprites, abilities, held_items, base_experience, ...rest } =
-    pokemonsDetailResponse;
+  const {
+    id,
+    name,
+    height,
+    weight,
+    order,
+    sprites,
+    abilities,
+    held_items,
+    base_experience,
+  } = pokemonsDetailResponse;
   return {
-    ...rest,
+    id,
+    name,
+    height,
+    weight,
+    order,
     avatar: sprites.front_default,
     baseExperience: base_experience,
     abilities: abilities.reduce(
