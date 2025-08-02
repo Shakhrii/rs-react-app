@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 import type { CardViewProps } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { selectSelectedItemIds } from '../../store/slices/selectedItems.slice';
-import { useEffect, useState, type ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { selected, unselected } from '../../store/slices/selectedItems.slice';
 
 export function CardView({ pokemon }: CardViewProps) {
@@ -16,8 +16,7 @@ export function CardView({ pokemon }: CardViewProps) {
   const selectedIds = useAppSelector(selectSelectedItemIds);
   const [isSelect, setSelected] = useState(isSelected());
 
-  const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    e.stopPropagation();
+  const handleSelect = () => {
     setSelected(!isSelect);
   };
 
@@ -70,7 +69,8 @@ export function CardView({ pokemon }: CardViewProps) {
         <input
           type="checkbox"
           checked={isSelect}
-          onChange={(e) => handleSelect(e)}
+          onClick={(e) => e.stopPropagation()}
+          onChange={handleSelect}
         />
       </div>
     </div>
