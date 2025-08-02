@@ -12,6 +12,7 @@ import { PaginationView } from '../../components/pagination/PaginationView';
 import { COUNT_KEY, LIMIT, SEARCH_TERM_KEY } from '../../utils/contstants';
 import { Outlet } from 'react-router';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { Flyout } from '../../components/flyout/Flyout';
 
 export default function Pokemons() {
   const [pokemons, setPokemons] = useState<Pokemon[] | undefined>(undefined);
@@ -108,6 +109,7 @@ export default function Pokemons() {
             <div className="flex-100">
               <Outlet />
             </div>
+            <Flyout />
           </MainView>
         </ErrorBoundary>
       </div>

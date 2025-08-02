@@ -1,5 +1,4 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-
 export interface SelectedItemsState {
   ids: number[];
 }
