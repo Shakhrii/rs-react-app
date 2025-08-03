@@ -11,7 +11,12 @@ export function ButtonRightArrow({ onClick }: ButtonArrowProps) {
       }}
       className={`hover:bg-amber-400 cursor-pointer
         font-medium rounded-lg text-sm p-2.5 text-center 
-        inline-flex items-center me-2 active:bg-amber-300 ${theme === 'dark' ? 'bg-[var(--accent-color-dark)]' : 'bg-[var(--accent-color-light)]'}`}
+        inline-flex items-center me-2 active:bg-amber-300 
+        ${
+          theme === 'dark'
+            ? 'bg-[var(--accent-color-dark)]'
+            : 'bg-[var(--accent-color-light)]'
+        }`}
     >
       <svg
         className="w-5 h-5"
