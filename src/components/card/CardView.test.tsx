@@ -6,6 +6,7 @@ import type { Pokemon } from '../../types/types';
 import { MemoryRouter } from 'react-router';
 import { store } from '../../store/store';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from '../../context/ThemeProvider';
 
 describe('Rendering tests', () => {
   it('correctly displays item names and descriptions', async () => {
@@ -24,7 +25,9 @@ describe('Rendering tests', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <CardView pokemon={testPokemon} />
+          <ThemeProvider>
+            <CardView pokemon={testPokemon} />
+          </ThemeProvider>
         </Provider>
       </MemoryRouter>
     );

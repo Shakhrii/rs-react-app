@@ -5,6 +5,7 @@ import { CardDetailView } from './CardDetailView';
 import type { Pokemon } from '../../types/types';
 import * as api from '../../api/Api';
 import { MemoryRouter } from 'react-router';
+import { ThemeProvider } from '../../context/ThemeProvider';
 
 describe('Rendering tests', () => {
   const testPokemon: Pokemon = {
@@ -32,7 +33,9 @@ describe('Rendering tests', () => {
   it('show loading state while fetching data', async () => {
     render(
       <MemoryRouter>
-        <CardDetailView id="1" />
+        <ThemeProvider>
+          <CardDetailView id="1" />
+        </ThemeProvider>
       </MemoryRouter>
     );
 

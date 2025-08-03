@@ -5,6 +5,7 @@ import { CardListView } from './CardListView';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { store } from '../../store/store';
+import { ThemeProvider } from '../../context/ThemeProvider';
 
 describe('Rendering Tests', () => {
   it('render correct number of items when data is provided', () => {
@@ -27,7 +28,9 @@ describe('Rendering Tests', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <CardListView pokemons={testPokemons} />
+          <ThemeProvider>
+            <CardListView pokemons={testPokemons} />
+          </ThemeProvider>
         </Provider>
       </MemoryRouter>
     );
@@ -57,7 +60,9 @@ describe('Data Display Tests', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <CardListView pokemons={testPokemons} />
+          <ThemeProvider>
+            <CardListView pokemons={testPokemons} />
+          </ThemeProvider>
         </Provider>
       </MemoryRouter>
     );
