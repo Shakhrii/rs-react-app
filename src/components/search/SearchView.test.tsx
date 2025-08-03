@@ -3,16 +3,25 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { SearchView } from './SearchView';
+import { ThemeProvider } from '../../context/ThemeProvider';
 
 describe('Render component', () => {
   it('render search input', () => {
-    render(<SearchView value={''} onSeacrhClick={() => {}} />);
+    render(
+      <ThemeProvider>
+        <SearchView value={''} onSearchClick={() => {}} />
+      </ThemeProvider>
+    );
     const result = screen.getByRole('textbox');
     expect(result).toBeInTheDocument();
   });
 
   it('render search button', () => {
-    render(<SearchView value={''} onSeacrhClick={() => {}} />);
+    render(
+      <ThemeProvider>
+        <SearchView value={''} onSearchClick={() => {}} />
+      </ThemeProvider>
+    );
     const result = screen.getByRole('button');
     expect(result).toBeInTheDocument();
   });
@@ -20,7 +29,11 @@ describe('Render component', () => {
 
 describe('Searching user interaction', () => {
   it('update input value when user types', async () => {
-    render(<SearchView value={''} onSeacrhClick={() => {}} />);
+    render(
+      <ThemeProvider>
+        <SearchView value={''} onSearchClick={() => {}} />
+      </ThemeProvider>
+    );
     const input = screen.getByRole('textbox');
     await userEvent.clear(input);
     await userEvent.type(input, 'test-data');
@@ -31,7 +44,11 @@ describe('Searching user interaction', () => {
     const handleSearchClick = vi.fn();
     const value = 'test value';
 
-    render(<SearchView value={value} onSeacrhClick={handleSearchClick} />);
+    render(
+      <ThemeProvider>
+        <SearchView value={value} onSearchClick={handleSearchClick} />
+      </ThemeProvider>
+    );
     const button = screen.getByRole('button');
     await userEvent.click(button);
     expect(handleSearchClick).toHaveBeenCalledWith(value);
@@ -41,7 +58,12 @@ describe('Searching user interaction', () => {
     const handleSearchClick = vi.fn();
     const values = ['     value', 'value     '];
 
-    render(<SearchView value={''} onSeacrhClick={handleSearchClick} />);
+    render(
+      <ThemeProvider>
+        <SearchView value={''} onSearchClick={handleSearchClick} />
+      </ThemeProvider>
+    );
+
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button');
 

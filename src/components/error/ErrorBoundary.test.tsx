@@ -1,30 +1,41 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { describe, expect, it, vi } from 'vitest';
 import ErrorBoundary from './ErrorBoundary';
-import { ButtonBoundaryErrorView } from './ButtonBoundaryErrorView';
-import userEvent from '@testing-library/user-event';
 
-describe('Error Catching Tests', () => {
-  const consoleErrorMock = vi.spyOn(console, 'error');
-
-  beforeEach(() => {
-    consoleErrorMock.mockImplementation(() => {});
-  });
-
-  afterEach(() => {
-    consoleErrorMock.mockRestore();
-  });
-  it('displays fallback UI when error occurs', async () => {
+describe('Renders child', () => {
+  it('render child without error', () => {
     render(
       <ErrorBoundary>
-        <ButtonBoundaryErrorView />
+        <div data-testid="child">Children</div>
       </ErrorBoundary>
     );
 
-    const button = screen.getByRole('button');
-    await userEvent.click(button);
+    expect(screen.getByTestId('child')).toBeInTheDocument();
+  });
 
-    expect(screen.getByText('Render Error')).toBeInTheDocument();
+  it('show ui fallback when error', () => {
+    vi.mock('./ErrorView', () => ({
+      ErrorView: vi.fn(() => <div>Render error</div>),
+    }));
+
+    const consoleErrorMock = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    const ThrowErrorComponent = () => {
+      throw new Error('Test error');
+      return null;
+    };
+
+    render(
+      <ErrorBoundary>
+        <ThrowErrorComponent />
+      </ErrorBoundary>
+    );
+
+    expect(screen.getByText('Render error')).toBeInTheDocument();
+
+    consoleErrorMock.mockRestore();
+    vi.clearAllMocks();
   });
 });

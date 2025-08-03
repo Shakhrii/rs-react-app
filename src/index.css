@@ -1,1 +1,25 @@
 @import 'tailwindcss';
+
+:root {
+    --bg-color-light: #f0f0f0f3;
+    --bg-color-dark: #2e2e2e;
+
+    --bg-card-color-dark: #353957;
+
+    --text-color-light: #2e2e2e;
+    --text-color-dark: #ffffff;
+
+    --accent-color-light: var(--color-amber-300);
+    --accent-color-dark: var(--color-amber-600);
+}
+
+.light {
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light)
+}
+  
+.dark {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark)
+}
+  

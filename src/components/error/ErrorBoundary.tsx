@@ -14,7 +14,7 @@ export default class ErrorBoundary extends React.Component<PropsWithChildren> {
 
   render() {
     if (this.state.hasError) {
-      return <ErrorView message="Render Error" />;
+      return <ErrorView message="Render Error" buttonText={''} />;
     }
     return this.props.children;
   }
