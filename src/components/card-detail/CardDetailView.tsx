@@ -31,7 +31,7 @@ export function CardDetailView({ id }: CardDetailViewProps) {
   }, [id]);
 
   return (
-    <div className="w-100 h-full flex justify-center relative">
+    <div className="w-100 flex justify-center relative">
       <CloseButton />
       {isLoading ? (
         <SpinnerView />
