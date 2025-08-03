@@ -1,14 +1,22 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { PaginationView } from './PaginationView';
 import { LIMIT } from '../../utils/contstants';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { ThemeProvider } from '../../context/ThemeProvider';
+import { Provider } from 'react-redux';
+import { useTheme } from '../../hooks/useTheme';
+import { store } from '../../store/store';
+
+vi.mock('../../hooks/useTheme', () => ({
+  useTheme: vi.fn(() => ({ theme: 'light' })),
+}));
 
 describe('Renders tests', () => {
+  const count = 1340;
+  const pages = 224;
+
   it('render correct pages count', () => {
-    const count = 1340;
-    const pages = 224;
     render(
       <MemoryRouter>
         <ThemeProvider>
@@ -23,6 +31,27 @@ describe('Renders tests', () => {
     );
 
     expect(screen.getByText(pages)).toBeInTheDocument();
+  });
+  it('apply dark theme', () => {
+    vi.mocked(useTheme).mockReturnValue({ theme: 'dark', setTheme: () => {} });
+
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <ThemeProvider>
+            <PaginationView
+              limit={LIMIT}
+              count={count}
+              onPageChanged={() => {}}
+              isVisible={true}
+            />
+          </ThemeProvider>
+        </Provider>
+      </MemoryRouter>
+    );
+
+    const button = screen.getByRole('button', { name: `${pages}` });
+    expect(button).toHaveClass('bg-[var(--accent-color-dark)]');
   });
 });
 
