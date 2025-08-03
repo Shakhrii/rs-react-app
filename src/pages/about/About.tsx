@@ -1,7 +1,9 @@
 import photo from '../../assets/images/photo.jpeg';
+import { useTheme } from '../../hooks/useTheme';
 
 export function About() {
   const link = 'https://rs.school/courses/reactjs';
+  const { theme } = useTheme();
 
   return (
     <div className="flex items-center justify-center gap-10 py-10">
@@ -24,9 +26,8 @@ export function About() {
         </p>
         <a href={link} target="blank" className="self-start mt-5">
           <div
-            className="bg-amber-300 text-neutral-800 
-              text-2xl inline p-2 rounded-sm hover:bg-amber-200
-            active:bg-amber-400"
+            className={`text-2xl inline p-2 rounded-sm hover:bg-amber-200
+            active:bg-amber-400 ${theme === 'dark' ? 'bg-[var(--accent-color-dark)]' : 'bg-[var(--accent-color-light)]'}`}
           >
             <span>RS School React Course</span>
           </div>

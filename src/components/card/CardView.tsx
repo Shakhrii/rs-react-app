@@ -3,8 +3,10 @@ import type { CardViewProps } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { selectSelectedItemIds } from '../../store/slices/selectedItems.slice';
 import { selected, unselected } from '../../store/slices/selectedItems.slice';
+import { useTheme } from '../../hooks/useTheme';
 
 export function CardView({ pokemon }: CardViewProps) {
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -37,9 +39,9 @@ export function CardView({ pokemon }: CardViewProps) {
     <div
       onClick={handleClick}
       data-testid="card-item"
-      className="w-50 flex flex-col items-start shadow
-      hover:bg-amber-500/50 rounded-sm transition-colors 
-        duration-300 ease-in-out active:bg-amber-500 bg-white"
+      className={`w-50 flex flex-col items-start shadow
+      hover:bg-amber-500/50 rounded-sm transition-color
+        duration-300 ease-in-out active:bg-amber-500 ${theme === 'dark' ? 'bg-[var(--bg-card-color-dark)]' : 'bg-white'}`}
     >
       <img
         className="w-full h-2/3"

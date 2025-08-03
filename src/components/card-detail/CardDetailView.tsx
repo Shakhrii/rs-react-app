@@ -4,8 +4,10 @@ import type { CardDetailViewProps, Pokemon } from '../../types/types';
 import { SpinnerView } from '../spinner/SpinnerView';
 import { ErrorView } from '../error/ErrorView';
 import { CloseButton } from './close-button/CloseButton';
+import { useTheme } from '../../hooks/useTheme';
 
 export function CardDetailView({ id }: CardDetailViewProps) {
+  const { theme } = useTheme();
   const [pokemon, setPokemon] = useState<Pokemon>({} as Pokemon);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -38,8 +40,8 @@ export function CardDetailView({ id }: CardDetailViewProps) {
       ) : (
         <div
           data-testid="card-item"
-          className="w-100 flex flex-col items-start shadow rounded-sm
-           transition-colors duration-300 ease-in-out bg-white relative"
+          className={`w-100 flex flex-col items-start shadow rounded-sm
+           transition-colors duration-300 ease-in-out relative ${theme === 'dark' ? 'bg-[var(--bg-card-color-dark)]' : 'bg-white'}`}
         >
           <img
             className="w-full h-2/3"
