@@ -15,3 +15,8 @@ export const MENU_ITEMS = [
   { value: 'Pokemons', path: PAGE_ROUTES.POKEMONS },
   { value: 'About', path: PAGE_ROUTES.ABOUT },
 ];
+
+export const THEMES = {
+  DARK: 'dark',
+  LIGHT: 'light',
+};
