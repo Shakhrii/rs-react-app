@@ -44,6 +44,13 @@ export type PokemonDetailResponse = {
   held_items: HeldItemsResponse[];
 };
 
+export type PokemonListResult = {
+  results: Array<{
+    name: string;
+    url: string;
+  }>;
+};
+
 export type PokemonsResponse = {
   name: string;
   url: string;

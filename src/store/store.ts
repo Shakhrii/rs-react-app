@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import selectedItemsSlice from './slices/selectedItems.slice';
 import { useDispatch, useSelector } from 'react-redux';
+import { pokemonApi } from './slices/api/pokemonApi';
 
 export const store = configureStore({
   reducer: {
     selectedItems: selectedItemsSlice,
+    [pokemonApi.reducerPath]: pokemonApi.reducer,
   },
 });
 
