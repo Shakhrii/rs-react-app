@@ -4,9 +4,7 @@ import { LIMIT } from '../../utils/contstants';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { ThemeProvider } from '../../context/ThemeProvider';
-import { Provider } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
-import { store } from '../../store/store';
 
 vi.mock('../../hooks/useTheme', () => ({
   useTheme: vi.fn(() => ({ theme: 'light' })),
@@ -37,16 +35,14 @@ describe('Renders tests', () => {
 
     render(
       <MemoryRouter>
-        <Provider store={store}>
-          <ThemeProvider>
-            <PaginationView
-              limit={LIMIT}
-              count={count}
-              onPageChanged={() => {}}
-              isVisible={true}
-            />
-          </ThemeProvider>
-        </Provider>
+        <ThemeProvider>
+          <PaginationView
+            limit={LIMIT}
+            count={count}
+            onPageChanged={() => {}}
+            isVisible={true}
+          />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
