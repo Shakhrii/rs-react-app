@@ -1,22 +1,20 @@
-import {
-  createApi,
-  fetchBaseQuery,
-  type FetchBaseQueryError,
-} from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { SERVER_URL } from '../../../utils/contstants';
 import type {
   Pokemon,
+  Pokemons,
   PokemonDetailResponse,
   PokemonListResult,
 } from '../../../types/types';
 
 export const pokemonApi = createApi({
   reducerPath: 'pokemonApi',
-  tagTypes: ['Pokemon'],
+  tagTypes: ['Pokemon', 'PokemonList'],
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_URL }),
   endpoints: (build) => ({
     getPokemonByName: build.query<Pokemon, string>({
-      query: (name) => `pokemon/${name}`,
+      query: (name) => `${name}`,
+      providesTags: ['Pokemon'],
       transformResponse: (response: PokemonDetailResponse) => {
         return {
           id: response.id,
@@ -42,35 +40,43 @@ export const pokemonApi = createApi({
         } as Pokemon;
       },
     }),
-    getPokemons: build.query<Pokemon[], { limit: number; offset: number }>({
-      async queryFn(
-        { limit, offset },
-        { dispatch },
-        extraOptions,
-        fetchWithBQ
-      ) {
+    getPokemons: build.query<
+      Pokemons,
+      { limit: number; offset: number; refetch: boolean }
+    >({
+      async queryFn({ limit, offset, refetch }, { dispatch }, _, fetchWithBQ) {
         const pokemonResult = await fetchWithBQ(
           `?limit=${limit}&offset=${offset}`
         );
         if (pokemonResult.error) {
-          return { error: pokemonResult.error as FetchBaseQueryError };
+          return { error: pokemonResult.error };
         } else {
           const results = (pokemonResult.data as PokemonListResult).results;
+          const count = (pokemonResult.data as { count: number }).count;
+
           const detailPromises: Array<Promise<Pokemon>> = results.map(
-            (pokemon) => {
-              return dispatch(
-                pokemonApi.endpoints.getPokemonByName.initiate(pokemon.name)
-              ).then((res) => res.data as Pokemon);
+            async (pokemon) => {
+              const res = await dispatch(
+                pokemonApi.endpoints.getPokemonByName.initiate(pokemon.name, {
+                  forceRefetch: refetch,
+                })
+              );
+              return res.data as Pokemon;
             }
           );
 
           const detailResults = await Promise.all(detailPromises);
 
-          return { data: detailResults };
+          return { data: { pokemons: detailResults, count: count } };
         }
       },
     }),
   }),
 });
 
-export const { useGetPokemonByNameQuery } = pokemonApi;
+export const {
+  useGetPokemonByNameQuery,
+  useLazyGetPokemonByNameQuery,
+  useGetPokemonsQuery,
+  useLazyGetPokemonsQuery,
+} = pokemonApi;

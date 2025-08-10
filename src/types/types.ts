@@ -12,6 +12,11 @@ export type Pokemon = {
   heldItems: string;
 };
 
+export type Pokemons = {
+  pokemons: Pokemon[];
+  count: number;
+};
+
 export type SpritesResponse = {
   front_default: string;
 };
@@ -107,4 +112,8 @@ export type MenuProps = {
 
 export type CardDetailViewProps = {
   id: string;
+};
+
+export type RefetchButtonProps = {
+  refetchHandler: () => void;
 };

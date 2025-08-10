@@ -6,48 +6,80 @@ import MainView from '../../components/main/MainView';
 import { SearchView } from '../../components/search/SearchView';
 import { SpinnerView } from '../../components/spinner/SpinnerView';
 import type { Pokemon } from '../../types/types';
-import { getFromLS } from '../../utils/utils';
-import { getPokemons as fetchData } from '../../api/Api';
 import { PaginationView } from '../../components/pagination/PaginationView';
-import { COUNT_KEY, LIMIT, SEARCH_TERM_KEY } from '../../utils/contstants';
+import { LIMIT, SEARCH_TERM_KEY } from '../../utils/contstants';
 import { Outlet } from 'react-router';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { Flyout } from '../../components/flyout/Flyout';
+import {
+  useLazyGetPokemonByNameQuery,
+  useLazyGetPokemonsQuery,
+} from '../../store/slices/api/pokemonApi';
+import { RefetchButton } from '../../components/refetch/RefetchButton';
 
 export default function Pokemons() {
-  const [pokemons, setPokemons] = useState<Pokemon[] | undefined>(undefined);
-  const [isLoading, setLoading] = useState(true);
+  const [pokemonList, setPokemonList] = useState<Pokemon[] | undefined>(
+    undefined
+  );
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState('');
   const [offset, setOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [searchTerm, setSearchTerm] = useLocalStorage('', SEARCH_TERM_KEY);
-
+  const [isRefetch, setRefetch] = useState(false);
+  const [triggerPokemons, { isFetching: isFetchPokemons }] =
+    useLazyGetPokemonsQuery();
+  const [triggerPokemon, { isFetching: isFetchPokemon }] =
+    useLazyGetPokemonByNameQuery();
   useEffect(() => {
-    getPokemons();
-  }, [searchTerm, offset]);
+    updatePokemons();
+  }, [searchTerm, offset, isRefetch]);
 
-  async function getPokemons(): Promise<Pokemon[]> {
+  async function updatePokemons(): Promise<Pokemon[]> {
     skipError();
-    setLoading(true);
 
     let result: Pokemon[] = [];
+    let count = 0;
 
     try {
-      const res = await fetchData(searchTerm.toString(), offset);
-      if (res && !Array.isArray(res)) {
-        result = [res];
+      if (searchTerm) {
+        await triggerPokemon(searchTerm, !isRefetch)
+          .unwrap()
+          .then((data) => {
+            result = [data];
+            count = 1;
+          })
+          .catch(() => {
+            showError('No Results');
+            result = [];
+            count = 0;
+          });
       } else {
-        result = res;
+        await triggerPokemons(
+          { limit: LIMIT, offset, refetch: isRefetch },
+          !isRefetch
+        )
+          .unwrap()
+          .then((data) => {
+            result = data.pokemons;
+            count = data.count;
+          })
+          .catch(() => {
+            showError('No Results');
+            result = [];
+            count = 0;
+          });
       }
-    } catch {
+    } catch (error) {
+      console.log(error);
       showError('No results...');
       return [];
     } finally {
-      setPokemons(result);
-      setLoading(false);
-      const count = Number(getFromLS(COUNT_KEY));
+      setPokemonList(result);
       setTotalCount(count);
+      if (isRefetch) {
+        setRefetch(false);
+      }
     }
     return result;
   }
@@ -74,19 +106,26 @@ export default function Pokemons() {
     setMessageError('');
   }
 
+  async function refetch() {
+    setRefetch(true);
+  }
+
   return (
     <>
       <div className="flex flex-col gap-15 items-center relative">
         <ErrorBoundary>
-          <SearchView
-            value={searchTerm}
-            onSearchClick={(value) => {
-              changeSearchTermHandler(value);
-            }}
-          />
+          <div className="flex flex-row gap-10 w-full items-center justify-center">
+            <SearchView
+              value={searchTerm}
+              onSearchClick={(value) => {
+                changeSearchTermHandler(value);
+              }}
+            />
+            <RefetchButton refetchHandler={refetch} />
+          </div>
           <MainView>
             <div className="flex flex-col gap-10 items-center justify-center flex-2/3">
-              {isLoading ? (
+              {isFetchPokemon || isFetchPokemons ? (
                 <SpinnerView />
               ) : error ? (
                 <ErrorView
@@ -96,11 +135,11 @@ export default function Pokemons() {
                 />
               ) : (
                 <>
-                  <CardListView pokemons={pokemons} />
+                  <CardListView pokemons={pokemonList} />
                 </>
               )}
               <PaginationView
-                isVisible={!isLoading && !error}
+                isVisible={!(isFetchPokemon || isFetchPokemons) && !error}
                 count={totalCount}
                 limit={LIMIT}
                 onPageChanged={(offset) => handlePaginationPageChanged(offset)}
