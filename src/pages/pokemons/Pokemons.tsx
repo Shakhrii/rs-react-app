@@ -121,7 +121,6 @@ export default function Pokemons() {
                 changeSearchTermHandler(value);
               }}
             />
-            <RefetchButton refetchHandler={refetch} />
           </div>
           <MainView>
             <div className="flex flex-col gap-10 items-center justify-center flex-2/3">
@@ -134,9 +133,10 @@ export default function Pokemons() {
                   clickHandler={() => resetSearch()}
                 />
               ) : (
-                <>
+                <div className="flex flex-col items-center">
+                  <RefetchButton refetchHandler={refetch} />
                   <CardListView pokemons={pokemonList} />
-                </>
+                </div>
               )}
               <PaginationView
                 isVisible={!(isFetchPokemon || isFetchPokemons) && !error}
