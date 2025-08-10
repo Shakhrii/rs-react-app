@@ -6,6 +6,8 @@ import type { Pokemon } from '../../types/types';
 import * as api from '../../api/Api';
 import { MemoryRouter } from 'react-router';
 import { ThemeProvider } from '../../context/ThemeProvider';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 describe('Rendering tests', () => {
   const testPokemon: Pokemon = {
@@ -33,9 +35,11 @@ describe('Rendering tests', () => {
   it('show loading state while fetching data', async () => {
     render(
       <MemoryRouter>
-        <ThemeProvider>
-          <CardDetailView id="1" />
-        </ThemeProvider>
+        <Provider store={store}>
+          <ThemeProvider>
+            <CardDetailView id="1" />
+          </ThemeProvider>
+        </Provider>
       </MemoryRouter>
     );
 
