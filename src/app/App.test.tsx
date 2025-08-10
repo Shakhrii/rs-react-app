@@ -1,9 +1,8 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import App from './App';
-import type { Pokemon } from '../types/types';
 
 import { renderWithProviders } from '../test/test-utils';
 
@@ -35,34 +34,8 @@ describe('Local Storage integration', () => {
 });
 
 describe('Rendering tests', () => {
-  beforeEach(() => {
-    const testPokemons: Pokemon[] = [];
-
-    for (let i = 0; i < 10; i++) {
-      const pokemon = {
-        id: i,
-        name: `name${i}`,
-        avatar: `avatar${i}`,
-        weight: i,
-        height: i,
-        order: i * 10,
-        baseExperience: i,
-        heldItems: `heldItems${i}`,
-        abilities: `abilities${i}`,
-      };
-      testPokemons.push(pokemon);
-    }
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('show loading state while fetching data', async () => {
     renderWithProviders(<App />);
-
-    const button = screen.getByText('Search');
-    await userEvent.click(button);
 
     expect(screen.getByRole('status')).toBeInTheDocument();
 
