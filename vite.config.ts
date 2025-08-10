@@ -9,7 +9,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['@testing-library/jest-dom/vitest'],
+    setupFiles: ['./src/test/setupTests.ts'],
     coverage: {
       provider: 'v8',
       thresholds: {

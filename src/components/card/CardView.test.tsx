@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { CardView } from './CardView';
 import type { Pokemon } from '../../types/types';
 import { MemoryRouter } from 'react-router';
-import { store } from '../../store/store';
+import { setupStore } from '../../store/store';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '../../context/ThemeProvider';
 import { useTheme } from '../../hooks/useTheme';
@@ -29,7 +29,7 @@ describe('Rendering tests', () => {
   it('correctly displays item names and descriptions', async () => {
     render(
       <MemoryRouter>
-        <Provider store={store}>
+        <Provider store={setupStore()}>
           <ThemeProvider>
             <CardView pokemon={testPokemon} />
           </ThemeProvider>
@@ -46,7 +46,7 @@ describe('Rendering tests', () => {
 
     render(
       <MemoryRouter>
-        <Provider store={store}>
+        <Provider store={setupStore()}>
           <ThemeProvider>
             <CardView pokemon={testPokemon} />
           </ThemeProvider>

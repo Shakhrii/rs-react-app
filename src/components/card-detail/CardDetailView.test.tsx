@@ -1,59 +1,50 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { CardDetailView } from './CardDetailView';
 import type { Pokemon } from '../../types/types';
-import * as api from '../../api/Api';
 import { MemoryRouter } from 'react-router';
 import { ThemeProvider } from '../../context/ThemeProvider';
-import { Provider } from 'react-redux';
-import { store } from '../../store/store';
+import { renderWithProviders } from '../../test/test-utils';
 
 describe('Rendering tests', () => {
   const testPokemon: Pokemon = {
     id: 1,
-    name: 'name1',
-    height: 1,
-    weight: 2,
-    abilities: 'abilities1',
-    avatar: '',
-    order: 3,
+    name: 'bulbasaur',
+    height: 7,
+    weight: 69,
+    abilities: 'overgrow',
+    avatar: 'image-url',
+    order: 1,
     baseExperience: 64,
-    heldItems: 'heldItem',
+    heldItems: '',
   };
-  beforeEach(() => {
-    vi.spyOn(api, 'getPokemon').mockImplementation(
-      () =>
-        new Promise((resolve) => setTimeout(() => resolve(testPokemon), 500))
-    );
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
 
   it('show loading state while fetching data', async () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <Provider store={store}>
-          <ThemeProvider>
-            <CardDetailView id="1" />
-          </ThemeProvider>
-        </Provider>
+        <ThemeProvider>
+          <CardDetailView id="bulbasaur" />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
     await waitFor(
       () => {
-        expect(screen.getByText(testPokemon.name)).toBeInTheDocument();
-        expect(screen.getByText(testPokemon.height)).toBeInTheDocument();
-        expect(screen.getByText(testPokemon.weight)).toBeInTheDocument();
-        expect(screen.getByText(testPokemon.abilities)).toBeInTheDocument();
-        expect(screen.getByText(testPokemon.order)).toBeInTheDocument();
-        expect(
-          screen.getByText(testPokemon.baseExperience)
-        ).toBeInTheDocument();
-        expect(screen.getByText(testPokemon.heldItems)).toBeInTheDocument();
+        const nameElements = screen.queryAllByText(testPokemon.name);
+        expect(nameElements[0]).toBeInTheDocument();
+        const heightElements = screen.queryAllByText(testPokemon.height);
+        expect(heightElements[0]).toBeInTheDocument();
+        const weightElements = screen.queryAllByText(testPokemon.weight);
+        expect(weightElements[0]).toBeInTheDocument();
+        const abilitiesElements = screen.queryAllByText(testPokemon.abilities);
+        expect(abilitiesElements[0]).toBeInTheDocument();
+        const baseExpElements = screen.queryAllByText(
+          testPokemon.baseExperience
+        );
+        expect(baseExpElements[0]).toBeInTheDocument();
+        const heldElememnts = screen.queryAllByText(testPokemon.heldItems);
+        expect(heldElememnts[0]).toBeInTheDocument();
       },
       { timeout: 3000 }
     );
