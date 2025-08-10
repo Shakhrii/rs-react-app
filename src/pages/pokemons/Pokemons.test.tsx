@@ -7,6 +7,34 @@ import { renderWithProviders } from '../../test/test-utils';
 import Pokemons from './Pokemons';
 import userEvent from '@testing-library/user-event';
 
+describe('Cache behavior tests', () => {
+  it('cache data when return back on pagination', async () => {
+    renderWithProviders(
+      <MemoryRouter>
+        <ThemeProvider>
+          <Pokemons />
+        </ThemeProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(
+      () => {
+        expect(screen.getByText('217'));
+        expect(screen.queryByRole('status')).toBeNull();
+
+        const buttonLast = screen.getByRole('button', { name: '217' });
+        const buttonFirst = screen.getByRole('button', { name: '1' });
+
+        userEvent.click(buttonLast);
+        userEvent.click(buttonFirst);
+
+        expect(screen.queryByRole('status')).toBeNull();
+      },
+      { timeout: 3000 }
+    );
+  });
+});
+
 describe('Rendering tests', () => {
   const count = 217;
   const names = ['bulbasaur', 'ivysaur', 'venusaur'];
