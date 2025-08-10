@@ -42,4 +42,12 @@ export const handlers = [
       }
     );
   }),
+
+  http.get('https://pokeapi.co/api/v2/pokemon/0', async () => {
+    await delay(150);
+
+    return HttpResponse.json('Not Found', {
+      status: 404,
+    });
+  }),
 ];

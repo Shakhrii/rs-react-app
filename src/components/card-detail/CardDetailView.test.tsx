@@ -20,7 +20,7 @@ describe('Rendering tests', () => {
     heldItems: '',
   };
 
-  it('show loading state while fetching data', async () => {
+  it('show loading state while fetching data and show correct data', async () => {
     renderWithProviders(
       <MemoryRouter>
         <ThemeProvider>
@@ -28,6 +28,8 @@ describe('Rendering tests', () => {
         </ThemeProvider>
       </MemoryRouter>
     );
+
+    expect(screen.getByRole('status')).toBeInTheDocument();
 
     await waitFor(
       () => {
@@ -45,6 +47,28 @@ describe('Rendering tests', () => {
         expect(baseExpElements[0]).toBeInTheDocument();
         const heldElememnts = screen.queryAllByText(testPokemon.heldItems);
         expect(heldElememnts[0]).toBeInTheDocument();
+
+        expect(screen.queryByRole('status')).toBeNull();
+      },
+      { timeout: 3000 }
+    );
+  });
+
+  it('show error with wrong request', async () => {
+    renderWithProviders(
+      <MemoryRouter>
+        <ThemeProvider>
+          <CardDetailView id="0" />
+        </ThemeProvider>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByRole('status')).toBeInTheDocument();
+
+    await waitFor(
+      () => {
+        expect(screen.getByText('Something went wrong :('));
+        expect(screen.queryByRole('status')).toBeNull();
       },
       { timeout: 3000 }
     );
