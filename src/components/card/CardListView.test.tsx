@@ -1,11 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { CardListView } from './CardListView';
 import { MemoryRouter } from 'react-router';
-import { Provider } from 'react-redux';
-import { store } from '../../store/store';
 import { ThemeProvider } from '../../context/ThemeProvider';
+import { renderWithProviders } from '../../test/test-utils';
 
 describe('Rendering Tests', () => {
   it('render correct number of items when data is provided', () => {
@@ -25,13 +24,11 @@ describe('Rendering Tests', () => {
       testPokemons.push(pokemon);
     }
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <Provider store={store}>
-          <ThemeProvider>
-            <CardListView pokemons={testPokemons} />
-          </ThemeProvider>
-        </Provider>
+        <ThemeProvider>
+          <CardListView pokemons={testPokemons} />
+        </ThemeProvider>
       </MemoryRouter>
     );
     const items = screen.queryAllByTestId('card-item');
@@ -57,13 +54,11 @@ describe('Data Display Tests', () => {
       testPokemons.push(pokemon);
     }
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <Provider store={store}>
-          <ThemeProvider>
-            <CardListView pokemons={testPokemons} />
-          </ThemeProvider>
-        </Provider>
+        <ThemeProvider>
+          <CardListView pokemons={testPokemons} />
+        </ThemeProvider>
       </MemoryRouter>
     );
 

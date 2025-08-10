@@ -54,7 +54,7 @@ describe('Rendering tests', () => {
     );
   });
 
-  it('show error with wrong request', async () => {
+  it('show loading state and show error with wrong data', async () => {
     renderWithProviders(
       <MemoryRouter>
         <ThemeProvider>

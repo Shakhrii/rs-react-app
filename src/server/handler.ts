@@ -1,7 +1,7 @@
 import { http, HttpResponse, delay } from 'msw';
 
 export const handlers = [
-  http.get('https://pokeapi.co/api/v2/pokemon', async () => {
+  http.get('https://pokeapi.co/api/v2/pokemon?limit=6&offset=0', async () => {
     await delay(150);
 
     return HttpResponse.json(
