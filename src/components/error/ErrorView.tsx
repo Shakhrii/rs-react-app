@@ -1,5 +1,6 @@
 import corruptedFile from '../../assets/images/corrupted-file.png';
 import type { ErrorViewProps } from '../../types/types';
+import Image from 'next/image';
 
 export function ErrorView({
   message,
@@ -9,7 +10,7 @@ export function ErrorView({
   return (
     <div className="w-1/2 flex flex-col gap-5 items-center justify-center">
       <div className="w-50 h-50 self-center opacity-70">
-        <img src={corruptedFile} alt="empty"></img>
+        <Image src={corruptedFile} alt="empty" />
       </div>
       <span className="text-neutral-400">{message}</span>
       {clickHandler && (

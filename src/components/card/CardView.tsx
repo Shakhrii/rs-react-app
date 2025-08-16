@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { selectSelectedItemIds } from '../../store/slices/selectedItems.slice';
 import { selected, unselected } from '../../store/slices/selectedItems.slice';
 import { useTheme } from '../../hooks/useTheme';
+import Image from 'next/image';
 
 export function CardView({ pokemon }: CardViewProps) {
   const { theme } = useTheme();
@@ -44,11 +45,11 @@ export function CardView({ pokemon }: CardViewProps) {
         duration-300 ease-in-out active:bg-amber-500 
         ${theme === 'dark' ? 'bg-[var(--bg-card-color-dark)]' : 'bg-white'}`}
     >
-      <img
+      <Image
         className="w-full h-2/3"
         src={pokemon.avatar}
         alt="pokemon avatar"
-      ></img>
+      />
       <div className="flex flex-col items-start p-5">
         <span data-testid="card-name" className="text-sm">
           <span className="font-bold">name: </span>

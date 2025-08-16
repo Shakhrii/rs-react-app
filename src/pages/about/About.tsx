@@ -1,5 +1,6 @@
 import photo from '../../assets/images/photo.jpeg';
 import { useTheme } from '../../hooks/useTheme';
+import Image from 'next/image';
 
 export function About() {
   const link = 'https://rs.school/courses/reactjs';
@@ -8,7 +9,7 @@ export function About() {
   return (
     <div className="flex items-center justify-center gap-10 py-10">
       <div className="flex items-center justify-end flex-1/2">
-        <img
+        <Image
           className="rounded-full w-100 h-100 object-cover"
           src={photo}
           alt="author photo"

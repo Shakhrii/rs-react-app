@@ -5,6 +5,7 @@ import { CloseButton } from './close-button/CloseButton';
 import { useTheme } from '../../hooks/useTheme';
 import { useGetPokemonByNameQuery } from '../../store/slices/api/pokemonApi';
 import { RefetchButton } from '../refetch/RefetchButton';
+import Image from 'next/image';
 
 export function CardDetailView({ id }: CardDetailViewProps) {
   const { theme } = useTheme();
@@ -25,11 +26,11 @@ export function CardDetailView({ id }: CardDetailViewProps) {
             className={`w-100 flex flex-col items-start shadow rounded-sm
            transition-colors duration-300 ease-in-out relative ${theme === 'dark' ? 'bg-[var(--bg-card-color-dark)]' : 'bg-white'}`}
           >
-            <img
+            <Image
               className="w-full h-2/3"
-              src={data?.avatar}
+              src={data?.avatar || ''}
               alt="pokemon avatar"
-            ></img>
+            />
             <div className="flex flex-col items-start p-5">
               <span data-testid="card-name" className="text-sm">
                 <span className="font-bold">name: </span>
