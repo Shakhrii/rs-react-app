@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from 'react-router';
-import HeaderView from '../components/header/HeaderView';
 import { About } from '../pages/about/About';
 import { NotFound } from '../pages/not-found/NotFound';
 import { Pokemon } from '../pages/pokemon/Pokemon';
@@ -9,7 +8,6 @@ import { PAGE_ROUTES } from '../utils/contstants';
 export const AppContent = () => {
   return (
     <>
-      <HeaderView />
       <Routes>
         <Route
           path="/"

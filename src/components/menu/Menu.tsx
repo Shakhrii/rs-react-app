@@ -6,7 +6,7 @@ export function Menu({ items }: MenuProps) {
     <ul className="flex flex-wrap -mb-px items-center justify-center gap-2">
       {items.map((item) => (
         <li key={item.value}>
-          <MenuItem value={item.value} path={item.path} />
+          <MenuItem value={item.value} path={item.path} isActive={false} />
         </li>
       ))}
     </ul>

@@ -104,6 +104,7 @@ export type ButtonArrowProps = {
 export type MenuItemProps = {
   value: string;
   path: string;
+  isActive: boolean;
 };
 
 export type MenuProps = {

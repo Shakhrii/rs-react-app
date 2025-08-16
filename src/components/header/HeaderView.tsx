@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '../../hooks/useTheme';
 import type { HeaderViewProps } from '../../types/types';
 import { MENU_ITEMS } from '../../utils/contstants';
@@ -8,7 +10,7 @@ export default function HeaderView({ children }: HeaderViewProps) {
   const { theme } = useTheme();
   return (
     <header className="pb-6">
-      <div>
+      <div className="flex flex-col justify-center items-center">
         <h1
           className={`text-4xl pb-6 ${theme === 'dark' ? 'text-white' : 'text-neutral-500'}`}
         >
