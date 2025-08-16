@@ -47,6 +47,8 @@ export function CardView({ pokemon }: CardViewProps) {
     >
       <Image
         className="w-full h-2/3"
+        width={96}
+        height={96}
         src={pokemon.avatar}
         alt="pokemon avatar"
       />

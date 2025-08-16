@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///Users/shakhri/Desktop/not-cloud/react/rs-react-app/src/app/App.css"],"sourcesContent":["#root {\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 2rem;\n  text-align: center;\n}\n"],"names":[],"mappings":"AAAA","debugId":null}}]
+}

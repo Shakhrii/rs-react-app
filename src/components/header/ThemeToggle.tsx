@@ -18,7 +18,7 @@ export const ThemeToggle = () => {
         value=""
         checked={theme === 'dark'}
         className="sr-only peer"
-        onClick={handleChangeTheme}
+        onChange={handleChangeTheme}
       />
       <div
         className={`

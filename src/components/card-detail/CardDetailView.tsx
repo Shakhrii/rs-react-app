@@ -28,6 +28,8 @@ export function CardDetailView({ id }: CardDetailViewProps) {
           >
             <Image
               className="w-full h-2/3"
+              width={400}
+              height={386}
               src={data?.avatar || ''}
               alt="pokemon avatar"
             />
