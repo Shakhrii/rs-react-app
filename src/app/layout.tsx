@@ -3,6 +3,7 @@ import HeaderView from '../components/header/HeaderView';
 import { ThemeProvider } from '../context/ThemeProvider';
 import '../index.css';
 import StoreProvider from './StoreProvider';
+import ErrorBoundary from '../components/error/ErrorBoundary';
 
 export default function RootLayout({
   children,
@@ -15,8 +16,8 @@ export default function RootLayout({
         <div id="root" className='flex flex-col items-center justify-center'>
             <ThemeProvider>
                 <StoreProvider>
-                    <HeaderView />    
-                    {children}
+                        <HeaderView />    
+                        {children}
                 </StoreProvider>
             </ThemeProvider>
         </div>

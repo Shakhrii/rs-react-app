@@ -10,6 +10,6 @@ export async function setCookieAction(
   (await cookies()).set({
     name: key,
     value: value,
-    ...options, // maxAge, path, domain, secure и т.д.
+    ...options,
   });
 }
