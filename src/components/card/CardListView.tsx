@@ -7,8 +7,8 @@ import { COUNT_KEY, LIMIT } from '../../utils/contstants';
 import { CardView } from './CardView';
 import { setCookieAction } from '../../../actions/set-cookie';
 import { ErrorView } from '../error/ErrorView';
-import { useRouter } from 'next/navigation';
 import SpinnerView from '../spinner/SpinnerView';
+import { useRouter } from 'next/navigation';
 
 export function CardListView({
   search,

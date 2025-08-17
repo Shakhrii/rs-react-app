@@ -1,5 +1,5 @@
-import type { MenuItemProps } from '../../../types/types';
 import Link from 'next/link';
+import type { MenuItemProps } from '../../../types/types';
 
 export function MenuItem({ value, path, isActive }: MenuItemProps) {
   return (

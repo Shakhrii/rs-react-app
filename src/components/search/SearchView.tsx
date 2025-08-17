@@ -19,21 +19,21 @@ export function SearchView() {
     router.push(`/pokemons?search=${encodeURIComponent(termLS)}`);
   }, [termLS]);
 
-  // useEffect(() => {
-  //   if (!searchTerm) {
-  //     handleClick();
-  //   }
-  // }, [searchTerm]);
+  useEffect(() => {
+    if (!searchTerm) {
+      handleClick();
+    }
+  }, [searchTerm]);
 
-  // useEffect(() => {
-  //   const searchParam = searchParams?.get('search') || '';
-  //   if (searchParam !== searchTerm) {
-  //     if (searchParam) {
-  //       setTermLS(searchParam);
-  //     }
-  //     setSearchTerm(searchParam);
-  //   }
-  // }, [searchParams]);
+  useEffect(() => {
+    const searchParam = searchParams?.get('search') || '';
+    if (searchParam !== searchTerm) {
+      if (searchParam) {
+        setTermLS(searchParam);
+      }
+      setSearchTerm(searchParam);
+    }
+  }, [searchParams]);
 
   function handleChangeEvent(event: ChangeEvent<HTMLInputElement>) {
     const inputValue = event.target.value.toString().trim();

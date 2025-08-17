@@ -9,7 +9,7 @@ import {
   selectSelectedItemIds,
   unselected,
 } from '../../../lib/features/selectedItems/selectedItems.slice';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export function CardView({ pokemon }: CardViewProps) {
   const { theme } = useTheme();
