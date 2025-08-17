@@ -3,8 +3,7 @@ import {
   PokemonDetailResponse,
   PokemonsResponse,
 } from '../src/types/types';
-import { SERVER_URL, LIMIT, COUNT_KEY } from '../src/utils/contstants';
-import { saveToLS } from '../src/utils/utils';
+import { SERVER_URL, LIMIT } from '../src/utils/contstants';
 let count = 0;
 
 export async function getPokemons(
@@ -35,6 +34,7 @@ export async function getPokemon(searchTerm: string) {
   const res = (await fetchPokemon(
     `${SERVER_URL}/${searchTerm}`
   )) as PokemonDetailResponse;
+  console.log(res);
   return parsePokemon(res);
 }
 

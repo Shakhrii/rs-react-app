@@ -8,6 +8,7 @@ import ErrorBoundary from '../../components/error/ErrorBoundary';
 import { Flyout } from '../../components/flyout/Flyout';
 // import { ErrorView } from '../../components/error/ErrorView';
 import MainView from '../../components/main/MainView';
+import { PokemonModal } from '../../components/modal/PokemonModal';
 import { PaginationView } from '../../components/pagination/PaginationView';
 import { SearchView } from '../../components/search/SearchView';
 import { COUNT_KEY, LIMIT } from '../../utils/contstants';
@@ -131,26 +132,28 @@ export default async function Pokemons({ searchParams }: PokemonsPageProps) {
           <SearchView />
         </div>
         <MainView>
-          {/* <div className="flex flex-col gap-10 items-center justify-center flex-2/3">
-              {isFetchPokemon || isFetchPokemons ? (
+          <div className="flex flex-col gap-10 items-center justify-center flex-2/3">
+            {/* </div>{ {isFetchPokemon || isFetchPokemons ? (
                 <SpinnerView />
               ) : error ? (
                 <ErrorView
                   message={messageError}
                   buttonText="Reset Search"
                   clickHandler={() => resetSearch()}
-                />
-              ) : ( */}
-          <div className="flex flex-col items-center">
-            {/* <RefetchButton refetchHandler={refetch} /> */}
-            <CardListView search={search} currentPage={page} />
+                /> */}
+            {/* ) : ( }} */}
+            <div className="flex flex-col items-center">
+              {/* <RefetchButton refetchHandler={refetch} /> */}
+              <CardListView search={search} currentPage={page} />
+            </div>
+            <PaginationView
+              isVisible={true}
+              count={Number(pages)}
+              limit={LIMIT}
+            />
+            <Flyout />
+            <PokemonModal />
           </div>
-          <PaginationView
-            isVisible={true}
-            count={Number(pages)}
-            limit={LIMIT}
-          />
-          <Flyout />
           {/* )} */}
           {/* <PaginationView
                 isVisible={!(isFetchPokemon || isFetchPokemons) && !error}

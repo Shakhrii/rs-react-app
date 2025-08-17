@@ -30,10 +30,8 @@ export function PaginationView({
   );
 
   const createPageURL = (pageNumber: number | string) => {
-    console.log(`page number = ${pageNumber}`);
     const params = new URLSearchParams(searchParams || '');
     params.set('page', pageNumber.toString());
-    console.log(params.toString());
     return `${pathname}?${params.toString()}`;
   };
 

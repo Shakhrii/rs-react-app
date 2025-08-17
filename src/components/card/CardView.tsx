@@ -1,15 +1,17 @@
 'use client'
 
-import { useNavigate } from 'react-router';
 import type { CardViewProps } from '../../types/types';
 import { useTheme } from '../../hooks/useTheme';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '../../../lib/hooks';
 import { selected, selectSelectedItemIds, unselected } from '../../../lib/features/selectedItems/selectedItems.slice';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 export function CardView({ pokemon }: CardViewProps) {
   const { theme } = useTheme();
-  // const navigate = useNavigate();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
 
   const selectedIds = useAppSelector(selectSelectedItemIds);
@@ -34,8 +36,9 @@ export function CardView({ pokemon }: CardViewProps) {
   };
 
   function handleClick() {
-    const searchParams = new URLSearchParams(window.location.search);
-    // navigate(`${pokemon.id}?${searchParams.toString()}`);
+    const params = new URLSearchParams(searchParams || '');
+    params.set('id', pokemon.id.toString());
+    router.push(`${pathname}?${params.toString()}`);
   }
   return (
     <div
