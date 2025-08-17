@@ -12,8 +12,8 @@ export const PAGE_ROUTES = {
 } as const;
 
 export const MENU_ITEMS = [
-  { value: 'Pokemons', path: PAGE_ROUTES.POKEMONS },
-  { value: 'About', path: PAGE_ROUTES.ABOUT },
+  { value: 'Pokemons', path: PAGE_ROUTES.POKEMONS, isActive: false },
+  { value: 'About', path: PAGE_ROUTES.ABOUT, isActive: false },
 ];
 
 export const THEMES = {
