@@ -1,4 +1,4 @@
-export function SpinnerView() {
+export default function SpinnerView() {
   return (
     <div role="status" className="self-center-safe">
       <svg

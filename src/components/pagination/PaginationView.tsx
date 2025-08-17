@@ -5,11 +5,7 @@ import { Button } from './buttons/Button';
 import { ButtonDisabled } from './buttons/ButtonDisabled';
 import { ButtonLeftArrow } from './buttons/ButtonLeftArrow';
 import { ButtonRightArrow } from './buttons/ButtonRightArrow';
-import { COUNT_KEY, LIMIT } from '../../utils/contstants';
-import Link from 'next/link';
-import { generatePagination } from '@/app/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { getCookieAction } from '../../../actions/get-cookie';
 
 type PaginationViewProps = {
   limit: number;
@@ -45,6 +41,10 @@ export function PaginationView({
     const path = createPageURL(currentPage);
     replace(path);
   }, [currentPage, isVisible]);
+
+  if (count === 0) {
+    return null;
+  }
 
   return (
     <div

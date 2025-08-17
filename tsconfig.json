@@ -30,7 +30,7 @@
     "build/types/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
-  ],
+, "src/app/pokemons/loading.tsx"  ],
   "exclude": [
     "node_modules"
   ]
