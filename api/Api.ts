@@ -3,15 +3,20 @@ import {
   PokemonDetailResponse,
   PokemonsResponse,
 } from '../src/types/types';
-import { SERVER_URL, LIMIT } from '../src/utils/contstants';
+import { SERVER_URL, LIMIT, COUNT_KEY } from '../src/utils/contstants';
+import { saveToLS } from '../src/utils/utils';
+let count = 0;
 
 export async function getPokemons(
   searchTerm: string,
   offset: number
-): Promise<Pokemon[] | Pokemon> {
+): Promise<
+  { pokemons: Pokemon[]; count: number } | { pokemons: Pokemon; count: number }
+> {
   if (searchTerm) {
-    // saveToLS(COUNT_KEY, '1');
-    return getPokemon(searchTerm);
+    count = 1;
+    const pokemon = await getPokemon(searchTerm);
+    return { pokemons: pokemon, count };
   } else {
     const pokemonResponse = await fetchPokemons(SERVER_URL, offset);
     const pokemonsDetailResponse = await Promise.all(
@@ -33,11 +38,14 @@ export async function getPokemon(searchTerm: string) {
   return parsePokemon(res);
 }
 
-function parsePokemons(pokemonResponses: PokemonDetailResponse[]): Pokemon[] {
+function parsePokemons(pokemonResponses: PokemonDetailResponse[]): {
+  pokemons: Pokemon[];
+  count: number;
+} {
   const pokemons: Pokemon[] = pokemonResponses.map((item) =>
     parsePokemon(item)
   );
-  return pokemons;
+  return { pokemons, count };
 }
 
 function parsePokemon(pokemonsDetailResponse: PokemonDetailResponse): Pokemon {
@@ -83,7 +91,7 @@ async function fetchPokemons(
   const response = await fetch(`${url}?limit=${LIMIT}&offset=${offset}`);
   if (response.ok) {
     const resultResponse = await response.json();
-    // saveToLS(COUNT_KEY, resultResponse.count || 1);
+    count = resultResponse.count || 1;
     return resultResponse.results;
   } else {
     throw Error(response.statusText);

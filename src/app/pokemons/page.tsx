@@ -1,13 +1,15 @@
 // 'use client';
 
 // import { useEffect, useState } from 'react';
+import { getCookieAction } from '../../../actions/get-cookie';
+import { getPokemons } from '../../../api/Api';
 import { CardListView } from '../../components/card/CardListView';
 import ErrorBoundary from '../../components/error/ErrorBoundary';
 // import { ErrorView } from '../../components/error/ErrorView';
 import MainView from '../../components/main/MainView';
 import { PaginationView } from '../../components/pagination/PaginationView';
 import { SearchView } from '../../components/search/SearchView';
-import { LIMIT } from '../../utils/contstants';
+import { COUNT_KEY, LIMIT } from '../../utils/contstants';
 // import { SpinnerView } from '../../components/spinner/SpinnerView';
 // import type { Pokemon } from '../../types/types';
 // import { PaginationView } from '../../components/pagination/PaginationView';
@@ -31,6 +33,7 @@ export default async function Pokemons({ searchParams }: PokemonsPageProps) {
   const sParams = await searchParams;
   const search = sParams?.search || '';
   const page = Number(sParams.page) || 1;
+  const pages = await getCookieAction(COUNT_KEY);
 
   //   const [pokemonList, setPokemonList] = useState<Pokemon[] | undefined>(
   //     undefined
@@ -101,9 +104,9 @@ export default async function Pokemons({ searchParams }: PokemonsPageProps) {
   //     // changeSearchTermHandler('');
   //   }
 
-//   function handlePaginationPageChanged(offs: number) {
-//     // setOffset(offs);
-//   }
+  //   function handlePaginationPageChanged(offs: number) {
+  //     // setOffset(offs);
+  //   }
 
   //   function showError(message: string) {
   //     setError(true);
@@ -141,7 +144,11 @@ export default async function Pokemons({ searchParams }: PokemonsPageProps) {
             {/* <RefetchButton refetchHandler={refetch} /> */}
             <CardListView search={search} currentPage={page} />
           </div>
-          <PaginationView isVisible={true} count={1200} limit={LIMIT} />
+          <PaginationView
+            isVisible={true}
+            count={Number(pages)}
+            limit={LIMIT}
+          />
           {/* )} */}
           {/* <PaginationView
                 isVisible={!(isFetchPokemon || isFetchPokemons) && !error}
