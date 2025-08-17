@@ -1,7 +1,9 @@
+'use client';
+
 import { useRef, useState } from 'react';
-import { useAppSelector } from '../../store/store';
-import { selectSelectedItems } from '../../store/slices/selectedItems.slice';
 import { convertToCSV } from '../../utils/utils';
+import { useAppSelector } from '../../../lib/hooks';
+import { selectSelectedItems } from '../../../lib/features/selectedItems/selectedItems.slice';
 
 export const ButtonDownload = () => {
   const [url, setUrl] = useState('');

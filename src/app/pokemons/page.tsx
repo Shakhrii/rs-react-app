@@ -5,6 +5,7 @@ import { getCookieAction } from '../../../actions/get-cookie';
 import { getPokemons } from '../../../api/Api';
 import { CardListView } from '../../components/card/CardListView';
 import ErrorBoundary from '../../components/error/ErrorBoundary';
+import { Flyout } from '../../components/flyout/Flyout';
 // import { ErrorView } from '../../components/error/ErrorView';
 import MainView from '../../components/main/MainView';
 import { PaginationView } from '../../components/pagination/PaginationView';
@@ -149,6 +150,7 @@ export default async function Pokemons({ searchParams }: PokemonsPageProps) {
             count={Number(pages)}
             limit={LIMIT}
           />
+          <Flyout />
           {/* )} */}
           {/* <PaginationView
                 isVisible={!(isFetchPokemon || isFetchPokemons) && !error}
@@ -160,7 +162,7 @@ export default async function Pokemons({ searchParams }: PokemonsPageProps) {
             <div className="flex-100">
               <Outlet />
             </div>
-            <Flyout /> */}
+            */}
         </MainView>
         {/* </ErrorBoundary> */}
       </div>

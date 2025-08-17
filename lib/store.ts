@@ -1,3 +1,5 @@
+'use client';
+
 import { configureStore } from '@reduxjs/toolkit';
 import countPageSlice from './features/pagination/countPage.slice';
 import selectedItemsSlice from './features/selectedItems/selectedItems.slice';
