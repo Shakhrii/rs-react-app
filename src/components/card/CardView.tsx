@@ -1,10 +1,14 @@
-'use client'
+'use client';
 
 import type { CardViewProps } from '../../types/types';
 import { useTheme } from '../../hooks/useTheme';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '../../../lib/hooks';
-import { selected, selectSelectedItemIds, unselected } from '../../../lib/features/selectedItems/selectedItems.slice';
+import {
+  selected,
+  selectSelectedItemIds,
+  unselected,
+} from '../../../lib/features/selectedItems/selectedItems.slice';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 export function CardView({ pokemon }: CardViewProps) {

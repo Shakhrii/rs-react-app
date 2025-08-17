@@ -5,19 +5,15 @@ import { useTheme } from '../../hooks/useTheme';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getPokemon as fetchData } from '../../../api/Api';
-import { useRouter } from 'next/navigation';
-import { PAGE_ROUTES } from '../../utils/contstants';
 import { ErrorView } from '../error/ErrorView';
 import SpinnerView from '../spinner/SpinnerView';
 
 export function CardDetailView({ id }: CardDetailViewProps) {
   const { theme } = useTheme();
   const [pokemon, setPokemon] = useState<Pokemon>();
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [error, setError] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const router = useRouter();
-  
+
   async function getPokemon() {
     setLoading(true);
     setError(false);
@@ -37,17 +33,12 @@ export function CardDetailView({ id }: CardDetailViewProps) {
   }, [id]);
 
   if (isLoading) {
-      return <SpinnerView />;
-    }
-  
-    if (error) {
-      return (
-        <ErrorView
-          message={'Not results'}
-          buttonText={''}
-        />
-      );
-    }
+    return <SpinnerView />;
+  }
+
+  if (error) {
+    return <ErrorView message={'Not results'} buttonText={''} />;
+  }
 
   return (
     <div className="w-100 flex justify-center relative">
@@ -58,12 +49,12 @@ export function CardDetailView({ id }: CardDetailViewProps) {
       >
         {pokemon?.avatar ? (
           <Image
-          className="w-full h-2/3"
-          width={400}
-          height={386}
-          src={pokemon.avatar}
-          alt="pokemon avatar"
-        />
+            className="w-full h-2/3"
+            width={400}
+            height={386}
+            src={pokemon.avatar}
+            alt="pokemon avatar"
+          />
         ) : null}
         <div className="flex flex-col items-start p-5">
           <span data-testid="card-name" className="text-sm">
