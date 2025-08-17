@@ -2,7 +2,6 @@ import { Provider } from 'react-redux';
 import HeaderView from '../components/header/HeaderView';
 import { ThemeProvider } from '../context/ThemeProvider';
 import '../index.css';
-import { setupStore } from '../store/store';
 import StoreProvider from './StoreProvider';
 
 export default function RootLayout({

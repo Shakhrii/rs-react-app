@@ -2,21 +2,19 @@
 
 import { useNavigate } from 'react-router';
 import type { CardViewProps } from '../../types/types';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import { selectSelectedItemIds } from '../../store/slices/selectedItems.slice';
-import { selected, unselected } from '../../store/slices/selectedItems.slice';
 import { useTheme } from '../../hooks/useTheme';
 import Image from 'next/image';
+import { useAppDispatch, useAppSelector } from '../../../lib/hooks';
+import { selected, selectSelectedItemIds, unselected } from '../../../lib/features/selectedItems/selectedItems.slice';
 
 export function CardView({ pokemon }: CardViewProps) {
   const { theme } = useTheme();
   // const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  // const selectedIds = useAppSelector(selectSelectedItemIds);
+  const selectedIds = useAppSelector(selectSelectedItemIds);
   const isSelected = () => {
-   
-    return true;
+    return selectedIds.includes(pokemon.id);
   };
 
   const handleSelect = () => {
@@ -28,11 +26,11 @@ export function CardView({ pokemon }: CardViewProps) {
   };
 
   const addSelected = () => {
-    // dispatch(selected(pokemon));
+    dispatch(selected(pokemon));
   };
 
   const removeSelected = () => {
-    // dispatch(unselected(pokemon));
+    dispatch(unselected(pokemon));
   };
 
   function handleClick() {

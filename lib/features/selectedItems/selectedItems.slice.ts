@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { Pokemon } from '../../types/types';
+import { Pokemon } from '../../../src/types/types';
 export interface SelectedItemsState {
   items: Pokemon[];
 }
