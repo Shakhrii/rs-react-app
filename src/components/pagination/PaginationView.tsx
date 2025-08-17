@@ -1,27 +1,40 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { Button } from './buttons/Button';
 import { ButtonDisabled } from './buttons/ButtonDisabled';
 import { ButtonLeftArrow } from './buttons/ButtonLeftArrow';
 import { ButtonRightArrow } from './buttons/ButtonRightArrow';
-import { useSearchParams } from 'react-router';
 import { LIMIT } from '../../utils/contstants';
+import Link from 'next/link';
+import { generatePagination } from '@/app/lib/utils';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type PaginationViewProps = {
   limit: number;
   count: number;
-  onPageChanged: (offset: number) => void;
   isVisible: boolean;
 };
 
 export function PaginationView({
   count,
   limit,
-  onPageChanged,
   isVisible,
 }: PaginationViewProps) {
-  const [paginationParam, setPaginationParam] = useSearchParams();
-  const page = paginationParam.get('page');
-  const [currentPage, setCurrentPage] = useState(Number(page) || 1);
+  const { replace } = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams?.get('page')) || 1
+  );
+
+  const createPageURL = (pageNumber: number | string) => {
+    console.log(`page number = ${pageNumber}`);
+    const params = new URLSearchParams(searchParams || '');
+    params.set('page', pageNumber.toString());
+    console.log(params.toString());
+    return `${pathname}?${params.toString()}`;
+  };
 
   const firstPage = 1;
   let pages = 0;
@@ -30,26 +43,8 @@ export function PaginationView({
   }
 
   useEffect(() => {
-    if (!isVisible && paginationParam.has('page')) {
-      paginationParam.delete('page');
-      setPaginationParam(paginationParam);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isVisible) {
-      paginationParam.delete('page');
-      setPaginationParam(paginationParam);
-    } else {
-      if (currentPage <= pages) {
-        const offset = (currentPage - 1) * LIMIT;
-        onPageChanged(offset);
-        paginationParam.set('page', String(currentPage));
-        setPaginationParam(paginationParam);
-      } else {
-        setCurrentPage(1);
-      }
-    }
+    const path = createPageURL(currentPage);
+    replace(path);
   }, [currentPage, isVisible]);
 
   return (

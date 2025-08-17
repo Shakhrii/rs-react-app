@@ -1,3 +1,5 @@
+'use client'
+
 import { useNavigate } from 'react-router';
 import type { CardViewProps } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../store/store';
@@ -8,12 +10,13 @@ import Image from 'next/image';
 
 export function CardView({ pokemon }: CardViewProps) {
   const { theme } = useTheme();
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useAppDispatch();
 
-  const selectedIds = useAppSelector(selectSelectedItemIds);
+  // const selectedIds = useAppSelector(selectSelectedItemIds);
   const isSelected = () => {
-    return selectedIds.includes(pokemon.id);
+   
+    return true;
   };
 
   const handleSelect = () => {
@@ -25,16 +28,16 @@ export function CardView({ pokemon }: CardViewProps) {
   };
 
   const addSelected = () => {
-    dispatch(selected(pokemon));
+    // dispatch(selected(pokemon));
   };
 
   const removeSelected = () => {
-    dispatch(unselected(pokemon));
+    // dispatch(unselected(pokemon));
   };
 
   function handleClick() {
     const searchParams = new URLSearchParams(window.location.search);
-    navigate(`${pokemon.id}?${searchParams.toString()}`);
+    // navigate(`${pokemon.id}?${searchParams.toString()}`);
   }
   return (
     <div
