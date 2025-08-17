@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '../../hooks/useTheme';
 
 export const ThemeToggle = () => {
@@ -18,7 +20,7 @@ export const ThemeToggle = () => {
         value=""
         checked={theme === 'dark'}
         className="sr-only peer"
-        onClick={handleChangeTheme}
+        onChange={handleChangeTheme}
       />
       <div
         className={`

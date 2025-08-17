@@ -6,10 +6,18 @@ import react from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
-import reactCompiler from 'eslint-plugin-react-compiler';
+import nextPlugin from '@next/eslint-plugin-next';
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage/**'] },
+  { 
+    ignores: [
+      'dist/**',
+      'coverage/**',
+      '.next/**',
+      'build/**',
+      'node_modules/**'      
+    ] 
+  },
   {
     extends: [
       js.configs.recommended,
@@ -19,14 +27,24 @@ export default tseslint.config(
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      ecmaVersion: 'latest',
+      globals: {
+        ...globals.browser,
+        ...globals.node 
+      },
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: import.meta.dirname,
+        ecmaFeatures: {
+          jsx: true
+        }
+      }
     },
     plugins: {
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      'react-compiler': reactCompiler,
+      '@next/next': nextPlugin
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -34,7 +52,6 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
-      'react-compiler/react-compiler': 'error',
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       quotes: ['error', 'single', { avoidEscape: true }],
@@ -51,6 +68,10 @@ export default tseslint.config(
       react: {
         version: 'detect',
       },
+      next: {
+        rootDir: true,
+      }
+
     },
   }
 );

@@ -1,5 +1,7 @@
-import { unselectedAll } from '../../store/slices/selectedItems.slice';
-import { useAppDispatch } from '../../store/store';
+'use client';
+
+import { unselectedAll } from '../../../lib/features/selectedItems/selectedItems.slice';
+import { useAppDispatch } from '../../../lib/hooks';
 
 export const ButtonUnselect = () => {
   const dispatch = useAppDispatch();

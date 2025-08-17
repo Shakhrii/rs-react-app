@@ -1,3 +1,5 @@
+'use client';
+
 import type { Pokemon } from '../types/types';
 
 export function saveToLS(key: string, value: string) {

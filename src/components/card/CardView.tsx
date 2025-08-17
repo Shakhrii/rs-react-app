@@ -1,13 +1,21 @@
-import { useNavigate } from 'react-router';
+'use client';
+
 import type { CardViewProps } from '../../types/types';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import { selectSelectedItemIds } from '../../store/slices/selectedItems.slice';
-import { selected, unselected } from '../../store/slices/selectedItems.slice';
 import { useTheme } from '../../hooks/useTheme';
+import Image from 'next/image';
+import { useAppDispatch, useAppSelector } from '../../../lib/hooks';
+import {
+  selected,
+  selectSelectedItemIds,
+  unselected,
+} from '../../../lib/features/selectedItems/selectedItems.slice';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export function CardView({ pokemon }: CardViewProps) {
   const { theme } = useTheme();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
 
   const selectedIds = useAppSelector(selectSelectedItemIds);
@@ -32,8 +40,9 @@ export function CardView({ pokemon }: CardViewProps) {
   };
 
   function handleClick() {
-    const searchParams = new URLSearchParams(window.location.search);
-    navigate(`${pokemon.id}?${searchParams.toString()}`);
+    const params = new URLSearchParams(searchParams || '');
+    params.set('id', pokemon.id.toString());
+    router.push(`${pathname}?${params.toString()}`);
   }
   return (
     <div
@@ -44,11 +53,13 @@ export function CardView({ pokemon }: CardViewProps) {
         duration-300 ease-in-out active:bg-amber-500 
         ${theme === 'dark' ? 'bg-[var(--bg-card-color-dark)]' : 'bg-white'}`}
     >
-      <img
+      <Image
         className="w-full h-2/3"
+        width={96}
+        height={96}
         src={pokemon.avatar}
         alt="pokemon avatar"
-      ></img>
+      />
       <div className="flex flex-col items-start p-5">
         <span data-testid="card-name" className="text-sm">
           <span className="font-bold">name: </span>

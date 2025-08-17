@@ -1,14 +1,23 @@
-import { useEffect, useState, type ChangeEvent } from 'react';
-import type { SearchViewProps } from '../../types/types';
-import { useTheme } from '../../hooks/useTheme';
+'use client';
 
-export function SearchView({ value, onSearchClick }: SearchViewProps) {
+import { useEffect, useState, type ChangeEvent } from 'react';
+import { useTheme } from '../../hooks/useTheme';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { SEARCH_TERM_KEY } from '../../utils/contstants';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+export function SearchView() {
   const { theme } = useTheme();
-  const [searchTerm, setSearchTerm] = useState(value);
+  const [termLS, setTermLS] = useLocalStorage('', SEARCH_TERM_KEY);
+  const [searchTerm, setSearchTerm] = useState('');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
   useEffect(() => {
-    setSearchTerm(value);
-  }, [value]);
+    router.push(`/pokemons?search=${encodeURIComponent(termLS)}`);
+  }, [termLS]);
 
   useEffect(() => {
     if (!searchTerm) {
@@ -16,13 +25,31 @@ export function SearchView({ value, onSearchClick }: SearchViewProps) {
     }
   }, [searchTerm]);
 
+  useEffect(() => {
+    const searchParam = searchParams?.get('search') || '';
+    if (searchParam !== searchTerm) {
+      if (searchParam) {
+        setTermLS(searchParam);
+      }
+      setSearchTerm(searchParam);
+    }
+  }, [searchParams]);
+
   function handleChangeEvent(event: ChangeEvent<HTMLInputElement>) {
     const inputValue = event.target.value.toString().trim();
     setSearchTerm(inputValue);
   }
 
   function handleClick() {
-    onSearchClick(searchTerm || '');
+    const params = new URLSearchParams(searchParams || '');
+    if (searchTerm !== '') {
+      params.set('search', searchTerm);
+    } else {
+      params.delete('search');
+    }
+
+    replace(`${pathname}?${params.toString()}`);
+    setTermLS(searchTerm);
   }
 
   return (

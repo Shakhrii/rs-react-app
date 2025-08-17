@@ -1,8 +1,10 @@
+'use client';
+
 import { ButtonDownload } from './ButtonDownload';
 import { ButtonUnselect } from './ButtonUnselect';
-import { useAppSelector } from '../../store/store';
-import { selectSelectedItems } from '../../store/slices/selectedItems.slice';
 import { useTheme } from '../../hooks/useTheme';
+import { useAppSelector } from '../../../lib/hooks';
+import { selectSelectedItems } from '../../../lib/features/selectedItems/selectedItems.slice';
 
 export const Flyout = () => {
   const { theme } = useTheme();
