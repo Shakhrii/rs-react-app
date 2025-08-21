@@ -1,0 +1,11 @@
+.list {
+    height: 200px;
+    overflow-y: scroll;
+    position: absolute;
+    top: 30px;
+    background-color: white;
+}
+
+.item {
+    cursor: pointer;
+}

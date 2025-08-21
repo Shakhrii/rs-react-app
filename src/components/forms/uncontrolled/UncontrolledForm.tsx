@@ -1,5 +1,7 @@
+import { getCounrtiesByQuery } from '../../../data/utils';
+import CompletedList from '../../completed-list/CompletedList';
 import styles from './Uncontrolled.module.css';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 interface UncontrolledFormProps {
   saveHandler: () => void;
@@ -12,10 +14,16 @@ function UncontrolledForm({ saveHandler }: UncontrolledFormProps) {
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
   const avatarRef = useRef<HTMLImageElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const countryRef = useRef<HTMLInputElement>(null);
+
+  const [completedList, setCompletedList] = useState<string[]>([]);
+  const [isShowCompletedList, setShowCompletedList] = useState(false);
 
   const handleSubmit = (formData: FormData) => {
-    const values = formData.entries;
-    console.log(values);
+    const values = formData.entries();
+    for (const [key, value] of values) {
+      console.log(`${key}:`, value);
+    }
 
     saveHandler();
   };
@@ -28,6 +36,22 @@ function UncontrolledForm({ saveHandler }: UncontrolledFormProps) {
       if (avatarRef.current && avatarRef.current.src) {
         avatarRef.current.src = objectUrl;
       }
+    }
+  };
+
+  const handleCountryChange = () => {
+    const country = countryRef.current?.value;
+    if (country && country != '') {
+      const completedCountries = getCounrtiesByQuery(country);
+      setCompletedList(completedCountries);
+      setShowCompletedList(true);
+    }
+  };
+
+  const handleClickCompletedListItem = (country: string) => {
+    if (countryRef.current) {
+      countryRef.current.value = country;
+      setShowCompletedList(false);
     }
   };
 
@@ -77,6 +101,23 @@ function UncontrolledForm({ saveHandler }: UncontrolledFormProps) {
           </div>
         </div>
         <div className={styles.section}>
+          <div className={styles.country}>
+            <label htmlFor="country">Country</label>
+            <input
+              type="text"
+              name="country"
+              id="country"
+              placeholder="Russia"
+              ref={countryRef}
+              onChange={() => handleCountryChange()}
+            />
+            {isShowCompletedList && completedList.length > 0 && (
+              <CompletedList
+                countries={completedList}
+                handleClick={handleClickCompletedListItem}
+              />
+            )}
+          </div>
           <div>
             <fieldset>
               <legend>Gender</legend>
@@ -90,10 +131,6 @@ function UncontrolledForm({ saveHandler }: UncontrolledFormProps) {
               </div>
             </fieldset>
           </div>
-          <div>
-            <input type="checkbox" name="agreement" id="agreement" />
-            <label htmlFor="agreement">I agree with Terms and Conditions</label>
-          </div>
           <div className={styles.file}>
             <img src="user.png" alt="avatar" ref={avatarRef} />
             <label htmlFor="avatar">Upload photo</label>
@@ -105,6 +142,10 @@ function UncontrolledForm({ saveHandler }: UncontrolledFormProps) {
               ref={fileRef}
               onChange={() => handleUploadPhoto()}
             />
+          </div>
+          <div>
+            <input type="checkbox" name="agreement" id="agreement" />
+            <label htmlFor="agreement">I agree with Terms and Conditions</label>
           </div>
         </div>
       </div>
