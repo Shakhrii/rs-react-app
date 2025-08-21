@@ -8,12 +8,17 @@ function MainPage() {
   const closeHandler = () => {
     setModalOpen(false);
   };
+
+  const saveHandler = () => {
+    closeHandler();
+  };
+
   return (
     <div>
       <button onClick={() => setModalOpen(true)}>Open Modal</button>
       {isModalOpen && (
-        <Modal closeHandler={closeHandler}>
-          <UncontrolledForm />
+        <Modal closeHandler={saveHandler}>
+          <UncontrolledForm saveHandler={closeHandler} />
         </Modal>
       )}
     </div>

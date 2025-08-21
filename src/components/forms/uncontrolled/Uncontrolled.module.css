@@ -1,5 +1,26 @@
 .form {
     width: 50vw;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.form > button {
+    padding: 15px 30px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(224, 54, 54);
+    font-size: 16px;
+    color: white;
+    align-self: center;
+    cursor: pointer;
+}
+
+.form > button:hover {
+    background-color: rgb(244, 100, 100);
+}
+
+.content {
     gap: 100px;
     display: flex;
     justify-content: space-between;
@@ -46,6 +67,7 @@
 
 .file > label {
     background-color: rgb(52, 137, 227);
+    color: white;
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
