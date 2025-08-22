@@ -1,0 +1,12 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0px;
+}
+
+.item > input {
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid rgb(198, 197, 197);
+}

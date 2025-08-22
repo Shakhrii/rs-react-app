@@ -43,6 +43,7 @@ export default tseslint.config([
           singleQuote: true,
           trailingComma: 'es5',
           semi: true,
+          tabWidth: 2,
         },
       ],
     },
