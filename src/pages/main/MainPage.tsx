@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import Modal from '../../components/modal/Modal';
 import UncontrolledForm from '../../components/forms/uncontrolled/UncontrolledForm';
+import Header from '../../components/header/Header';
 
 function MainPage() {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isControlled, setControlled] = useState(false);
 
   const closeHandler = () => {
     setModalOpen(false);
@@ -13,12 +15,27 @@ function MainPage() {
     closeHandler();
   };
 
+  const controlledClickHandler = () => {
+    setControlled(true);
+    setModalOpen(true);
+  };
+
+  const uncontrolledClickHandler = () => {
+    setControlled(false);
+    setModalOpen(true);
+  };
+
   return (
     <div>
-      <button onClick={() => setModalOpen(true)}>Open Modal</button>
+      <Header
+        controlledClickHandler={controlledClickHandler}
+        uncontrolledClickHandler={uncontrolledClickHandler}
+      />
       {isModalOpen && (
         <Modal closeHandler={saveHandler}>
-          <UncontrolledForm saveHandler={closeHandler} />
+          {isControlled ? (
+            <UncontrolledForm saveHandler={closeHandler} />
+          ) : null}
         </Modal>
       )}
     </div>

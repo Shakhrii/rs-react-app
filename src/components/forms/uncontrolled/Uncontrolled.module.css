@@ -10,7 +10,7 @@
     padding: 15px 30px;
     border-radius: 10px;
     border: none;
-    background-color: rgb(224, 54, 54);
+    background-color: var(--btn-color-red);
     font-size: 16px;
     color: white;
     align-self: center;
@@ -18,7 +18,7 @@
 }
 
 .form > button:hover {
-    background-color: rgb(244, 100, 100);
+    background-color: var(--btn-color-red-hover);
 }
 
 .content {
