@@ -19,6 +19,14 @@ const fileSchema = z
     }
   );
 
+const passwordSchema = z
+  .string()
+  .min(8, 'Password must contain at least 8 symbols')
+  .regex(/[0-9]/, 'Password must contain at least 1 number')
+  .regex(/[A-Z]/, 'Password must contain at least 1 uppercase letter')
+  .regex(/[a-z]/, 'Password must contain at least 1 lowercase letter')
+  .regex(/[^A-Za-z0-9]/, 'Password must contain at least 1 special character');
+
 export const FormSchema = z
   .object({
     name: z
@@ -33,17 +41,8 @@ export const FormSchema = z
       .min(1, 'Email has to be filled')
       .trim(),
 
-    password: z
-      .string()
-      .min(8, 'Password must contain at least 8 symbols')
-      .regex(/[0-9]/, 'Password must contain at least 1 number')
-      .regex(/[A-Z]/, 'Password must contain at least 1 uppercase letter')
-      .regex(/[a-z]/, 'Password must contain at least 1 lowercase letter')
-      .regex(
-        /[^A-Za-z0-9]/,
-        'Password must contain at least 1 special character'
-      ),
-    confirm: z.string(),
+    password: passwordSchema,
+    confirm: z.string().min(1, 'Please confirm your password'),
     gender: z.enum(['male', 'female'], {
       message: 'Please select your gender',
     }),

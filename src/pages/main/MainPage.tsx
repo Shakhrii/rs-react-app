@@ -37,7 +37,7 @@ function MainPage() {
           {isControlled ? (
             <UncontrolledForm saveHandler={closeHandler} />
           ) : (
-            <ControlledForm />
+            <ControlledForm saveHandler={saveHandler} />
           )}
         </Modal>
       )}
