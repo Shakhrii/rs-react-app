@@ -2,22 +2,44 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import styles from '../Form.module.css';
 import controlledStyles from './ControlledForm.module.css';
 import { countries } from '../../../data/countries';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FormSchema } from '../../../types/types';
+import { z } from 'zod';
+import ErrorMessage from '../error/ErrorMessage';
 
-interface IFormInput {
-  name: string;
-  email: string;
-  password: string;
-  confirm: string;
-  country: string;
-  gender: 'male' | 'female';
-  agreement: boolean;
-  avatar: string;
-}
+type FormType = z.infer<typeof FormSchema>;
 
 function ControlledForm() {
-  const { register, handleSubmit } = useForm<IFormInput>();
-  const submitHandler: SubmitHandler<IFormInput> = (data) => console.log(data);
-  const handleUploadPhoto = () => {};
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    clearErrors,
+    setError,
+  } = useForm<FormType>({
+    resolver: zodResolver(FormSchema),
+    mode: 'onChange',
+  });
+  const submitHandler: SubmitHandler<FormType> = (data) => console.log(data);
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      FormSchema.shape.avatar.parse(file);
+      setValue('avatar', file);
+      clearErrors('avatar');
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setError('avatar', { message: error.issues[0].message });
+      }
+      event.target.value = '';
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(submitHandler)} className={styles.form}>
@@ -25,6 +47,9 @@ function ControlledForm() {
       <div className={styles.content}>
         <div className={styles.section}>
           <div className={styles.item}>
+            {errors.name && (
+              <ErrorMessage message={errors.name.message || ''} />
+            )}
             <label htmlFor="name">Name</label>
             <input
               {...register('name')}
@@ -34,6 +59,9 @@ function ControlledForm() {
             />
           </div>
           <div className={styles.item}>
+            {errors.email && (
+              <ErrorMessage message={errors.email.message || ''} />
+            )}
             <label htmlFor="email">Email</label>
             <input
               {...register('email')}
@@ -43,20 +71,26 @@ function ControlledForm() {
             />
           </div>
           <div className={styles.item}>
+            {errors.password && (
+              <ErrorMessage message={errors.password.message || ''} />
+            )}
             <label htmlFor="password">Password</label>
             <input
               {...register('password')}
-              type="text"
+              type="password"
               id="password"
               placeholder="Your password"
             />
           </div>
           <div className={styles.item}>
-            <label htmlFor="confirm">Password</label>
+            {errors.confirm && (
+              <ErrorMessage message={errors.confirm.message || ''} />
+            )}
+            <label htmlFor="confirm">Confirm password</label>
             <input
               {...register('confirm')}
-              type="text"
-              id="password"
+              type="password"
+              id="confirm"
               placeholder="Your password"
             />
           </div>
@@ -67,12 +101,15 @@ function ControlledForm() {
         </div>
         <div className={styles.section}>
           <div className={styles.item}>
+            {errors.country && (
+              <ErrorMessage message={errors.country.message || ''} />
+            )}
             <label htmlFor="country">Country</label>
             <input
               {...register('country')}
               type="text"
               id="country"
-              placeholder="Russia"
+              placeholder="Russian Federation"
               list="countries"
             />
             <datalist id="countries">
@@ -82,25 +119,40 @@ function ControlledForm() {
             </datalist>
           </div>
           <fieldset>
+            {errors.gender && (
+              <ErrorMessage message={errors.gender.message || ''} />
+            )}
             <legend>Gender</legend>
             <div>
-              <input type="radio" id="male" name="gender" value="male" />
+              <input
+                {...register('gender')}
+                type="radio"
+                id="male"
+                value="male"
+              />
               <label htmlFor="male">Male</label>
             </div>
             <div>
-              <input type="radio" id="female" name="gender" value="female" />
+              <input
+                {...register('gender')}
+                type="radio"
+                id="female"
+                value="female"
+              />
               <label htmlFor="female">Female</label>
             </div>
           </fieldset>
           <div className={controlledStyles.file}>
+            {errors.avatar && (
+              <ErrorMessage message={errors.avatar.message || ''} />
+            )}
             <img src="user.png" alt="avatar" />
             <label htmlFor="avatar">Upload photo</label>
             <input
               {...register('avatar')}
               type="file"
               id="avatar"
-              accept="image/jpeg, image/png"
-              onChange={() => handleUploadPhoto()}
+              onChange={handleFileChange}
             />
           </div>
         </div>
