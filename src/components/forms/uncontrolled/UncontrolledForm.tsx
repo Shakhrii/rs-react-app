@@ -24,6 +24,7 @@ function UncontrolledForm({ saveHandler }: UncontrolledFormProps) {
 
   return (
     <form action={handleSubmit} className={styles.form}>
+      <h1>Uncontrolled Form</h1>
       <div className={styles.content}>
         <div className={styles.section}>
           <NameInput />

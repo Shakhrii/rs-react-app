@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Modal from '../../components/modal/Modal';
 import UncontrolledForm from '../../components/forms/uncontrolled/UncontrolledForm';
 import Header from '../../components/header/Header';
+import ControlledForm from '../../components/forms/controlled/ControlledForm';
 
 function MainPage() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -35,7 +36,9 @@ function MainPage() {
         <Modal closeHandler={saveHandler}>
           {isControlled ? (
             <UncontrolledForm saveHandler={closeHandler} />
-          ) : null}
+          ) : (
+            <ControlledForm />
+          )}
         </Modal>
       )}
     </div>
