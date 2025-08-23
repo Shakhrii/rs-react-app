@@ -1,5 +1,5 @@
 import { countries } from '../../../../../data/countries';
-import styles from '../Inputs.module.css';
+import styles from '../../../Input.module.css';
 
 function CountryInput() {
   return (

@@ -1,4 +1,4 @@
-import styles from '../Inputs.module.css';
+import styles from '../../../Input.module.css';
 
 function ConfirmInput() {
   return (

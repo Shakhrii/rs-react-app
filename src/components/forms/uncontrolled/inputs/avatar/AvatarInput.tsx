@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import styles from './AvatarInput.module.css';
+import styles from '../../../Avatar.module.css';
 
 function AvatarInput() {
   const avatarRef = useRef<HTMLImageElement>(null);

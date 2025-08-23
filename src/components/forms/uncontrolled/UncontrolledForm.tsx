@@ -6,7 +6,7 @@ import EmailInput from './inputs/email/EmailInput';
 import GenderInput from './inputs/gender/GenderInput';
 import NameInput from './inputs/name/NameInput';
 import PasswordInput from './inputs/password/PasswordInput';
-import styles from './Uncontrolled.module.css';
+import styles from '../Form.module.css';
 
 interface UncontrolledFormProps {
   saveHandler: () => void;
