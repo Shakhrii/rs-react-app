@@ -17,7 +17,9 @@ function DataList() {
       ))}
     </div>
   ) : (
-    <div>Нет данных для отображения, сделай submit формы</div>
+    <div className={styles.empty}>
+      Нет данных для отображения, сделай submit формы
+    </div>
   );
 }
 

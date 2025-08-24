@@ -14,3 +14,7 @@
   50% { border: 2px solid transparent; }
   100% { border: 2px solid #ff4444; }
 }
+
+.empty {
+  height: 100vh;
+}
