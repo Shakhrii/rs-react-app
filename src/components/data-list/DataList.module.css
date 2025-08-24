@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   gap: 40px;
   margin-top: 50px;
+  height: 100%;
 }
 
 .last_item {
