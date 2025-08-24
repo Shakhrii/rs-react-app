@@ -7,6 +7,7 @@ function ConfirmInput() {
     register,
     formState: { errors },
   } = useFormContext();
+
   return (
     <div className={styles.item}>
       <label htmlFor="confirm">Confirm password</label>

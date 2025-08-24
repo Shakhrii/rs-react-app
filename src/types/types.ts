@@ -19,13 +19,44 @@ const fileSchema = z
     }
   );
 
-const passwordSchema = z
-  .string()
-  .min(8, 'Password must contain at least 8 symbols')
-  .regex(/[0-9]/, 'Password must contain at least 1 number')
-  .regex(/[A-Z]/, 'Password must contain at least 1 uppercase letter')
-  .regex(/[a-z]/, 'Password must contain at least 1 lowercase letter')
-  .regex(/[^A-Za-z0-9]/, 'Password must contain at least 1 special character');
+const passwordSchema = z.string().superRefine((val, ctx) => {
+  if (val.length < 8) {
+    ctx.addIssue({
+      code: 'too_small',
+      minimum: 8,
+      origin: 'string',
+      message: 'Password must contain at least 8 symbols',
+    });
+  }
+
+  if (!/[0-9]/.test(val)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Password must contain at least 1 number',
+    });
+  }
+
+  if (!/[A-Z]/.test(val)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Password must contain at least 1 uppercase letter',
+    });
+  }
+
+  if (!/[a-z]/.test(val)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Password must contain at least 1 lowercase letter',
+    });
+  }
+
+  if (!/[^A-Za-z0-9]/.test(val)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Password must contain at least 1 special character',
+    });
+  }
+});
 
 export const FormSchema = z
   .object({
@@ -47,19 +78,36 @@ export const FormSchema = z
     gender: z.enum(['male', 'female'], {
       message: 'Please select your gender',
     }),
-    agreement: z.boolean().refine((val) => val === true, {
-      message: 'You must agree to the terms and conditions',
-    }),
+    agreement: z.boolean(),
     avatar: fileSchema,
     country: z.enum(getCountryNames(), {
       message: 'Select country from the list',
     }),
   })
+  .refine((data) => data.agreement === true, {
+    message: 'You must agree to the terms and conditions',
+    path: ['agreement'],
+    when: (payload) => {
+      return z
+        .object({
+          name: z.string(),
+        })
+        .safeParse(payload.value).success;
+    },
+  })
+
   .refine((data) => data.password === data.confirm, {
     message: 'Passwords must match',
     path: ['confirm'],
+    when: (payload) => {
+      return z
+        .object({
+          password: z.string().min(8),
+          confirm: z.string().min(1),
+        })
+        .safeParse(payload.value).success;
+    },
   });
-
 export type FormDataItem = {
   name: string;
   email: string;

@@ -7,6 +7,9 @@ function PasswordInput() {
     register,
     formState: { errors },
   } = useFormContext();
+
+  const error = errors.password;
+  console.log(error);
   return (
     <div className={styles.item}>
       <label htmlFor="password">Password</label>

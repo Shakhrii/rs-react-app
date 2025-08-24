@@ -29,14 +29,24 @@ function ControlledForm({ saveHandler }: ControlledFormProps) {
   };
   const methods = useForm<FormType>({
     resolver: zodResolver(FormSchema),
-    mode: 'onChange',
+    mode: 'all',
+    reValidateMode: 'onChange',
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirm: '',
+      agreement: false,
+      country: '',
+      gender: 'male',
+      avatar: new File([], '', { type: 'image/jpeg' }),
+    },
   });
 
   const {
     handleSubmit,
     formState: { isDirty, isValid },
   } = methods;
-
   const submitHandler: SubmitHandler<FormType> = async (data) => {
     console.log(data);
 
