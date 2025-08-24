@@ -11,12 +11,10 @@ function AvatarInput() {
     formState: { errors },
     setValue,
     clearErrors,
-    watch,
     trigger,
     setError,
   } = useFormContext();
 
-  const avatar = watch('avatar');
   const [photo, setPhoto] = useState('user.png');
 
   const handleFileChange = async (
@@ -33,7 +31,7 @@ function AvatarInput() {
       const objectUrl = URL.createObjectURL(file);
       setPhoto(objectUrl);
       console.log(`photo = ${objectUrl}`);
-      trigger(avatar);
+      trigger();
     } catch (error) {
       if (error instanceof z.ZodError) {
         setPhoto('user.png');
