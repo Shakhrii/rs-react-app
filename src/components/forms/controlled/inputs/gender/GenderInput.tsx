@@ -8,9 +8,6 @@ function GenderInput() {
   } = useFormContext();
   return (
     <fieldset>
-      {errors.gender && (
-        <ErrorMessage message={errors.gender.message as string} />
-      )}
       <legend>Gender</legend>
       <div>
         <input {...register('gender')} type="radio" id="male" value="male" />
@@ -25,6 +22,9 @@ function GenderInput() {
         />
         <label htmlFor="female">Female</label>
       </div>
+      {errors.gender && (
+        <ErrorMessage message={errors.gender.message as string} />
+      )}
     </fieldset>
   );
 }

@@ -10,9 +10,6 @@ function CountryInput() {
   } = useFormContext();
   return (
     <div className={styles.item}>
-      {errors.country && (
-        <ErrorMessage message={errors.country.message as string} />
-      )}
       <label htmlFor="country">Country</label>
       <input
         {...register('country')}
@@ -26,6 +23,9 @@ function CountryInput() {
           <option key={country.code} value={country.name} />
         ))}
       </datalist>
+      {errors.country && (
+        <ErrorMessage message={errors.country.message as string} />
+      )}
     </div>
   );
 }

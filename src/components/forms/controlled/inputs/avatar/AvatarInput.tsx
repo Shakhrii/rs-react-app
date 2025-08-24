@@ -41,9 +41,6 @@ function AvatarInput() {
 
   return (
     <div className={styles.file}>
-      {errors.avatar && (
-        <ErrorMessage message={errors.avatar.message as string} />
-      )}
       <img src={photo} alt="avatar" />
       <label htmlFor="avatar">Upload photo</label>
       <input
@@ -52,6 +49,9 @@ function AvatarInput() {
         id="avatar"
         onChange={handleFileChange}
       />
+      {errors.avatar && (
+        <ErrorMessage message={errors.avatar.message as string} />
+      )}
     </div>
   );
 }

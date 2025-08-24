@@ -9,7 +9,6 @@ function NameInput() {
   } = useFormContext();
   return (
     <div className={styles.item}>
-      {errors.name && <ErrorMessage message={errors.name.message as string} />}
       <label htmlFor="name">Name</label>
       <input
         {...register('name')}
@@ -17,6 +16,7 @@ function NameInput() {
         id="name"
         placeholder="Your name"
       />
+      {errors.name && <ErrorMessage message={errors.name.message as string} />}
     </div>
   );
 }

@@ -9,9 +9,6 @@ function ConfirmInput() {
   } = useFormContext();
   return (
     <div className={styles.item}>
-      {errors.confirm && (
-        <ErrorMessage message={errors.confirm.message as string} />
-      )}
       <label htmlFor="confirm">Confirm password</label>
       <input
         {...register('confirm')}
@@ -19,6 +16,9 @@ function ConfirmInput() {
         id="confirm"
         placeholder="Your password"
       />
+      {errors.confirm && (
+        <ErrorMessage message={errors.confirm.message as string} />
+      )}
     </div>
   );
 }

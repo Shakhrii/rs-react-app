@@ -9,9 +9,6 @@ function EmailInput() {
   } = useFormContext();
   return (
     <div className={styles.item}>
-      {errors.email && (
-        <ErrorMessage message={errors.email.message as string} />
-      )}
       <label htmlFor="email">Email</label>
       <input
         {...register('email')}
@@ -19,6 +16,9 @@ function EmailInput() {
         id="email"
         placeholder="your@email.com"
       />
+      {errors.email && (
+        <ErrorMessage message={errors.email.message as string} />
+      )}
     </div>
   );
 }

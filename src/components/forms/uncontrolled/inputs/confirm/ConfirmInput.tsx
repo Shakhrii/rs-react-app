@@ -5,7 +5,7 @@ function ConfirmInput() {
     <div className={styles.item}>
       <label htmlFor="confirm">Confirm password</label>
       <input
-        type="text"
+        type="password"
         name="confirm"
         id="confirm"
         placeholder="Your password"

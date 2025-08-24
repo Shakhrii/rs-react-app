@@ -3,7 +3,13 @@ function GenderInput() {
     <fieldset>
       <legend>Gender</legend>
       <div>
-        <input type="radio" id="male" name="gender" value="male" />
+        <input
+          type="radio"
+          id="male"
+          name="gender"
+          value="male"
+          defaultChecked
+        />
         <label htmlFor="male">Male</label>
       </div>
       <div>

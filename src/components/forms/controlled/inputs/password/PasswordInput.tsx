@@ -9,9 +9,6 @@ function PasswordInput() {
   } = useFormContext();
   return (
     <div className={styles.item}>
-      {errors.password && (
-        <ErrorMessage message={errors.password.message as string} />
-      )}
       <label htmlFor="password">Password</label>
       <input
         {...register('password')}
@@ -19,6 +16,9 @@ function PasswordInput() {
         id="password"
         placeholder="Your password"
       />
+      {errors.password && (
+        <ErrorMessage message={errors.password.message as string} />
+      )}
     </div>
   );
 }
