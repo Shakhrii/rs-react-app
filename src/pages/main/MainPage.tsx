@@ -3,6 +3,7 @@ import Modal from '../../components/modal/Modal';
 import UncontrolledForm from '../../components/forms/uncontrolled/UncontrolledForm';
 import Header from '../../components/header/Header';
 import ControlledForm from '../../components/forms/controlled/ControlledForm';
+import DataList from '../../components/data-list/DataList';
 
 function MainPage() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -41,6 +42,7 @@ function MainPage() {
           )}
         </Modal>
       )}
+      <DataList />
     </div>
   );
 }

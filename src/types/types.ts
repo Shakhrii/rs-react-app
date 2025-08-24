@@ -43,10 +43,13 @@ export const FormSchema = z
 
     password: passwordSchema,
     confirm: z.string().min(1, 'Please confirm your password'),
+
     gender: z.enum(['male', 'female'], {
       message: 'Please select your gender',
     }),
-    agreement: z.boolean(),
+    agreement: z.boolean().refine((val) => val === true, {
+      message: 'You must agree to the terms and conditions',
+    }),
     avatar: fileSchema,
     country: z.enum(getCountryNames(), {
       message: 'Select country from the list',
@@ -56,3 +59,14 @@ export const FormSchema = z
     message: 'Passwords must match',
     path: ['confirm'],
   });
+
+export type FormDataItem = {
+  name: string;
+  email: string;
+  password: string;
+  confirm: string;
+  agreement: boolean;
+  country: string;
+  gender: 'male' | 'female';
+  avatar: string;
+};
