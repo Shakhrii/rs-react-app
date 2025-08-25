@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  background-color: white;
+  border-bottom: 0.5px solid rgb(238, 237, 237);
+  padding-bottom: 30px;
+}
+
+.wrapper > button {
+  padding: 15px 15px;
+  color: white;
+  background-color: var(--primary-btn-color);
+  border: none;
+  border-radius: 5px;
+}
+
+.wrapper > button:hover {
+  background-color: var(--primary-btn-hover);
+}

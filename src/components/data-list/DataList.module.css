@@ -1,0 +1,21 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 50px;
+  height: 100%;
+}
+
+.last_item {
+  animation: blinkBorder 2s ease-in-out 3;
+}
+
+@keyframes blinkBorder {
+  0% { border: 2px solid #ff4444; }
+  50% { border: 2px solid transparent; }
+  100% { border: 2px solid #ff4444; }
+}
+
+.empty {
+  height: 100vh;
+}
