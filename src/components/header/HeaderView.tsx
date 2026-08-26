@@ -10,7 +10,7 @@ export default function HeaderView({ children }: HeaderViewProps) {
     <header className="pb-6">
       <div>
         <h1
-          className={`text-4xl pb-6 ${theme === 'dark' ? 'text-white' : 'text-neutral-500'}`}
+          className={`text-4xl font-bebas pb-6 ${theme === 'dark' ? 'text-white' : 'text-neutral-500'}`}
         >
           Pokemons Api
         </h1>

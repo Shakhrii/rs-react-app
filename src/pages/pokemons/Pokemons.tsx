@@ -8,7 +8,7 @@ import { SpinnerView } from '../../components/spinner/SpinnerView';
 import type { Pokemon } from '../../types/types';
 import { PaginationView } from '../../components/pagination/PaginationView';
 import { LIMIT, SEARCH_TERM_KEY } from '../../utils/contstants';
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { Flyout } from '../../components/flyout/Flyout';
 import {
@@ -16,11 +16,13 @@ import {
   useLazyGetPokemonsQuery,
 } from '../../store/slices/api/pokemonApi';
 import { RefetchButton } from '../../components/refetch/RefetchButton';
+import './Pokemons.css';
 
 export default function Pokemons() {
   const [pokemonList, setPokemonList] = useState<Pokemon[] | undefined>(
     undefined
   );
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState('');
   const [offset, setOffset] = useState(0);
@@ -31,6 +33,13 @@ export default function Pokemons() {
     useLazyGetPokemonsQuery();
   const [triggerPokemon, { isFetching: isFetchPokemon }] =
     useLazyGetPokemonByNameQuery();
+  const location = useLocation();
+
+  useEffect(() => {
+    const hasDetail = location.pathname.includes('/pokemons/');
+    setIsDetailOpen(hasDetail);
+  }, [location]);
+
   useEffect(() => {
     updatePokemons();
   }, [searchTerm, offset, isRefetch]);
@@ -124,6 +133,12 @@ export default function Pokemons() {
           </div>
           <MainView>
             <div className="flex flex-col gap-10 items-center justify-center flex-2/3">
+              <PaginationView
+                isVisible={!(isFetchPokemon || isFetchPokemons) && !error}
+                count={totalCount}
+                limit={LIMIT}
+                onPageChanged={(offset) => handlePaginationPageChanged(offset)}
+              />
               {isFetchPokemon || isFetchPokemons ? (
                 <SpinnerView />
               ) : error ? (
@@ -135,18 +150,20 @@ export default function Pokemons() {
               ) : (
                 <div className="flex flex-col items-center">
                   <RefetchButton refetchHandler={refetch} />
-                  <CardListView pokemons={pokemonList} />
+                  <div
+                    className={`cards-container ${isDetailOpen ? 'shift-left' : ''}`}
+                  >
+                    <CardListView pokemons={pokemonList} />
+                  </div>
                 </div>
               )}
-              <PaginationView
-                isVisible={!(isFetchPokemon || isFetchPokemons) && !error}
-                count={totalCount}
-                limit={LIMIT}
-                onPageChanged={(offset) => handlePaginationPageChanged(offset)}
-              />
             </div>
-            <div className="flex-100">
-              <Outlet />
+            <div className="flex">
+              <div
+                className={`detail-container ${isDetailOpen ? 'slide-in' : ''}`}
+              >
+                <Outlet />
+              </div>
             </div>
             <Flyout />
           </MainView>
