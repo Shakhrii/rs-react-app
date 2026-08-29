@@ -13,6 +13,17 @@
     --accent-color-dark: var(--color-amber-600);
 }
 
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("./assets/fonts/bebasneuecyrillic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@theme {
+  --font-bebas: "Bebas Neue", sans-serif;
+}
+
 .light {
     background-color: var(--bg-color-light);
     color: var(--text-color-light)
