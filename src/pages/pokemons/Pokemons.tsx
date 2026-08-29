@@ -132,7 +132,7 @@ export default function Pokemons() {
             />
           </div>
           <MainView>
-            <div className="flex flex-col gap-10 items-center justify-center flex-2/3">
+            <div className="flex flex-col gap-10 items-center justify-center">
               <PaginationView
                 isVisible={!(isFetchPokemon || isFetchPokemons) && !error}
                 count={totalCount}
